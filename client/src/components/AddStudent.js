@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 function AddStudent() {
     
-    const history = useHistory()
+    const navigate = useNavigate()
 
     const formSchema = yup.object().shape({
         firstName: yup
@@ -40,7 +40,7 @@ function AddStudent() {
                     data => {console.log(data)
                 alert("Student successfully added!")
                 resetForm()
-                history.push('/')
+                navigate('/')
             })
             }
             else {
