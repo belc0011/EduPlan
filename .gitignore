@@ -1,0 +1,8 @@
+# created by virtualenv automatically
+client/node_modules/
+.client/.cache/
+.client/build/
+.server/build/
+.venv/
+.DS_Store
+*.log

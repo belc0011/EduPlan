@@ -1,6 +1,0 @@
-# created by virtualenv automatically
-node_modules/
-.cache/
-.env
-.DS_Store
-*.log
