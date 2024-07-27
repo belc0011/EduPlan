@@ -3,7 +3,7 @@ from flask_restful import Resource
 from sqlalchemy import select
 
 from config import app, db, api
-from models import User, Student, Accommodation, Classes
+from models import User, Student, Accommodation
 
 class Signup(Resource):
     def post(self):
@@ -98,19 +98,7 @@ class StudentById(Resource):
             return {'message': 'Error, unauthorized user'}, 401
     
     def post(self, id):
-        if session.get('user_id'):
-            new_class_dict = request.get_json()
-            new_class = Classes(
-                name = new_class_dict['class'].title(),
-                student_id=id
-                )
-            db.session.add(new_class)
-            db.session.commit()
-            student = Student.query.filter_by(id=id).first()
-            response = make_response(student.to_dict(), 201)
-            return response
-        else:
-            return {'message': 'Unauthorized user'}, 401
+        pass
     
     def patch(self, id):
         if session.get('user_id'):
@@ -152,3 +140,6 @@ api.add_resource(Logout, '/logout', endpoint='logout')
 api.add_resource(Students, '/students', endpoint='students')
 api.add_resource(CheckSession, '/check_session', endpoint='check_session')
 api.add_resource(StudentById, '/students/<int:id>', endpoint='students/<int:id>')
+
+if __name__ == '__main__':
+    app.run(port=5555, debug=False)

@@ -2,14 +2,8 @@ import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Switch, Route, useHistory } from 'react-router-dom';
 import Login from './Login'
 import NavBar from './NavBar'
-import Students from './Students'
 import SignUp from './SignUp'
 import Home from './Home'
-import StudentPage from './StudentPage'
-import AccommodationSearch from './AccommodationSearch'
-import Comments from './Comments'
-import EditStudent from './EditStudent'
-import DeleteStudent from './DeleteStudent'
 
 function App() {
   const [user, setUser] = useState(null);
