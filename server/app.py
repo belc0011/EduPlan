@@ -137,3 +137,18 @@ class StudentById(Resource):
             return response
         else:
             return {'error': 'Unauthorized'}, 401
+
+class Accommodations(Resource):
+    def get(self):
+        if session.get('user_id'):
+            user_id = session['user_id']
+            accommodations = Accommodation.query.filter_by(user_id=user_id).all()
+            if accommodations:
+                [accommodation for accommodation in accommodations]
+
+api.add_resource(Signup, '/signup', endpoint='signup')
+api.add_resource(Login, '/', endpoint='')
+api.add_resource(Logout, '/logout', endpoint='logout')
+api.add_resource(Students, '/students', endpoint='students')
+api.add_resource(CheckSession, '/check_session', endpoint='check_session')
+api.add_resource(StudentById, '/students/<int:id>', endpoint='students/<int:id>')
