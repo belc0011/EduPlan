@@ -84,3 +84,56 @@ class Students(Resource):
                 return {'message': 'Error: unable to create new student'}, 404
         else:
             return 401
+class StudentById(Resource):
+
+    def get(self, id):
+        if session.get('user_id'):
+            student = Student.query.filter_by(id=id).first()
+            if student:
+                response = make_response(student.to_dict(), 200)
+                return response
+            else:
+                return {'message': 'Student not found'}, 404
+        else:
+            return {'message': 'Error, unauthorized user'}, 401
+    
+    def post(self, id):
+        if session.get('user_id'):
+            new_class_dict = request.get_json()
+            new_class = Classes(
+                name = new_class_dict['class'].title(),
+                student_id=id
+                )
+            db.session.add(new_class)
+            db.session.commit()
+            student = Student.query.filter_by(id=id).first()
+            response = make_response(student.to_dict(), 201)
+            return response
+        else:
+            return {'message': 'Unauthorized user'}, 401
+    
+    def patch(self, id):
+        if session.get('user_id'):
+            request_dict = request.get_json()
+            student = Student.query.filter_by(id=id).first()
+            if student:
+                student.first_name = request_dict.get('firstName', student.first_name).title()
+                student.last_name = request_dict.get('lastName', student.last_name).title()
+                student.grade = request_dict.get('grade', student.grade)
+                db.session.commit()
+                response = make_response(student.to_dict(), 200)
+                return response
+            else:
+                return {"error": "Student not found"}, 404
+        else:
+            return {"error": "Unauthorized"}, 401
+
+    def delete(self, id):
+        if session.get('user_id'):
+            student = Student.query.filter_by(id=id).first()
+            db.session.delete(student)
+            db.session.commit()
+            response = {'message': 'Successfully deleted'}, 200
+            return response
+        else:
+            return {'error': 'Unauthorized'}, 401
