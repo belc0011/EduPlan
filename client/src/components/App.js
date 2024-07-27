@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { BrowserRouter as Router, Switch, Route, useHistory } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
 import Login from './Login'
 import NavBar from './NavBar'
 import SignUp from './SignUp'
@@ -8,8 +8,6 @@ import Home from './Home'
 function App() {
   const [user, setUser] = useState(null);
   const [error, setError] = useState(false)
-  const [students, setStudents] = useState([])
-  const history = useHistory() //delete
 
   useEffect(() => {
     // auto-login
@@ -34,14 +32,10 @@ function App() {
         <>
           <NavBar user={user} setUser={setUser} />
           <main>
-            <Switch>
-              <Route exact path="/">
-                <Home />
-              </Route>
-              <Route path="/signup">
-                <SignUp />
-              </Route>
-            </Switch>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/signup" element={<SignUp />} />
+            </Routes>
           </main>
         </>
       ) : (

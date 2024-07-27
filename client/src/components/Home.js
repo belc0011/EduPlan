@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import AddStudent from './AddStudent'
 
 function Home() {
     const [showComponent, setShowComponent] = useState(false);
-    const history = useHistory()
+    const navigate = useNavigate()
 
     function handleClick(e) {
         history.push('/accommodations')
@@ -16,7 +16,7 @@ function Home() {
     
     function handleSubmit2(e) {
         e.preventDefault()
-        history.push('/students')
+        navigate('/students')
         
     }
 
