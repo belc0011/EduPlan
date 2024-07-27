@@ -33,3 +33,18 @@ class Login(Resource):
         else:
             return {'message': 'Incorrect username or password'}, 401
 
+class CheckSession(Resource):
+    def get(self):
+        if session.get('user_id'):
+            user = User.query.filter_by(id=session.get('user_id')).first()
+            response = make_response(user.to_dict(), 200)
+            return response
+        else:
+            return {'message': 'Error, unauthorized user'}, 401
+   
+class Logout(Resource):
+    def delete(self):
+        session.get('user_id')
+        session['user_id'] = None
+        return {}, 204
+
