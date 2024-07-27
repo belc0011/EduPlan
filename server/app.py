@@ -20,3 +20,16 @@ class Signup(Resource):
         session['user_id'] = new_user.id
         response = make_response(new_user_dict, 201)
         return response
+
+class Login(Resource):
+    def post(self):
+        request_dict = request.get_json()
+        user = User.query.filter_by(username=request_dict['userName']).first()
+        if user and user.authenticate(request_dict['password']):
+            user_dict = user.to_dict()
+            session['user_id'] = user.id
+            response = make_response(user_dict, 200)
+            return response
+        else:
+            return {'message': 'Incorrect username or password'}, 401
+
