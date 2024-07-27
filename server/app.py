@@ -48,3 +48,39 @@ class Logout(Resource):
         session['user_id'] = None
         return {}, 204
 
+class Students(Resource):
+    def get(self):
+        if session.get('user_id'):
+            user_id = session['user_id']
+            students = Student.query.filter_by(user_id=user_id).all()
+            if students:
+                student_list = []
+                for student in students:
+                    student_found = student.to_dict()
+                    student_list.append(student_found)
+                response = make_response(student_list, 200)
+                return response
+            else:
+                return {'message': 'No students found'}, 404
+        else:
+            return {'message': 'Unauthorized user'}, 401
+    def post(self):
+        request_json = request.get_json()
+        if session.get('user_id'):
+            user_id = session.get('user_id')
+            new_student = Student(
+                first_name=request_json['firstName'].title(),
+                last_name=request_json['lastName'].title(),
+                grade=request_json['grade'],
+                user_id=user_id
+            )
+            if new_student:
+                db.session.add(new_student)
+                db.session.commit()
+                new_student_dict = new_student.to_dict()
+                response = make_response(new_student_dict, 201)
+                return response
+            else:
+                return {'message': 'Error: unable to create new student'}, 404
+        else:
+            return 401
