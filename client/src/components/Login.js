@@ -5,7 +5,7 @@ import { useFormik } from "formik";
 function Login({ onLogin }) {
     
     const [showComponent, setShowComponent] = useState(false);
-    const history = useHistory()
+    const navigate = useNavigate()
 
     const formik = useFormik({
         initialValues: {

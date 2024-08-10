@@ -8,18 +8,22 @@ from models import User, Student, Accommodation
 class Signup(Resource):
     def post(self):
         request_dict = request.get_json()
-        new_user = User(
-                first_name=request_dict['firstName'].title(),
-                last_name=request_dict['lastName'].title(),
-                username=request_dict['userName'])
-        new_user.password_hash = request_dict['password']
-        
-        db.session.add(new_user)
-        db.session.commit()
-        new_user_dict = new_user.to_dict()
-        session['user_id'] = new_user.id
-        response = make_response(new_user_dict, 201)
-        return response
+        existing_user = User.query.filter_by(username=request_dict['userName']).first()
+        if existing_user:
+            return {'message': 'Username already exists'}, 400
+        else:
+            new_user = User(
+                    first_name=request_dict['firstName'].title(),
+                    last_name=request_dict['lastName'].title(),
+                    username=request_dict['userName'])
+            new_user.password_hash = request_dict['password']
+            
+            db.session.add(new_user)
+            db.session.commit()
+            new_user_dict = new_user.to_dict()
+            session['user_id'] = new_user.id
+            response = make_response(new_user_dict, 201)
+            return response
 
 class Login(Resource):
     def post(self):

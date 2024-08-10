@@ -22,6 +22,7 @@ class Accommodation(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     description = db.Column(db.String)
     student_id = db.Column(db.Integer, db.ForeignKey('students.id'))
+    category_id = db.Column(db.Integer, db.ForeignKey('categories.id'))
 
     comment = db.relationship('Comment', back_populates='accommodations')##add cascade=all and delete
     student = db.relationship('Student', back_populates='accommodations')
