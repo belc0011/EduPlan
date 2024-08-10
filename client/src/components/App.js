@@ -4,6 +4,7 @@ import Login from './Login'
 import NavBar from './NavBar'
 import SignUp from './SignUp'
 import Home from './Home'
+import { StudentProvider } from './MyContext';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -27,21 +28,24 @@ function App() {
   }, []);
   
   return (
-    <Router>
-      {user ? (
-        <>
-          <NavBar user={user} setUser={setUser} />
-          <main>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/signup" element={<SignUp />} />
-            </Routes>
-          </main>
-        </>
-      ) : (
-        <Login onLogin={setUser} />
-      )}
-    </Router>
+    <StudentProvider>
+      <Router>
+        {user ? (
+          <>
+            <NavBar user={user} setUser={setUser} />
+            <main>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/signup" element={<SignUp />} />
+                <Route path="/students" element={<Student />} />
+              </Routes>
+            </main>
+          </>
+        ) : (
+          <Login onLogin={setUser} />
+        )}
+      </Router>
+    </StudentProvider>
   );
 }
 
