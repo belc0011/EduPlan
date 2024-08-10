@@ -7,12 +7,18 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import MetaData
 from flask_bcrypt import Bcrypt
 import os
+from datetime import timedelta
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.json.compact = False
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
+app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=7)
+app.config['SESSION_TYPE'] = 'filesystem'  
+app.config['SESSION_COOKIE_SECURE'] = False 
+app.config['SESSION_COOKIE_HTTPONLY'] = True
+app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
 
 # Define metadata, instantiate db
 metadata = MetaData(naming_convention={

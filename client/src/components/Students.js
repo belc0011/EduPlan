@@ -1,9 +1,9 @@
 import React from 'react'
-import { useState, useEffect } from "react";
+import { useState, useContext } from "react";
 import StudentCard from './StudentCard.js'
 import AddStudent from './AddStudent.js'
 import { StudentContext } from "./MyContext.js";
-function Students({ students, setStudents, setError }) {
+function Students({ setError }) {
     const [showAddStudent, setShowAddStudent] = useState(false)
     
     const { students } = useContext(StudentContext);

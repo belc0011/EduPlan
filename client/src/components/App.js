@@ -4,6 +4,7 @@ import Login from './Login'
 import NavBar from './NavBar'
 import SignUp from './SignUp'
 import Home from './Home'
+import Students from './Students'
 import { StudentProvider } from './MyContext';
 
 function App() {
@@ -37,7 +38,7 @@ function App() {
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/signup" element={<SignUp />} />
-                <Route path="/students" element={<Student />} />
+                <Route path="/students" element={<Students />} />
               </Routes>
             </main>
           </>
