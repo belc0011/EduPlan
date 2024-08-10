@@ -1,9 +1,12 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useState, useEffect } from "react";
 
 function StudentCard({firstName, lastName, grade, accommodations, id}) {
     const navigate = useNavigate()
+    const [studentToDisplay, setStudentToDisplay] = useState({})
     function handleClick(e) {
+        setStudentToDisplay({firstName, lastName, grade, accommodations, id})
         navigate(`edit_student/${id}`)
     }
     return (
