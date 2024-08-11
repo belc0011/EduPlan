@@ -7,7 +7,7 @@ function Students({ setError }) {
     const [showAddStudent, setShowAddStudent] = useState(false)
     
     const { students } = useContext(StudentContext);
-    
+    console.log(students)
     function handleClick(e) {
         setShowAddStudent(true)
     }
@@ -19,7 +19,7 @@ function Students({ setError }) {
                 <h1>Students</h1>
                 <h3>Click on an accommodation to see comments</h3>
                 <div>
-                    {students.map(student => {
+                    {students ? students.map(student => {
                         return (
                             <StudentCard
                             key={student.id}
@@ -30,7 +30,7 @@ function Students({ setError }) {
                             accommodations={student.accommodations}
                             />
                         )
-                    })}
+                    }) : <h1>No student data to display</h1>}
                 </div>
             </main>
         </div>

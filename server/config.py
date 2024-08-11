@@ -10,9 +10,9 @@ import os
 from datetime import timedelta
 
 app = Flask(__name__)
+app.json.compact = False
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.json.compact = False
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=7)
 app.config['SESSION_TYPE'] = 'filesystem'  
@@ -32,6 +32,6 @@ db.init_app(app)
 api = Api(app)
 
 # Instantiate CORS
-CORS(app, supports_credentials=True, origins=["http://localhost:3000"])
+CORS(app, supports_credentials=True, origins=["http://127.0.0.1:3000"], send_wildcard=True)
 
 bcrypt = Bcrypt(app)
