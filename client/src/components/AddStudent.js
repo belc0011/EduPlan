@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { useNavigate } from 'react-router-dom'
+import { StudentContext } from "./MyContext.js";
 
 function AddStudent() {
     
     const navigate = useNavigate()
+    const { students, setStudents } = useContext(StudentContext);
 
     const formSchema = yup.object().shape({
         firstName: yup
@@ -37,7 +39,7 @@ function AddStudent() {
         .then(res => {
             if (res.ok) {
                 res.json().then(
-                    data => {console.log(data)
+                    data => {setStudents({...students, data})
                 alert("Student successfully added!")
                 resetForm()
                 navigate('/')

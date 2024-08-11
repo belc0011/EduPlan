@@ -72,20 +72,27 @@ class Students(Resource):
         request_json = request.get_json()
         if session.get('user_id'):
             user_id = session.get('user_id')
-            new_student = Student(
-                first_name=request_json['firstName'].title(),
-                last_name=request_json['lastName'].title(),
-                grade=request_json['grade'],
-                user_id=user_id
-            )
-            if new_student:
-                db.session.add(new_student)
-                db.session.commit()
-                new_student_dict = new_student.to_dict()
-                response = make_response(new_student_dict, 201)
-                return response
+            existing_student_first = request_json['firstName'].title()
+            existing_student_last = request_json['lastName'].title()
+            existing_student_grade = int(request_json['grade'])
+            existing_student = Student.query.filter_by(user_id=user_id, first_name=existing_student_first, last_name=existing_student_last, grade=existing_student_grade).first()
+            if existing_student:
+                return {'message': 'Student already exists'}, 400
             else:
-                return {'message': 'Error: unable to create new student'}, 404
+                new_student = Student(
+                    first_name=request_json['firstName'].title(),
+                    last_name=request_json['lastName'].title(),
+                    grade=request_json['grade'],
+                    user_id=user_id
+                )
+                if new_student:
+                    db.session.add(new_student)
+                    db.session.commit()
+                    new_student_dict = new_student.to_dict()
+                    response = make_response(new_student_dict, 201)
+                    return response
+                else:
+                    return {'message': 'Error: unable to create new student'}, 404
         else:
             return 401
 class StudentById(Resource):

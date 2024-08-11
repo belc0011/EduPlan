@@ -14,7 +14,7 @@ function Students({ setError }) {
     return (
         <div>
             <button onClick={handleClick}>Click here to add a new student</button>
-            {showAddStudent && <AddStudent setError={setError} students={students} setStudents={setStudents}/>}
+            {showAddStudent && <AddStudent setError={setError}/>}
             <main>
                 <h1>Students</h1>
                 <h3>Click on an accommodation to see comments</h3>
