@@ -7,7 +7,7 @@ function Home() {
     const navigate = useNavigate()
 
     function handleClick(e) {
-        history.push('/accommodations')
+        navigate('/accommodations')
     }
     function handleSubmit(e) {
         e.preventDefault()

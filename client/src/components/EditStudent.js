@@ -1,6 +1,7 @@
 import React from 'react'
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useNavigate, useLocation } from 'react-router-dom'
+import { StudentContext } from "./MyContext.js";
 import { useFormik } from "formik";
 import * as yup from "yup";
 
@@ -8,13 +9,18 @@ function EditStudent() {
     const location = useLocation()
     const url = location.pathname
     const parts = url.split("/")
-    const id = parts[2]
+    const id = parseInt(parts[3], 10)
     const [studentToDisplay, setStudentToDisplay] = useState({})
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
-
+    const { students, setStudents } = useContext(StudentContext);
     // Need to store the student to display in a state variable "studentToDisplay" and use that state variable to display data, not make a fetch request
-
+    useEffect(() => {
+        const student = students.find(student => student.id === id);
+        setStudentToDisplay(student);
+    }, [students, id]);
+    console.log(studentToDisplay)
+    console.log(typeof id)
     const formSchema = yup.object().shape({
         firstName: yup
         .string()
