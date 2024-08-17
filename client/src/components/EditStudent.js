@@ -16,20 +16,20 @@ function EditStudent() {
     const { students, setStudents } = useContext(StudentContext);
     // Need to store the student to display in a state variable "studentToDisplay" and use that state variable to display data, not make a fetch request
     useEffect(() => {
+        console.log("useEffect firing")
         const student = students.find(student => student.id === id);
         setStudentToDisplay(student);
     }, [students, id]);
-    console.log(studentToDisplay)
-    console.log(typeof id)
+    console.log(studentToDisplay);
     const formSchema = yup.object().shape({
         firstName: yup
         .string()
         .matches(/^[a-zA-Z\']+$/, "First name can not contain numbers or special characters, except an apostrophe")
-        .required("First name is required"),
+        .required(),
         lastName: yup
         .string()
-        .matches(/^[a-zA-Z\-]+$/, "Last name can not contain numbers or special characters, except a hyphen")
-        .required("Last name is required"),
+        .matches(/^[a-zA-Z\-]+$/, "Last name can only contain letters and hyphens")
+        .required(),
       });
 
     const formik = useFormik({
@@ -40,6 +40,7 @@ function EditStudent() {
         },
         validationSchema: formSchema,
         onSubmit: (values, { resetForm }) => {
+            console.log("inside on submit")
           fetch(`http://127.0.0.1:5555/students/${id}`, {
             method: "PATCH",
             headers: {
@@ -50,7 +51,15 @@ function EditStudent() {
         })
         .then(res => {
             if (res.ok) {
-                res.json().then(data => {setStudentToDisplay(data)
+                res.json().then(data => {
+                    setStudentToDisplay(data);
+                    setStudents(prevStudents => {
+                        const studentIndex = prevStudents.findIndex(student => student.id === data.id);
+                        
+                        if (studentIndex !== -1) {
+                            return [...prevStudents.slice(0, studentIndex), data,...prevStudents.slice(studentIndex + 1)];
+    
+                    }})
                 navigate('/students')
                 resetForm()})
             }
