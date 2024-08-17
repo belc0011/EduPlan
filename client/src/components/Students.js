@@ -19,7 +19,7 @@ function Students({ setError }) {
                 <h1>Students</h1>
                 <h3>Click on an accommodation to see comments</h3>
                 <div>
-                    {students ? students.map(student => {
+                    {students.length > 0 ? students.map(student => {
                         return (
                             <StudentCard
                             key={student.id}

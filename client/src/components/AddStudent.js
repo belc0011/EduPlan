@@ -39,8 +39,7 @@ function AddStudent() {
         .then(res => {
             if (res.ok) {
                 res.json().then(
-                    data => {setStudents({...students, data})
-                alert("Student successfully added!")
+                    data => {setStudents(prevStudents => [...prevStudents, data])
                 resetForm()
                 navigate('/')
             })
