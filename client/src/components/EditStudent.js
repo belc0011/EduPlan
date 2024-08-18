@@ -16,7 +16,6 @@ function EditStudent() {
     const { students, setStudents } = useContext(StudentContext);
     // Need to store the student to display in a state variable "studentToDisplay" and use that state variable to display data, not make a fetch request
     useEffect(() => {
-        console.log("useEffect firing")
         const student = students.find(student => student.id === id);
         setStudentToDisplay(student);
     }, [students, id]);

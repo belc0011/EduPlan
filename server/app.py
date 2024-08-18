@@ -146,7 +146,23 @@ class Accommodations(Resource):
             user_id = session['user_id']
             accommodations = Accommodation.query.filter_by(user_id=user_id).all()
             if accommodations:
-                [accommodation for accommodation in accommodations]
+                accommodation_list = [accommodation.to_dict() for accommodation in accommodations]
+                response = make_response(accommodation_list, 200)
+                return response
+            else:
+                return {'message': 'No accommodations found'}, 404
+        else:
+            return {'message': 'Error, unauthorized user'}, 401
+    
+    def post(self):
+        if session.get('user_id'):
+            user_id = session['user_id']
+            request_json = request.get_json()
+            new_accommodation = Accommodation(
+                name=request_json['name'],
+                address=request_json['address'],
+                city=request_json['city'],
+                state=request_json['state'])
 
 api.add_resource(Signup, '/signup', endpoint='signup')
 api.add_resource(Login, '/', endpoint='')

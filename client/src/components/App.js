@@ -6,6 +6,7 @@ import SignUp from './SignUp'
 import Home from './Home'
 import Students from './Students'
 import EditStudent from "./EditStudent";
+import StudentPage from './StudentPage';
 import { StudentProvider } from './MyContext';
 
 function App() {
@@ -40,6 +41,7 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/signup" element={<SignUp />} />
                 <Route path="/students" element={<Students />} />
+                <Route path="/students/:id" element={<StudentPage />} />
                 <Route path="/students/edit_student/:studentId" element={<EditStudent />} />
               </Routes>
             </main>

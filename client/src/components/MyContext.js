@@ -6,6 +6,7 @@ const StudentContext = React.createContext()
 function StudentProvider({children}) {
     const [students, setStudents] = useState([]);
   useEffect(() => {
+    console.log("useEffect firing")
     fetch("http://127.0.0.1:5555/students", {
         method: "GET",
         headers: {
