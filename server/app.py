@@ -3,7 +3,7 @@ from flask_restful import Resource
 from sqlalchemy import select
 
 from config import app, db, api
-from models import User, Student, Accommodation
+from models import User, Student, Accommodation, Category
 
 class Signup(Resource):
     def post(self):
@@ -163,6 +163,34 @@ class Accommodations(Resource):
                 address=request_json['address'],
                 city=request_json['city'],
                 state=request_json['state'])
+
+class Categories(Resource):
+    def get(self):
+        if session.get('user_id'):
+            user_id = session['user_id']
+            categories = Category.query.all()
+            category_list = {'categories': [category.to_dict() for category in categories]}
+            response = make_response(category_list, 200)
+            return response
+        else:
+            return {'message': 'Error, unauthorized user'}, 401
+    
+    def post(self):
+        if session.get('user_id'):
+            user_id = session['user_id']
+            request_json = request.get_json()
+            new_category = Category(
+                id=request_json['id'],
+                description=request_json['description'])
+            if new_category:
+                db.session.add(new_category)
+                db.session.commit()
+                response = make_response(new_category.to_dict(), 201)
+                return response
+            else:
+                return {'message': 'Error: unable to create new category'}, 404
+        else:
+            return {'message': 'Error, unauthorized user'}, 401
 
 api.add_resource(Signup, '/signup', endpoint='signup')
 api.add_resource(Login, '/', endpoint='')

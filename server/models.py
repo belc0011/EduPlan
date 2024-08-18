@@ -23,10 +23,12 @@ class Accommodation(db.Model, SerializerMixin):
     description = db.Column(db.String)
     student_id = db.Column(db.Integer, db.ForeignKey('students.id'))
     category_id = db.Column(db.Integer, db.ForeignKey('categories.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
     comment = db.relationship('Comment', back_populates='accommodations')##add cascade=all and delete
     student = db.relationship('Student', back_populates='accommodations')
     category = db.relationship('Category', back_populates='accommodations')
+    user = db.relationship('User', back_populates='accommodations')
 
 class User(db.Model, SerializerMixin):
     __tablename__ = "users"
@@ -39,6 +41,7 @@ class User(db.Model, SerializerMixin):
     _password_hash = db.Column(db.String)
 
     students = db.relationship('Student', back_populates='user')
+    accommodations = db.relationship("Accommodation", back_populates="user")
 
     @hybrid_property
     def password_hash(self):
