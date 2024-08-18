@@ -69,7 +69,7 @@ function StudentPage({ }) {
     }
     return (
         <div>
-            {studentToDisplay.first_name ? (
+            {studentToDisplay ? (
             <>
                 <h1>{studentToDisplay.first_name} {studentToDisplay.last_name}</h1>
                 <h3>To delete this student's record, click here:</h3>

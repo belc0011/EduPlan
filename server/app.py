@@ -159,10 +159,19 @@ class Accommodations(Resource):
             user_id = session['user_id']
             request_json = request.get_json()
             new_accommodation = Accommodation(
-                name=request_json['name'],
-                address=request_json['address'],
-                city=request_json['city'],
-                state=request_json['state'])
+                description=request_json['description'],
+                student_id=request_json['student_id'],
+                category_id=request_json['category_id'],
+                user_id=user_id)
+            if new_accommodation:
+                db.session.add(new_accommodation)
+                db.session.commit()
+                response = make_response(new_accommodation.to_dict(), 201)
+                return response
+            else:
+                return {'message': 'Error: unable to create new accommodation'}, 404
+        else:
+            return {'message': 'Error, unauthorized user'}, 401
 
 class Categories(Resource):
     def get(self):
