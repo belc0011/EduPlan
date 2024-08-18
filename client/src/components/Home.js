@@ -20,11 +20,16 @@ function Home() {
         
     }
 
+    function handleClick2(e) {
+        navigate('/categories')
+    }
     return (
         <div>
             <main>
-                <h3>Click here to search by accommodation: </h3>
+                <h3>Click here to see a list of accommodations: </h3>
                 <button onClick={handleClick}>Accommodation Search</button>
+                <h3>Click here to see a list of categories: </h3>
+                <button onClick={handleClick2}>Category List</button>
                 <form onSubmit={handleSubmit2}>
                     <h3>Click here for a list of your students</h3>
                     <div>

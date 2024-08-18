@@ -8,6 +8,7 @@ import Students from './Students'
 import EditStudent from "./EditStudent";
 import StudentPage from './StudentPage';
 import { StudentProvider } from './MyContext';
+import Categories from './Categories';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -43,6 +44,7 @@ function App() {
                 <Route path="/students" element={<Students />} />
                 <Route path="/students/:id" element={<StudentPage />} />
                 <Route path="/students/edit_student/:studentId" element={<EditStudent />} />
+                <Route path="/categories" element={<Categories />} />
               </Routes>
             </main>
           </>
