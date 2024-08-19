@@ -189,7 +189,6 @@ class Categories(Resource):
             user_id = session['user_id']
             request_json = request.get_json()
             new_category = Category(
-                id=request_json['id'],
                 description=request_json['description'])
             if new_category:
                 db.session.add(new_category)
@@ -207,6 +206,8 @@ api.add_resource(Logout, '/logout', endpoint='logout')
 api.add_resource(Students, '/students', endpoint='students')
 api.add_resource(CheckSession, '/check_session', endpoint='check_session')
 api.add_resource(StudentById, '/students/<int:id>', endpoint='students/<int:id>')
+api.add_resource(Accommodations, '/accommodations', endpoint='accommodations')
+api.add_resource(Categories, '/categories', endpoint='categories')
 
 if __name__ == '__main__':
     app.run(port=5555, debug=False)

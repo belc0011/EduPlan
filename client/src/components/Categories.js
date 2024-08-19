@@ -12,7 +12,10 @@ function Categories() {
             credentials: 'include'
         })
        .then(res => res.json())
-       .then(data => setCategories(data))
+       .then(data => {
+        setCategories(data.categories)
+        console.log(data)
+        console.log(data.categories)})
        .catch(error => console.error('Error:', error));
     }, [])
 
@@ -26,7 +29,7 @@ function Categories() {
                 <h1>Categories</h1>
                 <ul>
                     {categories.map(category => (
-                        <li key={category.id}>{category.name}</li>
+                        <li key={category.id}>{category.description}</li>
                     ))}
                 </ul>
             </>
