@@ -14,7 +14,7 @@ class Student(db.Model, SerializerMixin):
     user = db.relationship('User', back_populates='students')
     accommodations = db.relationship('Accommodation', back_populates='student')
 
-    serialize_rules = ('-accommodations.student', '-user.students', '-user.accommodations')
+    serialize_rules = ('-accommodations.student', '-user.students')
 
 
 class Accommodation(db.Model, SerializerMixin):
@@ -26,7 +26,7 @@ class Accommodation(db.Model, SerializerMixin):
     category_id = db.Column(db.Integer, db.ForeignKey('categories.id'))
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
-    comment = db.relationship('Comment', back_populates='accommodations')##add cascade=all and delete
+    comment = db.relationship('Comment', back_populates='accommodation')##add cascade=all and delete
     student = db.relationship('Student', back_populates='accommodations')
     category = db.relationship('Category', back_populates='accommodations')
     user = db.relationship('User', back_populates='accommodations')
@@ -75,8 +75,8 @@ class Comment(db.Model, SerializerMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     description = db.Column(db.String)
-    accommodations_id = db.Column(db.Integer, db.ForeignKey("accommodations.id"))
+    accommodation_id = db.Column(db.Integer, db.ForeignKey("accommodations.id"))
 
-    accommodations = db.relationship("Accommodation", back_populates="comment")
+    accommodation = db.relationship("Accommodation", back_populates="comment")
 
-    serialize_rules = ('-accommodations.comment',)
+    serialize_rules = ('-accommodation.comment',)
