@@ -11,7 +11,7 @@ function AddCategory({ categories, setCategories}) {
     const formSchema = yup.object().shape({
         description: yup
         .string()
-        .matches(/^[a-zA-Z'-]+$/, "Description can not contain numbers or special characters, except an apostrophe")
+        .matches(/^[a-zA-Z\s'-]+$/, "Description can not contain numbers or special characters, except an apostrophe")
         .required("First name is required"),
       });
 

@@ -5,7 +5,6 @@ from sqlalchemy.ext.hybrid import hybrid_property
 class Student(db.Model, SerializerMixin):
     __tablename__ = "students"
 
-    serialize_rules = ('-accommodations.student', '-user.students')
     id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String)
     last_name = db.Column(db.String)
@@ -15,10 +14,12 @@ class Student(db.Model, SerializerMixin):
     user = db.relationship('User', back_populates='students')
     accommodations = db.relationship('Accommodation', back_populates='student')
 
+    serialize_rules = ('-accommodations.student', '-user.students', '-user.accommodations')
+
+
 class Accommodation(db.Model, SerializerMixin):
     __tablename__ = "accommodations"
 
-    serialize_rules = ('-comment.accommodations', '-student.accommodations', '-category.accommodations')
     id = db.Column(db.Integer, primary_key=True)
     description = db.Column(db.String)
     student_id = db.Column(db.Integer, db.ForeignKey('students.id'))
@@ -30,10 +31,11 @@ class Accommodation(db.Model, SerializerMixin):
     category = db.relationship('Category', back_populates='accommodations')
     user = db.relationship('User', back_populates='accommodations')
 
+    serialize_rules = ('-student.accommodations', '-category.accommodations', '-user.accommodations', '-comment.accommodations')
+
 class User(db.Model, SerializerMixin):
     __tablename__ = "users"
     
-    serialize_rules = ('-students.user',)
     id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String)
     last_name = db.Column(db.String)
@@ -42,6 +44,8 @@ class User(db.Model, SerializerMixin):
 
     students = db.relationship('Student', back_populates='user')
     accommodations = db.relationship("Accommodation", back_populates="user")
+    
+    serialize_rules = ('-students.user', '-accommodations.user')
 
     @hybrid_property
     def password_hash(self):
@@ -55,22 +59,24 @@ class User(db.Model, SerializerMixin):
     def authenticate(self, password):
         return bcrypt.check_password_hash(
             self._password_hash, password.encode('utf-8'))
-    
+
 class Category(db.Model, SerializerMixin):
     __tablename__ = "categories"
 
-    serialize_rules = ('-accommodations.category',)
     id = db.Column(db.Integer, primary_key=True)
     description = db.Column(db.String)
 
     accommodations = db.relationship("Accommodation", back_populates="category")
-    
+
+    serialize_rules = ('-accommodations.category',)
+
 class Comment(db.Model, SerializerMixin):
     __tablename__ = "comments"
 
-    serialize_rules = ('-accommodations.comment',)
     id = db.Column(db.Integer, primary_key=True)
     description = db.Column(db.String)
     accommodations_id = db.Column(db.Integer, db.ForeignKey("accommodations.id"))
 
     accommodations = db.relationship("Accommodation", back_populates="comment")
+
+    serialize_rules = ('-accommodations.comment',)

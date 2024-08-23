@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { useNavigate, useLocation } from 'react-router-dom'
 import { useFormik } from "formik";
 import { StudentContext } from "./MyContext.js";
+import Categories from "./Categories.js";
 
 function StudentPage({ }) {
     const location = useLocation()
@@ -11,8 +12,9 @@ function StudentPage({ }) {
     const [studentToDisplay, setStudentToDisplay] = useState({})
     const [studentData, setStudentData] = useState(false)
     const navigate = useNavigate()
-    const { students, setStudents } = useContext(StudentContext);
-
+    const { students, setStudents, categories } = useContext(StudentContext);
+    const student_id = id
+    
     useEffect(() => {
         const student = students.find(student => student.id === id);
         setStudentToDisplay(student);
@@ -20,46 +22,27 @@ function StudentPage({ }) {
 
     const formik = useFormik({
         initialValues: {
-          accommodation: ""
+          description: "",
+          category_id: "",
+          student_id: id
         },
         onSubmit: (values, { resetForm }) => {
-        fetch(`http://127.0.0.1:5555/accommodations/`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(values, null, 2),
-            credentials: 'include'
-        })
+            console.log(values + id)
+            fetch("http://127.0.0.1:5555/accommodations", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(values, null, 2),
+              credentials: 'include'
+          })
         .then(res => res.json())
         .then(data => {setStudentToDisplay(data)
         resetForm() 
         })
         }
     })
-    const formik2 = useFormik({
-        initialValues: {
-          class: ""
-        },
-        onSubmit: (values, { resetForm }) => {
-        fetch(`http://127.0.0.1:5555/students/${id}`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                ...values,
-                student_id: id
-            }),
-            credentials: 'include'
-        })
-        .then(res => res.json())
-        .then(data => {setStudentToDisplay(data)
-        resetForm()
-        alert("Class successfully added!")}) 
-        }
-    })
-    
+
     function handleDelete(e) {
         navigate(`/delete/${id}`)
     }
@@ -101,40 +84,38 @@ function StudentPage({ }) {
                     <h2>To add an accommodation for this student, select the accommodation from the dropdown and click Submit </h2>
                     <label htmlFor="new-accommodation">Accommodations</label>
                             <div>
-                                <select type="dropdown" 
-                                name="accommodation"
-                                id="accommodation" 
-                                value={formik.values.accommodation} 
-                                onChange={formik.handleChange}>
-                                    <option value="default">Select One</option>
-                                    <option value="preferential-seating">Preferential Seating</option>
-                                    <option value="guided-notes">Guided Notes</option>
-                                    <option value="extra-time">Extra Time</option>
-                                    <option value="small-group-testing">Small Group Testing</option>
-                                    <option value="other">Other</option>
-                                </select>
+                                <input 
+                                    type="text" 
+                                    placeholder="Enter description" 
+                                    name="description"
+                                    id="description" 
+                                    value={formik.values.description} 
+                                    onChange={formik.handleChange}
+                                    onBlur={formik.handleBlur}/>
+                                    {formik.touched.description && formik.errors.description ? (
+                                    <p style={{ color: "red" }}>{formik.errors.description}</p>
+                                    ) : null}
                             </div>
                             <h1>   </h1> 
+                            <div>
+                                <select type="dropdown" 
+                                id="category" 
+                                name="category"
+                                value={formik.values.category_id} 
+                                onChange={formik.handleChange}>
+                                    {categories.map(category => {
+                                    return <option key={category.id} value={category.id}>
+                                    {category.description}
+                                  </option>
+                                    })}
+                                </select>
+                            </div>
                             <h1>  </h1>
                             <h1>  </h1>
                     <button type='submit'>Submit</button>
                 </form>
                 <br></br>
                 <br></br>
-                <form onSubmit={formik2.handleSubmit}>
-                    <div>
-                    <h2>To add a class for this student, type the class in the text box and click Submit </h2>
-                        <label htmlFor="new-class">Add a new class:</label>
-                        <input type="text"
-                        id="class"
-                        name="class"
-                        value={formik2.values.class}
-                        onChange={formik2.handleChange}
-                        />
-                    </div>
-                    <br></br>
-                    <button type="submit">Submit</button>
-                </form>
                 </>
             ) : ( 
                 <p>Loading...</p>

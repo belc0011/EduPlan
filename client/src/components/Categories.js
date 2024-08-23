@@ -6,18 +6,7 @@ function Categories() {
     const [categories, setCategories] = useState([]);
     const [showAddCategory, setShowAddCategory] = useState(false);
 
-    useEffect(() => {
-        fetch("http://127.0.0.1:5555/categories", {
-            method: "GET",
-            credentials: 'include'
-        })
-       .then(res => res.json())
-       .then(data => {
-        setCategories(data.categories)
-        console.log(data)
-        console.log(data.categories)})
-       .catch(error => console.error('Error:', error));
-    }, [])
+    
 
     function handleClick(e) {
         setShowAddCategory(!showAddCategory);

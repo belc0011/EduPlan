@@ -158,6 +158,7 @@ class Accommodations(Resource):
         if session.get('user_id'):
             user_id = session['user_id']
             request_json = request.get_json()
+            print(request_json)
             new_accommodation = Accommodation(
                 description=request_json['description'],
                 student_id=request_json['student_id'],

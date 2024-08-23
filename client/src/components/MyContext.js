@@ -5,6 +5,8 @@ const StudentContext = React.createContext()
 
 function StudentProvider({children}) {
     const [students, setStudents] = useState([]);
+    const [categories, setCategories] = useState([]);
+
   useEffect(() => {
     console.log("useEffect firing")
     fetch("http://127.0.0.1:5555/students", {
@@ -27,7 +29,20 @@ function StudentProvider({children}) {
       .then(data => setStudents(data))
       .catch(error => console.log(error));
   }, []);
-    return <StudentContext.Provider value={{students, setStudents}}>{children}</StudentContext.Provider>
+  
+  useEffect(() => {
+    fetch("http://127.0.0.1:5555/categories", {
+        method: "GET",
+        credentials: 'include'
+    })
+   .then(res => res.json())
+   .then(data => {
+      setCategories(data.categories)
+      console.log(data)
+      console.log(data.categories)})
+   .catch(error => console.error('Error:', error));
+  }, [])
+    return <StudentContext.Provider value={{students, setStudents, categories, setCategories}}>{children}</StudentContext.Provider>
 }
 
 export {StudentContext, StudentProvider}
