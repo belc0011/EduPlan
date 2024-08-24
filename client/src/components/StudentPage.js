@@ -64,7 +64,7 @@ function StudentPage({ }) {
                 { studentToDisplay ? (
                     <div>
                         {studentToDisplay.accommodations ? studentToDisplay.accommodations.map((accommodation) => {
-                            return <div key={accommodation.id}><a href={`/edit_accommodation/${id}`}>{accommodation.description}</a> </div>;
+                            return <div key={accommodation.id}><a href={`/students/${id}/${accommodation.id}`}>{accommodation.description}</a> </div>;
                         }) : <p>No Accommodations</p>}
                     </div>
                     ) : (

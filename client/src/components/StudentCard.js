@@ -17,7 +17,7 @@ function StudentCard({firstName, lastName, grade, accommodations, id}) {
                 {accommodations && accommodations.length > 0 ? (
                     accommodations.map(accommodation => (
                         <div key={accommodation.id}>
-                        <a href={`/edit_accommodation/${id}`}>{accommodation.description}</a>
+                        <a href={`/students/${id}/${accommodation.id}`}>{accommodation.description}</a>
                         </div>
                     ))
                 ) : (

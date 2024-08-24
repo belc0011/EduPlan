@@ -173,6 +173,20 @@ class Accommodations(Resource):
                 return {'message': 'Error: unable to create new accommodation'}, 404
         else:
             return {'message': 'Error, unauthorized user'}, 401
+    def patch(self, id):
+        if session.get('user_id'):
+            request_dict = request.get_json()
+            accommodation = Accommodation.query.filter_by(id=id).first()
+            if accommodation:
+                if 'description' in request_dict:
+                    accommodation.description = request_dict['description']
+                db.session.commit()
+                response = make_response(accommodation.to_dict(), 200)
+                return response
+            else:
+                return {"error": "Accommodation not found"}, 404
+        else:
+            return {"error": "Unauthorized"}, 401
 
 class Categories(Resource):
     def get(self):
