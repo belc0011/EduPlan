@@ -29,7 +29,6 @@ class Accommodation(db.Model, SerializerMixin):
     comment = db.relationship('Comment', back_populates='accommodation')##add cascade=all and delete
     student = db.relationship('Student', back_populates='accommodations')
     category = db.relationship('Category', back_populates='accommodations')
-    user = db.relationship('User', back_populates='accommodations')
 
     serialize_rules = ('-student.accommodations', '-category.accommodations', '-user.accommodations', '-comment.accommodations')
 
@@ -43,7 +42,6 @@ class User(db.Model, SerializerMixin):
     _password_hash = db.Column(db.String)
 
     students = db.relationship('Student', back_populates='user')
-    accommodations = db.relationship("Accommodation", back_populates="user")
     
     serialize_rules = ('-students.user', '-accommodations.user')
 

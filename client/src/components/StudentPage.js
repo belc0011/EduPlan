@@ -18,6 +18,7 @@ function StudentPage({ }) {
     useEffect(() => {
         const student = students.find(student => student.id === id);
         setStudentToDisplay(student);
+        console.log(studentToDisplay.accommodations)
     }, [students, id]);
 
     const formik = useFormik({
@@ -60,11 +61,10 @@ function StudentPage({ }) {
                 <h3>To edit this student's record, click here:</h3>
                 <button onClick={handleEdit}>Click here to edit</button>
                 <h2>Accommodations: </h2>
-                <h3>(Click on an accommodation to see comments)</h3>
-                { studentData ? (
+                { studentToDisplay ? (
                     <div>
                         {studentToDisplay.accommodations ? studentToDisplay.accommodations.map((accommodation) => {
-                            return <div key={accommodation.id}><a href={`/comments/${id}/${accommodation.id}`}>{accommodation.description}</a> </div>;
+                            return <div key={accommodation.id}><a href={`/edit_accommodation/${id}`}>{accommodation.description}</a> </div>;
                         }) : <p>No Accommodations</p>}
                     </div>
                     ) : (

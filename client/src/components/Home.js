@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate } from 'react-router-dom'
 import AddStudent from './AddStudent'
+import { StudentContext } from "./MyContext.js";
 
 function Home() {
     const [showComponent, setShowComponent] = useState(false);
     const navigate = useNavigate()
+    const { students, setStudents, categories } = useContext(StudentContext);
 
     function handleClick(e) {
         navigate('/accommodations')

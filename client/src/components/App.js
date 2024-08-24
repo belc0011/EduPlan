@@ -9,6 +9,7 @@ import EditStudent from "./EditStudent";
 import StudentPage from './StudentPage';
 import { StudentProvider } from './MyContext';
 import Categories from './Categories';
+import EditAccommodation from './EditAccommodation';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -45,6 +46,7 @@ function App() {
                 <Route path="/students/:id" element={<StudentPage />} />
                 <Route path="/students/edit_student/:studentId" element={<EditStudent />} />
                 <Route path="/categories" element={<Categories />} />
+                <Route path="/edit_accommodation/:accommodationId" element={<EditAccommodation />} />
               </Routes>
             </main>
           </>

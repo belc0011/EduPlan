@@ -81,7 +81,7 @@ function EditStudent() {
                 {studentToDisplay.accommodations && studentToDisplay.accommodations.length > 0 ? (
                     studentToDisplay.accommodations.map(accommodation => (
                         <div key={accommodation.id}>
-                            <a href={`/comments/${id}/${accommodation.id}`}>{accommodation.description}</a>
+                            <a href={`/edit_accommodation/${id}`}>{accommodation.description}</a>
                         </div>
                     ))
                 ) : (

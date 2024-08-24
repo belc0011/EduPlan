@@ -26,7 +26,10 @@ function StudentProvider({children}) {
         }
         return response.json();
       })
-      .then(data => setStudents(data))
+      .then(data => {
+        setStudents(data);
+      console.log(data)
+  })
       .catch(error => console.log(error));
   }, []);
   
