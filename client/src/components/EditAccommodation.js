@@ -31,24 +31,31 @@ function EditAccommodation() {
         .matches(/^[a-zA-Z\'\- ]+$/, "Description can not contain numbers or special characters, except an apostrophe, hyphen or white space")
         .required(),
       });
-    function handleEditClick(e) {
-        fetch(`http://127.0.0.1:5555/accommodations/${id}`, {
-            method: "PATCH",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(values, null, 2),
-            credentials: 'include'
+    
+      const formik = useFormik({
+        initialValues: {
+          description: "",
+        },
+        validationSchema: formSchema,
+        onSubmit: (values, { resetForm }) => {
+            console.log("inside on submit")
+            fetch(`http://127.0.0.1:5555/accommodations/${accommodationId}`, {
+                method: "PATCH",
+                headers: {
+                "Content-Type": "application/json",
+                },
+                body: JSON.stringify(values, null, 2),
+                credentials: 'include'
         })
         .then(res => {
             if (res.ok) {
                 res.json().then(data => {
                     setStudentToDisplay(data);
-                    setStudents(prevAccommodations => {
-                        const accommodationIndex = prevAccommodations.findIndex(accommodation => accommodation.id === data.id);
+                    setStudents(prevStudents => {
+                        const studentIndex = prevStudents.findIndex(student => student.id === data.id);
                         
-                        if (accommodationIndex !== -1) {
-                            return [...prevAccommodations.slice(0, accommodationIndex), data,...prevAccommodations.slice(accommodationIndex + 1)];
+                        if (studentIndex !== -1) {
+                            return [...prevStudents.slice(0, studentIndex), data,...prevStudents.slice(studentIndex + 1)];
     
                     }})
                     navigate('/')
@@ -60,7 +67,8 @@ function EditAccommodation() {
         })
         .catch(error => {
             console.error('Error updating student:', error)})
-    }
+        }
+    });
 
     function handleDeleteClick(e) {
         fetch()
@@ -76,8 +84,22 @@ function EditAccommodation() {
                 {accommodationToDisplay ? (
                     <div>
                         <h2>{accommodationToDisplay.description}</h2>
-                        <button onClick={handleEditClick}>Edit</button>
-                        <button onClick={handleDeleteClick}>Delete</button>
+                        <form onSubmit={formik.handleSubmit}>
+                        <label htmlFor="description">Enter updated description: </label>
+                            <div>
+                                <input 
+                                type="text" 
+                                placeholder="Enter description" 
+                                name="description"
+                                id="description" 
+                                value={formik.values.description} /* add touched, blur and errors */
+                                onChange={formik.handleChange}/>
+                            </div>
+                            <div>
+                            <p></p>
+                            <button type="submit">Submit</button>
+                        </div>
+                        </form>
                     </div>
                 ) : (
                 <div>No Accommodations</div>
