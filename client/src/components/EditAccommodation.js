@@ -72,7 +72,26 @@ function EditAccommodation() {
     });
 
     function handleDeleteClick(e) {
-        fetch()
+        fetch(`http://127.0.0.1:5555/accommodations/${accommodationId}`, {
+            method: "DELETE",
+            headers: {
+            "Content-Type": "application/json",
+            },
+            credentials: 'include'
+    })
+    .then(res => res.json())
+    .then(data => {
+        const updatedAccommodations = studentToDisplay.accommodations.filter(accommodation => accommodation.id !== accommodationId);
+        const updatedStudents = students.map(student => {
+            if (student.id === id) {
+                return {...student, accommodations: updatedAccommodations}
+            }
+            return student;
+        })
+        setStudents(updatedStudents);
+        navigate(`/students/${id}`)
+    })
+    
     }
     
     return (
