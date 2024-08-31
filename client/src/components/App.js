@@ -10,6 +10,7 @@ import StudentPage from './StudentPage';
 import { StudentProvider } from './MyContext';
 import Categories from './Categories';
 import EditAccommodation from './EditAccommodation';
+import AccommodationSearch from './AccommodationSearch';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -47,6 +48,7 @@ function App() {
                 <Route path="/students/edit_student/:id" element={<EditStudent />} />
                 <Route path="/categories" element={<Categories />} />
                 <Route path="/students/:id/:accommodationId" element={<EditAccommodation />} />
+                <Route path="/accommodations" element={<AccommodationSearch />} />
               </Routes>
             </main>
           </>
