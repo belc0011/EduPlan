@@ -37,9 +37,13 @@ function StudentPage({ }) {
               credentials: 'include'
           })
         .then(res => res.json())
-        .then(data => {setStudentToDisplay(data)
-        resetForm() 
-        })
+        .then(data => {
+            setStudentToDisplay(prevState => ({
+                ...prevState,
+                accommodations: [...prevState.accommodations, data]
+            }));
+            resetForm();
+        });
         }
     })
 
@@ -80,7 +84,7 @@ function StudentPage({ }) {
                         ) : null}
                     </div>
                 <form onSubmit={formik.handleSubmit}>
-                    <h2>To add an accommodation for this student, select the accommodation from the dropdown and click Submit </h2>
+                    <h2>To add an accommodation for this student, type the description into the text box, choose the appropriate category for the accommodation, then click Submit </h2>
                     <label htmlFor="new-accommodation">Accommodations</label>
                             <div>
                                 <input 
@@ -98,10 +102,13 @@ function StudentPage({ }) {
                             <h1>   </h1> 
                             <div>
                                 <select type="dropdown" 
-                                id="category" 
-                                name="category"
+                                id="category_id" 
+                                name="category_id"
                                 value={formik.values.category_id} 
                                 onChange={formik.handleChange}>
+                                    <option value="" disabled>
+                                         Select one
+                                    </option>
                                     {categories.map(category => {
                                     return <option key={category.id} value={category.id}>
                                     {category.description}
