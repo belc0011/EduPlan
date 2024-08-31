@@ -72,6 +72,8 @@ function EditAccommodation() {
     });
 
     function handleDeleteClick(e) {
+        const isConfirmed = window.confirm('Are you sure you want to delete this accommodation?');
+        if (isConfirmed) {
         fetch(`http://127.0.0.1:5555/accommodations/${accommodationId}`, {
             method: "DELETE",
             headers: {
@@ -93,7 +95,10 @@ function EditAccommodation() {
     })
     
     }
-    
+    else {
+        console.log('User canceled delete action')
+    }
+}
     return (
         studentToDisplay ? (
         <div className="card">
