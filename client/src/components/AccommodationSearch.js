@@ -7,6 +7,7 @@ import { StudentContext } from "./MyContext.js";
 function AccommodationSearch() {
 
     const [accommodations, setAccommodations] = useState()
+    const [accommodationsToDisplay, setAccommodationsToDisplay] = useState()
     useEffect(() => {
         fetch("http://127.0.0.1:5555/accommodations", {
             method: "GET",
@@ -18,6 +19,7 @@ function AccommodationSearch() {
        .then(res => res.json())
        .then(data => {
         setAccommodations(data);
+        setAccommodationsToDisplay(data); 
     console.log(accommodations)}) 
     }, [])
     const formSchema = yup.object().shape({
@@ -34,15 +36,19 @@ function AccommodationSearch() {
         validationSchema: formSchema,
         onSubmit: (values, { resetForm }) => {
             const filteredAccommodations = accommodations.filter(accommodation => accommodation.description.toLowerCase().includes(values.description.toLowerCase()))
-            setAccommodations(filteredAccommodations)
+            setAccommodationsToDisplay(filteredAccommodations)
             resetForm()
         }
         });
+
+        function handleClick(e) {
+            setAccommodationsToDisplay(accommodations) //
+        }
     
     return (
         <>
         <h1>Accommodations:</h1>
-        {accommodations ? accommodations.map(accommodation => (
+        {accommodationsToDisplay ? accommodationsToDisplay.map(accommodation => (
             <div key={accommodation.id}>
                 <h3>{accommodation.student.first_name} {accommodation.student.last_name}</h3>
                 <p>{accommodation.description}</p>
@@ -68,6 +74,7 @@ function AccommodationSearch() {
                         <button type="submit">Submit</button>
                     </div>
         </form>
+        <button onClick={handleClick}>Click here to restore list of accommodations</button>
         </>
     )
 }
