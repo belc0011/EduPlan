@@ -18,10 +18,11 @@ function EditAccommodation() {
     const [accommodationToDisplay, setAccommodationToDisplay] = useState({})
     // Need to store the student to display in a state variable "studentToDisplay" and use that state variable to display data, not make a fetch request
     useEffect(() => {
+        if (students.length > 0) {
         const student = students.find(student => student.id === id);
         setStudentToDisplay(student);
         setAccommodationToDisplay(student.accommodations.find(accommodation => accommodation.id===accommodationId))
-    }, [students, id]);
+    }}, [students, id]);
     console.log(studentToDisplay);
     console.log(accommodationToDisplay)
 
@@ -100,6 +101,9 @@ function EditAccommodation() {
                             <button type="submit">Submit</button>
                         </div>
                         </form>
+                        <div>
+                            <button onClick={handleDeleteClick}>Click Here to Delete Accommodation</button>
+                        </div>
                     </div>
                 ) : (
                 <div>No Accommodations</div>

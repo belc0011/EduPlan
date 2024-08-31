@@ -189,6 +189,19 @@ class AccommodationById(Resource):
                 return {"error": "Accommodation not found"}, 404
         else:
             return {"error": "Unauthorized"}, 401
+    
+    def delete(self, id):
+        if session.get('user_id'):
+            accommodation = Accommodation.query.filter_by(id=id).first()
+            if accommodation:
+                db.session.delete(accommodation)
+                db.session.commit()
+                response = {'message': 'Successfully deleted'}, 200
+                return response
+            else:
+                return {"error": "Accommodation not found"}, 404
+        else:
+            return {"error": "Unauthorized"}, 401
         
 class Categories(Resource):
     def get(self):
