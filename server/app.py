@@ -160,7 +160,7 @@ class Accommodations(Resource):
             request_json = request.get_json()
             print(request_json)
             new_accommodation = Accommodation(
-                description=request_json['description'],
+                description=request_json['description'].title(),
                 student_id=request_json['student_id'],
                 category_id=request_json['category_id'],
                 user_id=user_id)
