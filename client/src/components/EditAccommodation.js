@@ -5,6 +5,8 @@ import { StudentContext } from "./MyContext.js";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import AddComment from "./AddComment.js"
+import EditComment from './EditComment.js';
+import { Link } from 'react-router-dom';
 
 function EditAccommodation() {
     const location = useLocation()
@@ -75,6 +77,12 @@ function EditAccommodation() {
     function handleComment(e) {
         setShowAddComment(true)
     }
+
+    function handleCommentClick(e) {
+        console.log(accommodationToDisplay)
+        navigate(`/comment/${accommodationId}`, { state: { accommodation: accommodationToDisplay } });
+    }
+
     function handleDeleteClick(e) {
         const isConfirmed = window.confirm('Are you sure you want to delete this accommodation?');
         if (isConfirmed) {
@@ -117,14 +125,25 @@ function EditAccommodation() {
                                 <button onClick={handleComment}>Click here to add a comment to this accommodation</button>
                             </div>
                             <h2>{accommodationToDisplay.description}</h2>
-                            {accommodationToDisplay.comment ? 
-                                accommodationToDisplay.comment.map(comment => {
-                                    return <div key={comment.id}>{comment.description}</div>
-                                }) 
-                                : null
-                            }
+                                {accommodationToDisplay.comment ? 
+                                    accommodationToDisplay.comment.map(comment => {
+                                        return (
+                                            <Link 
+                                                key={comment.id} 
+                                                to={`/comment/${accommodationId}`} 
+                                                state={{ accommodation: accommodationToDisplay }} // Pass state with Link
+                                                onClick={handleCommentClick}
+                                            >
+                                                Current comment: {comment.description}
+                                            </Link>
+                                        );
+                                    }) 
+                                : null}
+                            <div>
+                                <p></p>
+                            </div>
                             <form onSubmit={formik.handleSubmit}>
-                            <label htmlFor="description">Enter updated description: </label>
+                            <label htmlFor="description">Enter updated accommodation description: </label>
                                 <div>
                                     <input 
                                     type="text" 
