@@ -16,6 +16,7 @@ function EditAccommodation() {
     const navigate = useNavigate();
     const { students, setStudents } = useContext(StudentContext);
     const [accommodationToDisplay, setAccommodationToDisplay] = useState({})
+    const [showAddComment, setShowAddComment] = useState(false);
     // Need to store the student to display in a state variable "studentToDisplay" and use that state variable to display data, not make a fetch request
     useEffect(() => {
         if (students.length > 0) {
@@ -70,7 +71,9 @@ function EditAccommodation() {
             console.error('Error updating student:', error)})
         }
     });
-
+    function handleComment(e) {
+        setShowAddComment(true)
+    }
     function handleDeleteClick(e) {
         const isConfirmed = window.confirm('Are you sure you want to delete this accommodation?');
         if (isConfirmed) {
@@ -108,6 +111,9 @@ function EditAccommodation() {
                 <h3>Grade {studentToDisplay.grade}</h3>
                 {accommodationToDisplay ? (
                     <div>
+                        <div>
+                            <button onClick={handleComment}>Click here to add a comment to this accommodation</button>
+                        </div>
                         <h2>{accommodationToDisplay.description}</h2>
                         <form onSubmit={formik.handleSubmit}>
                         <label htmlFor="description">Enter updated description: </label>
