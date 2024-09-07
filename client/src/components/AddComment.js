@@ -1,25 +1,31 @@
 import React, { useState, useContext } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 
 function AddComment() {
     
     const navigate = useNavigate()
-    
+    const location = useLocation()
+    const url = location.pathname
+    const parts = url.split("/")
+    const accommodationId = parseInt(parts[3], 10)
+
     const formSchema = yup.object().shape({
-        description: yup
+        comment_text: yup
         .string()
         .matches(/^[a-zA-Z\s'-]+$/, "Description can not contain numbers or special characters, except an apostrophe")
-        .required("First name is required"),
+        .required("Description is required"),
       });
 
     const formik = useFormik({
         initialValues: {
           comment_text: "",
+          accommodation_id: accommodationId,
         },
         validationSchema: formSchema,
         onSubmit: (values, { resetForm }) => {
+            console.log("click")
           fetch("http://127.0.0.1:5555/comments", {
             method: "POST",
             headers: {

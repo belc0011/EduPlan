@@ -230,7 +230,7 @@ class Categories(Resource):
         else:
             return {'message': 'Error, unauthorized user'}, 401
 
-class Comment(Resource):
+class Comments(Resource):
     def post(self):
         if session.get('user_id'):
             user_id = session['user_id']
@@ -238,7 +238,7 @@ class Comment(Resource):
             accommodation_id = request_json['accommodation_id']
             comment_text = request_json['comment_text']
             new_comment = Comment(
-                comment_text=comment_text,
+                description=comment_text,
                 accommodation_id=accommodation_id
             )
             if new_comment:
@@ -260,7 +260,7 @@ api.add_resource(StudentById, '/students/<int:id>', endpoint='students/<int:id>'
 api.add_resource(Accommodations, '/accommodations', endpoint='accommodations')
 api.add_resource(AccommodationById, '/accommodations/<int:id>', endpoint='accommodations/<int:id>')
 api.add_resource(Categories, '/categories', endpoint='categories')
-api.add_resource(Comment, '/comments', endpoint='comments')
+api.add_resource(Comments, '/comments', endpoint='comments')
 
 if __name__ == '__main__':
     app.run(port=5555, debug=False)
