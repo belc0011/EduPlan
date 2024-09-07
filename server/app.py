@@ -3,7 +3,7 @@ from flask_restful import Resource
 from sqlalchemy import select
 
 from config import app, db, api
-from models import User, Student, Accommodation, Category
+from models import User, Student, Accommodation, Category, Comment
 
 class Signup(Resource):
     def post(self):
@@ -230,6 +230,27 @@ class Categories(Resource):
         else:
             return {'message': 'Error, unauthorized user'}, 401
 
+class Comment(Resource):
+    def post(self):
+        if session.get('user_id'):
+            user_id = session['user_id']
+            request_json = request.get_json()
+            accommodation_id = request_json['accommodation_id']
+            comment_text = request_json['comment_text']
+            new_comment = Comment(
+                comment_text=comment_text,
+                accommodation_id=accommodation_id
+            )
+            if new_comment:
+                db.session.add(new_comment)
+                db.session.commit()
+                response = make_response(new_comment.to_dict(), 201)
+                return response
+            else:
+                return {'message': 'Error: unable to create new comment'}, 404
+        else:
+            return {'message': 'Error, unauthorized user'}, 401
+    
 api.add_resource(Signup, '/signup', endpoint='signup')
 api.add_resource(Login, '/', endpoint='')
 api.add_resource(Logout, '/logout', endpoint='logout')
@@ -239,6 +260,7 @@ api.add_resource(StudentById, '/students/<int:id>', endpoint='students/<int:id>'
 api.add_resource(Accommodations, '/accommodations', endpoint='accommodations')
 api.add_resource(AccommodationById, '/accommodations/<int:id>', endpoint='accommodations/<int:id>')
 api.add_resource(Categories, '/categories', endpoint='categories')
+api.add_resource(Comment, '/comments', endpoint='comments')
 
 if __name__ == '__main__':
     app.run(port=5555, debug=False)
