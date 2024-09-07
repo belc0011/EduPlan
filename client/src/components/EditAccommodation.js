@@ -4,6 +4,7 @@ import { useNavigate, useLocation } from 'react-router-dom'
 import { StudentContext } from "./MyContext.js";
 import { useFormik } from "formik";
 import * as yup from "yup";
+import AddComment from "./AddComment.js"
 
 function EditAccommodation() {
     const location = useLocation()
@@ -104,42 +105,49 @@ function EditAccommodation() {
 }
     return (
         studentToDisplay ? (
-        <div className="card">
-            {isLoading ? (<h1>Loading...</h1>) : (
-            <>
-                <a href={`/students/${id}`}>{studentToDisplay.first_name} {studentToDisplay.last_name}</a>
-                <h3>Grade {studentToDisplay.grade}</h3>
-                {accommodationToDisplay ? (
-                    <div>
+        <div>
+            <div className="card">
+                {isLoading ? (<h1>Loading...</h1>) : (
+                <>
+                    <a href={`/students/${id}`}>{studentToDisplay.first_name} {studentToDisplay.last_name}</a>
+                    <h3>Grade {studentToDisplay.grade}</h3>
+                    {accommodationToDisplay ? (
                         <div>
-                            <button onClick={handleComment}>Click here to add a comment to this accommodation</button>
-                        </div>
-                        <h2>{accommodationToDisplay.description}</h2>
-                        <form onSubmit={formik.handleSubmit}>
-                        <label htmlFor="description">Enter updated description: </label>
                             <div>
-                                <input 
-                                type="text" 
-                                placeholder="Enter description" 
-                                name="description"
-                                id="description" 
-                                value={formik.values.description} /* add touched, blur and errors */
-                                onChange={formik.handleChange}/>
+                                <button onClick={handleComment}>Click here to add a comment to this accommodation</button>
                             </div>
+                            <h2>{accommodationToDisplay.description}</h2>
+                            <form onSubmit={formik.handleSubmit}>
+                            <label htmlFor="description">Enter updated description: </label>
+                                <div>
+                                    <input 
+                                    type="text" 
+                                    placeholder="Enter description" 
+                                    name="description"
+                                    id="description" 
+                                    value={formik.values.description} /* add touched, blur and errors */
+                                    onChange={formik.handleChange}/>
+                                </div>
+                                <div>
+                                <p></p>
+                                <button type="submit">Submit</button>
+                            </div>
+                            </form>
                             <div>
-                            <p></p>
-                            <button type="submit">Submit</button>
+                                <button onClick={handleDeleteClick}>Click Here to Delete Accommodation</button>
+                            </div>
                         </div>
-                        </form>
-                        <div>
-                            <button onClick={handleDeleteClick}>Click Here to Delete Accommodation</button>
-                        </div>
-                    </div>
-                ) : (
-                <div>No Accommodations</div>
+                    ) : (
+                    <div>No Accommodations</div>
+                    )}
+                </>
                 )}
-            </>
-            )}
+            </div>
+            <div>
+                {showAddComment ? (
+                    <AddComment/>
+                ) : null}
+            </div>
         </div>
         ) : null
     )
