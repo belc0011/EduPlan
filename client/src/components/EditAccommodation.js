@@ -117,6 +117,12 @@ function EditAccommodation() {
                                 <button onClick={handleComment}>Click here to add a comment to this accommodation</button>
                             </div>
                             <h2>{accommodationToDisplay.description}</h2>
+                            {accommodationToDisplay.comment ? 
+                                accommodationToDisplay.comment.map(comment => {
+                                    return <div key={comment.id}>{comment.description}</div>
+                                }) 
+                                : null
+                            }
                             <form onSubmit={formik.handleSubmit}>
                             <label htmlFor="description">Enter updated description: </label>
                                 <div>
