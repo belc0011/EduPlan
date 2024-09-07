@@ -250,6 +250,22 @@ class Comments(Resource):
                 return {'message': 'Error: unable to create new comment'}, 404
         else:
             return {'message': 'Error, unauthorized user'}, 401
+
+class CommentsById(Resource):
+    def patch(self, id):
+        if session.get('user_id'):
+            request_dict = request.get_json()
+            comment = Comment.query.filter_by(id=id).first()
+            if comment:
+                if 'comment_text' in request_dict:
+                    comment.description = request_dict['comment_text']
+                db.session.commit()
+                response = make_response(comment.to_dict(), 200)
+                return response
+            else:
+                return {"error": "Comment not found"}, 404
+        else:
+            return {"error": "Unauthorized"}, 401
     
 api.add_resource(Signup, '/signup', endpoint='signup')
 api.add_resource(Login, '/', endpoint='')
@@ -261,6 +277,7 @@ api.add_resource(Accommodations, '/accommodations', endpoint='accommodations')
 api.add_resource(AccommodationById, '/accommodations/<int:id>', endpoint='accommodations/<int:id>')
 api.add_resource(Categories, '/categories', endpoint='categories')
 api.add_resource(Comments, '/comments', endpoint='comments')
+api.add_resource(CommentsById, '/comments/<int:id>', endpoint='comments/<int:id>')
 
 if __name__ == '__main__':
     app.run(port=5555, debug=False)
