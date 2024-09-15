@@ -22,11 +22,13 @@ function EditAccommodation() {
     const [showAddComment, setShowAddComment] = useState(false);
     // Need to store the student to display in a state variable "studentToDisplay" and use that state variable to display data, not make a fetch request
     useEffect(() => {
-        if (students.length > 0) {
-        const student = students.find(student => student.id === id);
-        setStudentToDisplay(student);
-        setAccommodationToDisplay(student.accommodations.find(accommodation => accommodation.id===accommodationId))
-    }}, [students, id]);
+        if (students) {
+            const student = students.find(student => student.id === id);
+            setStudentToDisplay(student || {});
+            setAccommodationToDisplay(student ? student.accommodations.find(accommodation => accommodation.id === accommodationId) : {});
+        }
+    }, [students, id, accommodationId]);
+    
     console.log(studentToDisplay);
     console.log(accommodationToDisplay)
 
@@ -52,23 +54,23 @@ function EditAccommodation() {
                 body: JSON.stringify(values, null, 2),
                 credentials: 'include'
         })
-        .then(res => {
-            if (res.ok) {
-                res.json().then(data => {
-                    setStudentToDisplay(data);
-                    setStudents(prevStudents => {
-                        const studentIndex = prevStudents.findIndex(student => student.id === data.id);
-                        
-                        if (studentIndex !== -1) {
-                            return [...prevStudents.slice(0, studentIndex), data,...prevStudents.slice(studentIndex + 1)];
-    
-                    }})
-                    navigate('/')
-                    resetForm()})
-            }
-            else {
-                console.log("error: " + res)
-            }
+        .then(data => {
+            setStudentToDisplay(data); // Update the current student
+            setStudents(prevStudents => {
+                if (prevStudents === null) {
+                    return [data]; // Return new array if students was null
+                }
+                const studentIndex = prevStudents.findIndex(student => student.id === data.id);
+                if (studentIndex !== -1) {
+                    return [
+                        ...prevStudents.slice(0, studentIndex),
+                        data,
+                        ...prevStudents.slice(studentIndex + 1),
+                    ];
+                }
+                return [...prevStudents, data]; // Add new student if not found
+            });
+            navigate('/');
         })
         .catch(error => {
             console.error('Error updating student:', error)})
@@ -80,7 +82,10 @@ function EditAccommodation() {
 
     function handleCommentClick(e) {
         console.log(accommodationToDisplay)
-        navigate(`/comment/${accommodationId}`, { state: { accommodation: accommodationToDisplay } });
+        navigate(`/comment/${accommodationId}`, { state: { 
+            accommodation: accommodationToDisplay,
+            student: studentToDisplay 
+        } });
     }
 
     function handleDeleteClick(e) {
@@ -131,7 +136,10 @@ function EditAccommodation() {
                                             <Link 
                                                 key={comment.id} 
                                                 to={`/comment/${accommodationId}`} 
-                                                state={{ accommodation: accommodationToDisplay }} // Pass state with Link
+                                                state={{ 
+                                                    accommodation: accommodationToDisplay,
+                                                student: studentToDisplay 
+                                            }} // Pass state with Link
                                                 onClick={handleCommentClick}
                                             >
                                                 Current comment: {comment.description}

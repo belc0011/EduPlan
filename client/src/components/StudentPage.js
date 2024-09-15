@@ -16,8 +16,10 @@ function StudentPage({ }) {
     const student_id = id
     
     useEffect(() => {
-        const student = students.find(student => student.id === id);
+        if (students) {
+            const student = students.find(student => student.id === id);
         setStudentToDisplay(student);
+        }
     }, [students, id]);
 
     const formik = useFormik({

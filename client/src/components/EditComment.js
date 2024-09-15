@@ -10,11 +10,13 @@ function EditComment() {
     const url = location.pathname
     const parts = url.split("/")
     const accommodationId = parseInt(parts[2], 10)
-    const [studentToDisplay, setStudentToDisplay] = useState({})
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
-    const { accommodation } = location.state || {};
+    const { accommodation, student } = location.state || {};
     console.log(accommodation)
+    console.log(student)
+    console.log('Received state:', location.state);
+
     const [showForm, setShowForm] = useState(false);
     const commentId = accommodation.comment[0].id;
 
@@ -44,8 +46,8 @@ function EditComment() {
         .then(res => {
             if (res.ok) {
                 res.json().then(data => {
-                    console.log(data);
-                navigate('/students')
+                    console.log("student: " + student + "accomm" + accommodationId);
+                navigate(`/students/${student.id}`);
                 resetForm()})
             }
             else {
@@ -63,10 +65,12 @@ function EditComment() {
     return (
     <>
         <h1>{accommodation.description}</h1>
-        <h2>{accommodation.comment.map(comment => {
-            return <h3 key={comment.id}>Current comment: {comment.description}</h3>
-        })}</h2>
-
+        <h2>Current comment:</h2>
+        <div>
+            {accommodation.comment.map(comment => {
+            return <h3 key={comment.id}>{comment.description}</h3>
+        })}
+        </div>
         <button onClick={handleClick}>Click here to edit comment</button>
         {showForm ? (
             <form onSubmit={formik.handleSubmit}>

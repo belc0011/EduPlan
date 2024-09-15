@@ -4,7 +4,7 @@ import { useState, useEffect } from'react';
 const StudentContext = React.createContext()
 
 function StudentProvider({children}) {
-    const [students, setStudents] = useState([]);
+    const [students, setStudents] = useState(null);
     const [categories, setCategories] = useState([]);
 
   useEffect(() => {
