@@ -54,8 +54,10 @@ function EditAccommodation() {
                 body: JSON.stringify(values, null, 2),
                 credentials: 'include'
         })
+        .then(res => res.json())
         .then(data => {
             setAccommodationToDisplay(data); 
+            console.log(data)
             const updatedAccommodation = data
             setStudentToDisplay(prevStudent =>{
                 const updatedAccommodations = prevStudent.accommodations.map(accommodation => 
