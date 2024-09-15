@@ -3,13 +3,14 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import { useNavigate, useLocation } from 'react-router-dom'
 
-function AddComment() {
+function AddComment({accommodation, setAccommodation, student, setStudent}) {
     
     const navigate = useNavigate()
     const location = useLocation()
     const url = location.pathname
     const parts = url.split("/")
     const accommodationId = parseInt(parts[3], 10)
+    const studentId = parseInt(parts[2], 10)
 
     const formSchema = yup.object().shape({
         comment_text: yup
@@ -36,11 +37,14 @@ function AddComment() {
         })
         .then(res => {
             if (res.ok) {
-                res.json().then(
-                    data => {console.log(data)
-                resetForm()
-                navigate('/')
-            })
+                res.json().then(data => {
+                    // Assuming data contains the new comment, not the entire accommodation
+                    setAccommodation(prevAccommodation => ({
+                        ...prevAccommodation,
+                        comment: data.comment // Update the comment field with the new data
+                    }));
+                    resetForm(); // Reset the form after setting the accommodation
+                });
             }
             else {
                 console.log("error: " + res)

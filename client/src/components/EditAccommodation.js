@@ -55,22 +55,18 @@ function EditAccommodation() {
                 credentials: 'include'
         })
         .then(data => {
-            setStudentToDisplay(data); // Update the current student
-            setStudents(prevStudents => {
-                if (prevStudents === null) {
-                    return [data]; // Return new array if students was null
-                }
-                const studentIndex = prevStudents.findIndex(student => student.id === data.id);
-                if (studentIndex !== -1) {
-                    return [
-                        ...prevStudents.slice(0, studentIndex),
-                        data,
-                        ...prevStudents.slice(studentIndex + 1),
-                    ];
-                }
-                return [...prevStudents, data]; // Add new student if not found
-            });
-            navigate('/');
+            setAccommodationToDisplay(data); 
+            const updatedAccommodation = data
+            setStudentToDisplay(prevStudent =>{
+                const updatedAccommodations = prevStudent.accommodations.map(accommodation => 
+                    accommodation.id === accommodationId ? updatedAccommodation : accommodation
+                );
+                return {
+                    ...prevStudent,
+                    accommodations: updatedAccommodations
+                };
+            })
+            resetForm();
         })
         .catch(error => {
             console.error('Error updating student:', error)})
@@ -127,29 +123,35 @@ function EditAccommodation() {
                     {accommodationToDisplay ? (
                         <div>
                             <div>
-                                <button onClick={handleComment}>Click here to add a comment to this accommodation</button>
+                                <button onClick={handleComment}>ADD A COMMENT</button>
                             </div>
-                            <h2>{accommodationToDisplay.description}</h2>
                                 {accommodationToDisplay.comment ? 
-                                    accommodationToDisplay.comment.map(comment => {
-                                        return (
-                                            <Link 
-                                                key={comment.id} 
-                                                to={`/comment/${accommodationId}`} 
-                                                state={{ 
-                                                    accommodation: accommodationToDisplay,
-                                                student: studentToDisplay 
-                                            }} // Pass state with Link
-                                                onClick={handleCommentClick}
-                                            >
-                                                Current comment: {comment.description}
-                                            </Link>
-                                        );
-                                    }) 
+                                <div>
+                                    <h2>{accommodationToDisplay.description}</h2>
+                                    <h3>Comments:</h3>
+                                    <ul>
+                                        {accommodationToDisplay.comment.map(comment => (
+                                            <li key={comment.id}>
+                                                <Link 
+                                                    to={`/comment/${accommodationId}`} 
+                                                    state={{ 
+                                                        accommodation: accommodationToDisplay,
+                                                        student: studentToDisplay,
+                                                        commentId: comment.id 
+                                                    }} // Pass state with Link
+                                                    onClick={handleCommentClick}
+                                                >
+                                                    {comment.description}
+                                                </Link>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div> 
                                 : null}
                             <div>
                                 <p></p>
                             </div>
+                            <h3>Edit accommodation: </h3>
                             <form onSubmit={formik.handleSubmit}>
                             <label htmlFor="description">Enter updated accommodation description: </label>
                                 <div>
@@ -178,7 +180,7 @@ function EditAccommodation() {
             </div>
             <div>
                 {showAddComment ? (
-                    <AddComment/>
+                    <AddComment accommodation={accommodationToDisplay} setAccommodation={setAccommodationToDisplay} student={studentToDisplay} setStudent={setStudentToDisplay}/>
                 ) : null}
             </div>
         </div>

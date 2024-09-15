@@ -61,8 +61,7 @@ function StudentPage({ }) {
             {studentToDisplay ? (
             <>
                 <h1>{studentToDisplay.first_name} {studentToDisplay.last_name}</h1>
-                <h3>To delete this student's record, click here:</h3>
-                <button onClick={handleDelete}>Click here to delete</button>
+                <button onClick={handleDelete}>Click here to delete student's record</button>
                 <h3>To edit this student's record, click here:</h3>
                 <button onClick={handleEdit}>Click here to edit</button>
                 <h2>Accommodations: </h2>

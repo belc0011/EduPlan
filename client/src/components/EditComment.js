@@ -62,6 +62,18 @@ function EditComment() {
     function handleClick(e) {
         setShowForm(true)
     }
+
+    function handleDelete(e) {
+        fetch(`http://127.0.0.1:5555/comments/${commentId}`, {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            credentials: 'include'
+        })
+       .then(res => {
+       });
+    }
     return (
     <>
         <h1>{accommodation.description}</h1>
@@ -71,7 +83,12 @@ function EditComment() {
             return <h3 key={comment.id}>{comment.description}</h3>
         })}
         </div>
-        <button onClick={handleClick}>Click here to edit comment</button>
+        <div>
+            <button onClick={handleClick}>Edit comment</button>
+        </div>
+        <div>
+            <button onClick={handleDelete}>Delete Comment</button>
+        </div>
         {showForm ? (
             <form onSubmit={formik.handleSubmit}>
             <label htmlFor="comment_text">Enter new accommodation comment: </label>

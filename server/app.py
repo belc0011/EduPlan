@@ -237,17 +237,21 @@ class Comments(Resource):
             request_json = request.get_json()
             accommodation_id = request_json['accommodation_id']
             comment_text = request_json['comment_text']
-            new_comment = Comment(
-                description=comment_text,
-                accommodation_id=accommodation_id
-            )
-            if new_comment:
-                db.session.add(new_comment)
-                db.session.commit()
-                response = make_response(new_comment.to_dict(), 201)
-                return response
+            accommodation = Accommodation.query.filter_by(id=accommodation_id).first()
+            if accommodation.description:
+                return {'message': 'Error: Accommodation already has a description.'}, 409
             else:
-                return {'message': 'Error: unable to create new comment'}, 404
+                new_comment = Comment(
+                    description=comment_text,
+                    accommodation_id=accommodation_id
+                )
+                if new_comment:
+                    db.session.add(new_comment)
+                    db.session.commit()
+                    response = make_response(new_comment.to_dict(), 201)
+                    return response
+                else:
+                    return {'message': 'Error: unable to create new comment'}, 404
         else:
             return {'message': 'Error, unauthorized user'}, 401
 
