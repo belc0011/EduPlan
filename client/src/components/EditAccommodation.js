@@ -127,29 +127,28 @@ function EditAccommodation() {
                             <div>
                                 <button onClick={handleComment}>ADD A COMMENT</button>
                             </div>
+                            <div>
+                                <h2>{accommodationToDisplay.description}</h2>
                                 {accommodationToDisplay.comment ? 
-                                <div>
-                                    <h2>{accommodationToDisplay.description}</h2>
-                                    <h3>Comments:</h3>
+                                (<div> 
+                                    <h3>Comment:</h3>
                                     <ul>
-                                        {accommodationToDisplay.comment.map(comment => (
-                                            <li key={comment.id}>
-                                                <Link 
-                                                    to={`/comment/${accommodationId}`} 
-                                                    state={{ 
-                                                        accommodation: accommodationToDisplay,
-                                                        student: studentToDisplay,
-                                                        commentId: comment.id 
-                                                    }} // Pass state with Link
-                                                    onClick={handleCommentClick}
-                                                >
-                                                    {comment.description}
-                                                </Link>
-                                            </li>
-                                        ))}
+                                        <li key={accommodationToDisplay.comment.id}>
+                                            <Link 
+                                                to={`/comment/${accommodationId}`} 
+                                                state={{ 
+                                                    accommodation: accommodationToDisplay,
+                                                    student: studentToDisplay,
+                                                    commentId: accommodationToDisplay.comment.id 
+                                                }} // Pass state with Link
+                                                onClick={handleCommentClick}
+                                            >
+                                                {accommodationToDisplay.comment.description}
+                                            </Link>
+                                        </li>
                                     </ul>
-                                </div> 
-                                : null}
+                                    </div>) : null}
+                                </div>
                             <div>
                                 <p></p>
                             </div>
@@ -168,7 +167,7 @@ function EditAccommodation() {
                                 <div>
                                 <p></p>
                                 <button type="submit">Submit</button>
-                            </div>
+                                </div>
                             </form>
                             <div>
                                 <button onClick={handleDeleteClick}>Click Here to Delete Accommodation</button>

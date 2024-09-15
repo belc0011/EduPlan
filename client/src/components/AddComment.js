@@ -38,10 +38,10 @@ function AddComment({accommodation, setAccommodation, student, setStudent}) {
         .then(res => {
             if (res.ok) {
                 res.json().then(data => {
-                    // Assuming data contains the new comment, not the entire accommodation
+                    console.log(data)
                     setAccommodation(prevAccommodation => ({
                         ...prevAccommodation,
-                        comment: data.comment // Update the comment field with the new data
+                        comment: data.description
                     }));
                     resetForm(); // Reset the form after setting the accommodation
                 });
