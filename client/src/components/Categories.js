@@ -16,7 +16,7 @@ function Categories() {
         })
            .then(response => response.json())
            .then(data => {
-            setCategories(data)
+            setCategories(data.categories || [])
         console.log(data)
     })
            .catch(error => console.error('Error:', error));
