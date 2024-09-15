@@ -273,6 +273,20 @@ class CommentsById(Resource):
         else:
             return {"error": "Unauthorized"}, 401
     
+    def delete(self, id):
+        if session.get('user_id'):
+            comment = Comment.query.filter_by(id=id).first()
+            if comment:
+                db.session.delete(comment)
+                db.session.commit()
+                response = {'message': 'Successfully deleted'}, 200
+                return response
+            else:
+                return {"error": "Comment not found"}, 404
+        else:
+            return {"error": "Unauthorized"}, 401
+        
+    
 api.add_resource(Signup, '/signup', endpoint='signup')
 api.add_resource(Login, '/', endpoint='')
 api.add_resource(Logout, '/logout', endpoint='logout')
