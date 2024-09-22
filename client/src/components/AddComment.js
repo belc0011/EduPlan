@@ -3,7 +3,7 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import { useNavigate, useLocation } from 'react-router-dom'
 
-function AddComment({accommodation, setAccommodation, student, setStudent}) {
+function AddComment({accommodation, setAccommodation, student, setStudent, students, setStudents}) {
     
     const navigate = useNavigate()
     const location = useLocation()
@@ -39,11 +39,19 @@ function AddComment({accommodation, setAccommodation, student, setStudent}) {
             if (res.ok) {
                 res.json().then(data => {
                     console.log(data)
-                    setAccommodation(prevAccommodation => ({
-                        ...prevAccommodation,
-                        comment: data.description
+                    setStudent(prevStudent => ({
+                        ...prevStudent,
+                        accommodations: prevStudent.accommodations.map(accommodation =>{
+                            accommodation.id === accommodationId ? {...accommodation, comment: data.description} : accommodation
+                        })
                     }));
-                    resetForm(); // Reset the form after setting the accommodation
+                    setStudents(prevStudents => 
+                        prevStudents.map(student1 => {
+                            student1.id === student.id ? student1 : student
+                        })
+                        )
+                    resetForm(); 
+                    console.log(accommodation)
                 });
             }
             else {

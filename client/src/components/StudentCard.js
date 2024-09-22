@@ -1,10 +1,11 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { StudentContext } from "./MyContext.js";
 
 function StudentCard({firstName, lastName, grade, accommodations, id}) {
     const navigate = useNavigate()
-    const [studentToDisplay, setStudentToDisplay] = useState({})
+    const { studentToDisplay, setStudentToDisplay } = useContext(StudentContext);
     function handleClick(e) {
         setStudentToDisplay({firstName, lastName, grade, accommodations, id})
         navigate(`edit_student/${id}`)

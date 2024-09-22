@@ -9,10 +9,8 @@ function StudentPage({ }) {
     const url = location.pathname
     const parts = url.split("/")
     const id = parseInt(parts[2])
-    const [studentToDisplay, setStudentToDisplay] = useState({})
-    const [studentData, setStudentData] = useState(false)
     const navigate = useNavigate()
-    const { students, setStudents, categories } = useContext(StudentContext);
+    const { students, setStudents, categories, studentToDisplay, setStudentToDisplay } = useContext(StudentContext);
     const student_id = id
     
     useEffect(() => {
@@ -20,7 +18,7 @@ function StudentPage({ }) {
             const student = students.find(student => student.id === id);
         setStudentToDisplay(student);
         }
-    }, [students, id]);
+    }, [students]);
 
     const formik = useFormik({
         initialValues: {

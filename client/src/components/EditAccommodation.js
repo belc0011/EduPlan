@@ -14,21 +14,20 @@ function EditAccommodation() {
     const parts = url.split("/")
     const id = parseInt(parts[2], 10)
     const accommodationId = parseInt(parts[3], 10)
-    const [studentToDisplay, setStudentToDisplay] = useState({})
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
-    const { students, setStudents } = useContext(StudentContext);
-    const [accommodationToDisplay, setAccommodationToDisplay] = useState({})
+    const { students, setStudents, studentToDisplay, setStudentToDisplay, accommodationToDisplay, setAccommodationToDisplay } = useContext(StudentContext);
     const [showAddComment, setShowAddComment] = useState(false);
-    // Need to store the student to display in a state variable "studentToDisplay" and use that state variable to display data, not make a fetch request
+    
     useEffect(() => {
         if (students) {
             const student = students.find(student => student.id === id);
-            setStudentToDisplay(student || {});
-            setAccommodationToDisplay(student ? student.accommodations.find(accommodation => accommodation.id === accommodationId) : {});
+        setStudentToDisplay(student);
+        const accommodation = student.accommodations.find(accommodation => accommodation.id ===accommodationId);
+        setAccommodationToDisplay(accommodation);
         }
-    }, [students, id, accommodationId]);
-    
+    }, [students, studentToDisplay]);
+
     console.log(studentToDisplay);
     console.log(accommodationToDisplay)
 
@@ -59,7 +58,7 @@ function EditAccommodation() {
             setAccommodationToDisplay(data); 
             console.log(data)
             const updatedAccommodation = data
-            setStudentToDisplay(prevStudent =>{
+            setStudentToDisplay(prevStudent => {
                 const updatedAccommodations = prevStudent.accommodations.map(accommodation => 
                     accommodation.id === accommodationId ? updatedAccommodation : accommodation
                 );
@@ -80,10 +79,8 @@ function EditAccommodation() {
 
     function handleCommentClick(e) {
         console.log(accommodationToDisplay)
-        navigate(`/comment/${accommodationId}`, { state: { 
-            accommodation: accommodationToDisplay,
-            student: studentToDisplay 
-        } });
+        console.log(accommodationToDisplay.comment.id)
+        navigate(`/comment/${accommodationId}`);
     }
 
     function handleDeleteClick(e) {
@@ -139,8 +136,8 @@ function EditAccommodation() {
                                                 state={{ 
                                                     accommodation: accommodationToDisplay,
                                                     student: studentToDisplay,
-                                                    commentId: accommodationToDisplay.comment.id 
-                                                }} // Pass state with Link
+                                                    commentId: accommodationToDisplay.comment.id
+                                                }}
                                                 onClick={handleCommentClick}
                                             >
                                                 {accommodationToDisplay.comment.description}
@@ -181,7 +178,7 @@ function EditAccommodation() {
             </div>
             <div>
                 {showAddComment ? (
-                    <AddComment accommodation={accommodationToDisplay} setAccommodation={setAccommodationToDisplay} student={studentToDisplay} setStudent={setStudentToDisplay}/>
+                    <AddComment accommodation={accommodationToDisplay} setAccommodation={setAccommodationToDisplay} student={studentToDisplay} setStudent={setStudentToDisplay} students={students} setStudents={setStudents}/>
                 ) : null}
             </div>
         </div>

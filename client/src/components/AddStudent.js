@@ -41,7 +41,6 @@ function AddStudent() {
                 res.json().then(
                     data => {setStudents(prevStudents => [...prevStudents, data])
                 resetForm()
-                navigate('/')
             })
             }
             else {

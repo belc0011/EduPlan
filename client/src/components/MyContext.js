@@ -1,11 +1,19 @@
 import React from 'react';
-import { useState, useEffect } from'react';
+import { useState, useEffect, useMemo } from'react';
 
 const StudentContext = React.createContext()
 
 function StudentProvider({children}) {
-    const [students, setStudents] = useState(null);
+  const [students, setStudents] = useState(() => {
+    return null;
+  });
+  
     const [categories, setCategories] = useState([]);
+    const [studentToDisplay, setStudentToDisplay] = useState(() => {
+      return null;
+    });
+    
+    const [accommodationToDisplay, setAccommodationToDisplay] = useState(null);
 
   useEffect(() => {
     console.log("useEffect firing")
@@ -45,7 +53,19 @@ function StudentProvider({children}) {
       console.log(data.categories)})
    .catch(error => console.error('Error:', error));
   }, [])
-    return <StudentContext.Provider value={{students, setStudents, categories, setCategories}}>{children}</StudentContext.Provider>
+
+  const contextValue = useMemo(() => ({
+    students,
+    setStudents,
+    categories,
+    setCategories,
+    studentToDisplay,
+    setStudentToDisplay,
+    accommodationToDisplay,
+    setAccommodationToDisplay
+  }), [students, categories, studentToDisplay, accommodationToDisplay]);
+    
+  return <StudentContext.Provider value={contextValue}>{children}</StudentContext.Provider>
 }
 
 export {StudentContext, StudentProvider}

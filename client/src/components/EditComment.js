@@ -12,13 +12,16 @@ function EditComment() {
     const accommodationId = parseInt(parts[2], 10)
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
-    const { accommodation, student } = location.state || {};
-    console.log(accommodation)
-    console.log(student)
-    console.log('Received state:', location.state);
-
+    const { students, accommodationToDisplay, setAccommodationToDisplay } = useContext(StudentContext);
     const [showForm, setShowForm] = useState(false);
-    const commentId = accommodation.comment[0].id;
+    const [commentToDisplay, setCommentToDisplay] = useState("");
+
+    const { accommodation, student, commentId } = location.state || {};
+    console.log(accommodationToDisplay);
+    console.log(student);
+    console.log(commentId);
+
+    console.log("Comment ID:" + commentId)
 
     const formSchema = yup.object().shape({
         comment_text: yup
@@ -29,7 +32,7 @@ function EditComment() {
 
     const formik = useFormik({
         initialValues: {
-          comment_text: accommodation.comment.description,
+          comment_text: accommodationToDisplay.comment.description,
           comment_id: commentId,
         },
         //validationSchema: formSchema,
@@ -47,7 +50,6 @@ function EditComment() {
             if (res.ok) {
                 res.json().then(data => {
                     console.log("student: " + student + "accomm" + accommodationId);
-                navigate(`/students/${student.id}`);
                 resetForm()})
             }
             else {
@@ -71,17 +73,23 @@ function EditComment() {
             },
             credentials: 'include'
         })
-       .then(res => {
+       .then(res => res.json())
+       .then(data => {
+        setAccommodationToDisplay(prevState => ({
+            ...prevState,
+            comment: {
+                ...prevState.comment,
+                description: ""
+            }
+        }))
        });
     }
     return (
     <>
-        <h1>{accommodation.description}</h1>
+        <h1>{accommodationToDisplay.description}</h1>
         <h2>Current comment:</h2>
         <div>
-            {accommodation.comment.map(comment => {
-            return <h3 key={comment.id}>{comment.description}</h3>
-        })}
+            <h3>{accommodationToDisplay.comment.description}</h3>
         </div>
         <div>
             <button onClick={handleClick}>Edit comment</button>
