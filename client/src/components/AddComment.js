@@ -46,9 +46,9 @@ function AddComment({accommodation, setAccommodation, student, setStudent, stude
                         })
                     }));
                     setStudents(prevStudents => 
-                        prevStudents.map(student1 => {
-                            student1.id === student.id ? student1 : student
-                        })
+                        prevStudents.map(student1 => 
+                            student1.id === student.id ? { ...student1, ...student } : student1
+                        )
                         )
                     resetForm(); 
                     console.log(accommodation)
