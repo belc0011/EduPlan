@@ -39,19 +39,25 @@ function AddComment({accommodation, setAccommodation, student, setStudent, stude
             if (res.ok) {
                 res.json().then(data => {
                     console.log(data)
+                    console.log(accommodationId)
+                    console.log(student.accommodations)
+                    setAccommodation(prevAccommodation => ({
+                       ...prevAccommodation,
+                        comment: data.description
+                    }));
                     setStudent(prevStudent => ({
                         ...prevStudent,
-                        accommodations: prevStudent.accommodations.map(accommodation =>{
+                        accommodations: prevStudent.accommodations.map(accommodation =>
                             accommodation.id === accommodationId ? {...accommodation, comment: data.description} : accommodation
-                        })
+                        )
                     }));
                     setStudents(prevStudents => 
                         prevStudents.map(student1 => 
                             student1.id === student.id ? { ...student1, ...student } : student1
-                        )
-                        )
+                        ))
                     resetForm(); 
-                    console.log(accommodation)
+                    console.log(accommodation);
+                    console.log(student);
                 });
             }
             else {

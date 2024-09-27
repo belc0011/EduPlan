@@ -4,16 +4,12 @@ import { useState, useEffect, useMemo } from'react';
 const StudentContext = React.createContext()
 
 function StudentProvider({children}) {
-  const [students, setStudents] = useState(() => {
-    return null;
-  });
+  const [students, setStudents] = useState(null);
   
     const [categories, setCategories] = useState([]);
-    const [studentToDisplay, setStudentToDisplay] = useState(() => {
-      return null;
-    });
+    const [studentToDisplay, setStudentToDisplay] = useState({});
     
-    const [accommodationToDisplay, setAccommodationToDisplay] = useState(null);
+    const [accommodationToDisplay, setAccommodationToDisplay] = useState({});
 
   useEffect(() => {
     console.log("useEffect firing")
@@ -64,7 +60,10 @@ function StudentProvider({children}) {
     accommodationToDisplay,
     setAccommodationToDisplay
   }), [students, categories, studentToDisplay, accommodationToDisplay]);
-    
+  
+  console.log(students)
+  console.log(studentToDisplay)
+  console.log(accommodationToDisplay)
   return <StudentContext.Provider value={contextValue}>{children}</StudentContext.Provider>
 }
 
