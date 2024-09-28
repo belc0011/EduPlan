@@ -27,7 +27,6 @@ function StudentPage({ }) {
           student_id: id
         },
         onSubmit: (values, { resetForm }) => {
-            console.log(values + id)
             fetch("http://127.0.0.1:5555/accommodations", {
               method: "POST",
               headers: {
@@ -66,7 +65,7 @@ function StudentPage({ }) {
                 { studentToDisplay ? (
                     <div>
                         {studentToDisplay.accommodations ? studentToDisplay.accommodations.map((accommodation) => {
-                            return <div key={accommodation.id}><a href={`/students/${id}/${accommodation.id}`}>{accommodation.description}</a> </div>;
+                            return <div key={accommodation.id}><a href={`/students/${id}/${accommodation.id}`}>{accommodation.description}</a> </div>; // triggers EditAccommodation
                         }) : <p>No Accommodations</p>}
                     </div>
                     ) : (

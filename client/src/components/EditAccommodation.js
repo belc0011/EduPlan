@@ -21,10 +21,15 @@ function EditAccommodation() {
     
     useEffect(() => {
         if (students) {
-            const student = students.find(student => student.id === id);
-        setStudentToDisplay(student);
-        const accommodation = student.accommodations.find(accommodation => accommodation.id ===accommodationId);
-        setAccommodationToDisplay(accommodation);
+            const student = students.find(student => student.id === id); //should be finding 1st student object
+        setStudentToDisplay(student); //setting studentToDisplay to that student object
+        const accommodation = student.accommodations.find(accommodation => {
+            console.log(accommodation); // Logs each accommodation object being iterated over
+            console.log(accommodationId);
+            return accommodation.id === accommodationId;
+          });
+          
+          setAccommodationToDisplay(accommodation);
         }
     }, [students, studentToDisplay]);
 

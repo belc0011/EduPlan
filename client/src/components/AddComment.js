@@ -11,6 +11,8 @@ function AddComment({accommodation, setAccommodation, student, setStudent, stude
     const parts = url.split("/")
     const accommodationId = parseInt(parts[3], 10)
     const studentId = parseInt(parts[2], 10)
+    console.log(accommodation)
+
 
     const formSchema = yup.object().shape({
         comment_text: yup
@@ -42,9 +44,9 @@ function AddComment({accommodation, setAccommodation, student, setStudent, stude
                     console.log(accommodationId)
                     console.log(student.accommodations)
                     setAccommodation(prevAccommodation => ({
-                       ...prevAccommodation,
+                        ...prevAccommodation,
                         comment: data.description
-                    }));
+                      }));
                     setStudent(prevStudent => ({
                         ...prevStudent,
                         accommodations: prevStudent.accommodations.map(accommodation =>

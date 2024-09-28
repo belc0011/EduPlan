@@ -61,9 +61,7 @@ function StudentProvider({children}) {
     setAccommodationToDisplay
   }), [students, categories, studentToDisplay, accommodationToDisplay]);
   
-  console.log(students)
-  console.log(studentToDisplay)
-  console.log(accommodationToDisplay)
+
   return <StudentContext.Provider value={contextValue}>{children}</StudentContext.Provider>
 }
 
