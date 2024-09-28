@@ -14,10 +14,7 @@ function EditStudent() {
     const navigate = useNavigate();
     const { students, setStudents, studentToDisplay, setStudentToDisplay } = useContext(StudentContext);
     // Need to store the student to display in a state variable "studentToDisplay" and use that state variable to display data, not make a fetch request
-    useEffect(() => {
-        const student = students.find(student => student.id === id);
-        setStudentToDisplay(student);
-    }, [students, id]);
+    
     console.log(studentToDisplay);
     const formSchema = yup.object().shape({
         firstName: yup

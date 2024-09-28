@@ -241,7 +241,7 @@ class Comments(Resource):
             comment_text = request_json['comment_text']
             existing_comment = Comment.query.filter_by(accommodation_id=accommodation_id).first()
             if existing_comment:
-                print(existing_comment)
+                print(existing_comment.id)
                 return {'message': 'Error: comment already exists for this accommodation'}, 400  # This should be a conflict response, not a 400 Bad Request. However, Flask's built-in JSON responses will automatically set the HTTP status code to 409. 409 Conflict is not suitable for this use case.
             else:
                 new_comment = Comment(

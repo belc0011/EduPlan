@@ -77,4 +77,4 @@ class Comment(db.Model, SerializerMixin):
 
     accommodation = db.relationship("Accommodation", back_populates="comment", uselist=False)
 
-    serialize_rules = ('-accommodation.comment',)
+    serialize_rules = ('-accommodation',)

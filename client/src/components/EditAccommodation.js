@@ -131,7 +131,7 @@ function EditAccommodation() {
                                                 }}
                                                 onClick={handleCommentClick}
                                             >
-                                                {accommodationToDisplay.comment.id}
+                                                {accommodationToDisplay.comment.description}
                                             </Link>
                                         </li>
                                     </ul>
