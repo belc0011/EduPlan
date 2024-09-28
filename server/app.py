@@ -54,6 +54,7 @@ class Logout(Resource):
 
 class Students(Resource):
     def get(self):
+        print(session)
         if session.get('user_id'):
             user_id = session['user_id']
             students = Student.query.filter_by(user_id=user_id).all()

@@ -35,7 +35,7 @@ function App() {
   }, []);
   
   return (
-    <StudentProvider>
+    <StudentProvider user={user}>
       <Router>
         {user ? (
           <>

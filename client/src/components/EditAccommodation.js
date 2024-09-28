@@ -13,25 +13,11 @@ function EditAccommodation() {
     const url = location.pathname
     const parts = url.split("/")
     const id = parseInt(parts[2], 10)
-    const accommodationId = parseInt(parts[3], 10)
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
     const { students, setStudents, studentToDisplay, setStudentToDisplay, accommodationToDisplay, setAccommodationToDisplay } = useContext(StudentContext);
     const [showAddComment, setShowAddComment] = useState(false);
-    
-    useEffect(() => {
-        if (students) {
-            const student = students.find(student => student.id === id); //should be finding 1st student object
-        setStudentToDisplay(student); //setting studentToDisplay to that student object
-        const accommodation = student.accommodations.find(accommodation => {
-            console.log(accommodation); // Logs each accommodation object being iterated over
-            console.log(accommodationId);
-            return accommodation.id === accommodationId;
-          });
-          
-          setAccommodationToDisplay(accommodation);
-        }
-    }, [students, studentToDisplay]);
+    const accommodationId = accommodationToDisplay.id;
 
     console.log(studentToDisplay);
     console.log(accommodationToDisplay)
@@ -145,7 +131,7 @@ function EditAccommodation() {
                                                 }}
                                                 onClick={handleCommentClick}
                                             >
-                                                {accommodationToDisplay.comment.description}
+                                                {accommodationToDisplay.comment.id}
                                             </Link>
                                         </li>
                                     </ul>

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { useNavigate, useLocation } from 'react-router-dom'
 import { useFormik } from "formik";
 import { StudentContext } from "./MyContext.js";
-import Categories from "./Categories.js";
+import EditAccommodation from "./EditAccommodation.js";
 
 function StudentPage({ }) {
     const location = useLocation()
@@ -10,8 +10,9 @@ function StudentPage({ }) {
     const parts = url.split("/")
     const id = parseInt(parts[2])
     const navigate = useNavigate()
-    const { students, setStudents, categories, studentToDisplay, setStudentToDisplay } = useContext(StudentContext);
+    const { students, setStudents, categories, studentToDisplay, setStudentToDisplay, accommodationToDisplay, setAccommodationToDisplay } = useContext(StudentContext);
     const student_id = id
+    const [showEditAccommodation, setShowEditAccommodation] = useState(false);
     
     useEffect(() => {
         if (students) {
@@ -53,78 +54,94 @@ function StudentPage({ }) {
     function handleEdit(e) {
         navigate(`/students/edit_student/${id}`)
     }
+
+    function handleEditClick(accommodation) {
+        setShowEditAccommodation(true);
+        setAccommodationToDisplay(accommodation);
+        console.log(accommodationToDisplay);
+    }
+
     return (
         <div>
-            {studentToDisplay ? (
-            <>
-                <h1>{studentToDisplay.first_name} {studentToDisplay.last_name}</h1>
-                <button onClick={handleDelete}>Click here to delete student's record</button>
-                <h3>To edit this student's record, click here:</h3>
-                <button onClick={handleEdit}>Click here to edit</button>
-                <h2>Accommodations: </h2>
-                { studentToDisplay ? (
-                    <div>
-                        {studentToDisplay.accommodations ? studentToDisplay.accommodations.map((accommodation) => {
-                            return <div key={accommodation.id}><a href={`/students/${id}/${accommodation.id}`}>{accommodation.description}</a> </div>; // triggers EditAccommodation
-                        }) : <p>No Accommodations</p>}
-                    </div>
-                    ) : (
-                        <p>No student data to display</p>
-                        )}
-                    <div>
-                        { studentToDisplay.classes && studentToDisplay.classes.length > 0 ? (
-                            <div>
-                                <h2>Classes:</h2>
-                                {studentToDisplay.classes.map((classItem) => {
-                                    return <h3 key={classItem.name}>{classItem.name}</h3>;
-                                })}
-                            </div>
-                        ) : null}
-                    </div>
-                <form onSubmit={formik.handleSubmit}>
-                    <h2>To add an accommodation for this student, type the description into the text box, choose the appropriate category for the accommodation, then click Submit </h2>
-                    <label htmlFor="new-accommodation">Accommodations</label>
-                            <div>
-                                <input 
-                                    type="text" 
-                                    placeholder="Enter description" 
-                                    name="description"
-                                    id="description" 
-                                    value={formik.values.description} 
-                                    onChange={formik.handleChange}
-                                    onBlur={formik.handleBlur}/>
-                                    {formik.touched.description && formik.errors.description ? (
-                                    <p style={{ color: "red" }}>{formik.errors.description}</p>
-                                    ) : null}
-                            </div>
-                            <h1>   </h1> 
-                            <div>
-                                <select type="dropdown" 
-                                id="category_id" 
-                                name="category_id"
-                                value={formik.values.category_id} 
-                                onChange={formik.handleChange}>
-                                    <option value="" disabled>
-                                         Select one
-                                    </option>
-                                    {categories.map(category => {
-                                    return <option key={category.id} value={category.id}>
-                                    {category.description}
-                                  </option>
+            {!showEditAccommodation ? (
+            <div>
+                {studentToDisplay ? (
+                <>
+                    <h1>{studentToDisplay.first_name} {studentToDisplay.last_name}</h1>
+                    <button onClick={handleDelete}>Click here to delete student's record</button>
+                    <h3>To edit this student's record, click here:</h3>
+                    <button onClick={handleEdit}>Click here to edit</button>
+                    <h2>Accommodations: </h2>
+                    { studentToDisplay ? (
+                        <div>
+                            {studentToDisplay.accommodations ? studentToDisplay.accommodations.map((accommodation) => {
+                                return <div key={accommodation.id}><button onClick={() => handleEditClick(accommodation)}>
+                                {accommodation.description}
+                              </button> 
+                              </div>;
+                            }) : <p>No Accommodations</p>}
+                        </div>
+                        ) : (
+                            <p>No student data to display</p>
+                            )}
+                        <div>
+                            { studentToDisplay.classes && studentToDisplay.classes.length > 0 ? (
+                                <div>
+                                    <h2>Classes:</h2>
+                                    {studentToDisplay.classes.map((classItem) => {
+                                        return <h3 key={classItem.name}>{classItem.name}</h3>;
                                     })}
-                                </select>
-                            </div>
-                            <h1>  </h1>
-                            <h1>  </h1>
-                    <button type='submit'>Submit</button>
-                </form>
-                <br></br>
-                <br></br>
-                </>
-            ) : ( 
-                <p>Loading...</p>
-                )}
-        </div>
+                                </div>
+                            ) : null}
+                        </div>
+                    <form onSubmit={formik.handleSubmit}>
+                        <h2>To add an accommodation for this student, type the description into the text box, choose the appropriate category for the accommodation, then click Submit </h2>
+                        <label htmlFor="new-accommodation">Accommodations</label>
+                                <div>
+                                    <input 
+                                        type="text" 
+                                        placeholder="Enter description" 
+                                        name="description"
+                                        id="description" 
+                                        value={formik.values.description} 
+                                        onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur}/>
+                                        {formik.touched.description && formik.errors.description ? (
+                                        <p style={{ color: "red" }}>{formik.errors.description}</p>
+                                        ) : null}
+                                </div>
+                                <h1>   </h1> 
+                                <div>
+                                    <select type="dropdown" 
+                                    id="category_id" 
+                                    name="category_id"
+                                    value={formik.values.category_id} 
+                                    onChange={formik.handleChange}>
+                                        <option value="" disabled>
+                                            Select one
+                                        </option>
+                                        {categories.map(category => {
+                                        return <option key={category.id} value={category.id}>
+                                        {category.description}
+                                    </option>
+                                        })}
+                                    </select>
+                                </div>
+                                <h1>  </h1>
+                                <h1>  </h1>
+                        <button type='submit'>Submit</button>
+                    </form>
+                    <br></br>
+                    <br></br>
+                    </>
+                ) : ( 
+                    <p>Loading...</p>
+                    )}
+            </div>
+        ) : (
+            <EditAccommodation student={studentToDisplay} accommodation={accommodationToDisplay} setStudent={setStudentToDisplay} setAccommodation={setAccommodationToDisplay}/>
+        )}
+    </div>
     )
 }
 

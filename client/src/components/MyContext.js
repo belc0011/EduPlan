@@ -3,7 +3,7 @@ import { useState, useEffect, useMemo } from'react';
 
 const StudentContext = React.createContext()
 
-function StudentProvider({children}) {
+function StudentProvider({children, user}) {
   const [students, setStudents] = useState(null);
   
     const [categories, setCategories] = useState([]);
@@ -35,7 +35,7 @@ function StudentProvider({children}) {
       console.log(data)
   })
       .catch(error => console.log(error));
-  }, []);
+  }, [user]);
   
   useEffect(() => {
     fetch("http://127.0.0.1:5555/categories", {
