@@ -45,12 +45,12 @@ function AddComment({accommodation, setAccommodation, student, setStudent, stude
                     console.log(student.accommodations)
                     setAccommodation(prevAccommodation => ({
                         ...prevAccommodation,
-                        comment: data.description
+                        comment: data
                       }));
                     setStudent(prevStudent => ({
                         ...prevStudent,
                         accommodations: prevStudent.accommodations.map(accommodation =>
-                            accommodation.id === accommodationId ? {...accommodation, comment: data.description} : accommodation
+                            accommodation.id === accommodationId ? {...accommodation, comment: data} : accommodation
                         )
                     }));
                     setStudents(prevStudents => 

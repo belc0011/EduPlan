@@ -112,9 +112,11 @@ function EditAccommodation() {
                     <h3>Grade {studentToDisplay.grade}</h3>
                     {accommodationToDisplay ? (
                         <div>
+                            {!accommodationToDisplay.comment ? (
                             <div>
                                 <button onClick={handleComment}>ADD A COMMENT</button>
                             </div>
+                            ) : null}
                             <div>
                                 <h2>{accommodationToDisplay.description}</h2>
                                 {accommodationToDisplay.comment ? 
