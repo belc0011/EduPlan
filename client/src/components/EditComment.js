@@ -12,16 +12,12 @@ function EditComment() {
     const accommodationId = parseInt(parts[2], 10)
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
-    const { students, accommodationToDisplay, setAccommodationToDisplay } = useContext(StudentContext);
+    const { studentToDisplay, setStudentToDisplay, accommodationToDisplay, setAccommodationToDisplay } = useContext(StudentContext);
     const [showForm, setShowForm] = useState(false);
     const [commentToDisplay, setCommentToDisplay] = useState("");
-
-    const { accommodation, student, commentId } = location.state || {};
+    const commentId = accommodationToDisplay.comment.id;
     console.log(accommodationToDisplay);
-    console.log(student);
-    console.log(commentId);
-
-    console.log("Comment ID:" + commentId)
+    console.log(studentToDisplay);
 
     const formSchema = yup.object().shape({
         comment_text: yup
@@ -32,8 +28,8 @@ function EditComment() {
 
     const formik = useFormik({
         initialValues: {
-          comment_text: accommodationToDisplay.comment.description,
-          comment_id: commentId,
+          comment_text: "",
+          comment_id: "",
         },
         //validationSchema: formSchema,
         onSubmit: (values, { resetForm }) => {
@@ -49,7 +45,10 @@ function EditComment() {
         .then(res => {
             if (res.ok) {
                 res.json().then(data => {
-                    console.log("student: " + student + "accomm" + accommodationId);
+                    setAccommodationToDisplay(prevAccommodation => ({
+                        ...prevAccommodation,
+                        comment: data
+                      }));
                 resetForm()})
             }
             else {
@@ -86,35 +85,38 @@ function EditComment() {
     }
     return (
     <>
-        <h1>{accommodationToDisplay.description}</h1>
-        <h2>Current comment:</h2>
+    {accommodationToDisplay.comment ? (
         <div>
-            <h3>{accommodationToDisplay.comment.description}</h3>
-        </div>
-        <div>
-            <button onClick={handleClick}>Edit comment</button>
-        </div>
-        <div>
-            <button onClick={handleDelete}>Delete Comment</button>
-        </div>
-        {showForm ? (
-            <form onSubmit={formik.handleSubmit}>
-            <label htmlFor="comment_text">Enter new accommodation comment: </label>
-                <div>
-                    <input 
-                    type="text" 
-                    placeholder="Enter description" 
-                    name="comment_text"
-                    id="comment_text" 
-                    value={formik.values.comment_text} /* add touched, blur and errors */
-                    onChange={formik.handleChange}/>
-                </div>
-                <div>
-                    <p></p>
-                    <button type="submit">Submit</button>
-                </div>
-        </form>
-        ) : null}
+            <h1>{accommodationToDisplay.description}</h1>
+            <h2>Current comment:</h2>
+            <div>
+                <h3>{accommodationToDisplay.comment.description}</h3>
+            </div>
+            <div>
+                <button onClick={handleClick}>Edit comment</button>
+            </div>
+            <div>
+                <button onClick={handleDelete}>Delete Comment</button>
+            </div>
+            {showForm ? (
+                <form onSubmit={formik.handleSubmit}>
+                <label htmlFor="comment_text">Enter new accommodation comment: </label>
+                    <div>
+                        <input 
+                        type="text" 
+                        placeholder="Enter description" 
+                        name="comment_text"
+                        id="comment_text" 
+                        value={formik.values.comment_text} /* add touched, blur and errors */
+                        onChange={formik.handleChange}/>
+                    </div>
+                    <div>
+                        <p></p>
+                        <button type="submit">Submit</button>
+                    </div>
+            </form>
+            ) : null}
+    </div>) : null}
     </>)
 
 }

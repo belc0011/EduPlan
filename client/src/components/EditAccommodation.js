@@ -64,7 +64,7 @@ function EditAccommodation() {
             console.error('Error updating student:', error)})
         }
     });
-    function handleComment(e) {
+    function handleAddComment(e) {
         setShowAddComment(true)
     }
 
@@ -72,6 +72,10 @@ function EditAccommodation() {
         console.log(accommodationToDisplay)
         console.log(accommodationToDisplay.comment.id)
         navigate(`/comment/${accommodationId}`);
+    }
+
+    function handleEditComment(e) {
+        navigate(`/comment/${accommodationId}`)
     }
 
     function handleDeleteClick(e) {
@@ -114,9 +118,15 @@ function EditAccommodation() {
                         <div>
                             {!accommodationToDisplay.comment ? (
                             <div>
-                                <button onClick={handleComment}>ADD A COMMENT</button>
+                                <button onClick={handleAddComment}>ADD A COMMENT</button>
                             </div>
-                            ) : null}
+                            ) : (
+                                <div>
+                                    <button onClick={handleEditComment}>EDIT COMMENT</button>
+                                    <p></p>
+                                    <button>DELETE COMMENT</button>
+                                </div>
+                            )}
                             <div>
                                 <h2>{accommodationToDisplay.description}</h2>
                                 {accommodationToDisplay.comment ? 
