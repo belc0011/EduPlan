@@ -39,6 +39,10 @@
     text-align: center;
     list-style: none;
   }
+
+  a {
+    font-size: 24px;
+  }
   
   ul li {
     margin-bottom: 5px;

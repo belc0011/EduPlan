@@ -16,6 +16,7 @@ function EditComment() {
     const [showForm, setShowForm] = useState(false);
     const [commentToDisplay, setCommentToDisplay] = useState("");
     const commentId = accommodationToDisplay.comment.id;
+    const id = studentToDisplay.id;
     console.log(accommodationToDisplay);
     console.log(studentToDisplay);
 
@@ -86,12 +87,12 @@ function EditComment() {
             });
         }
     }
-    
+
     return (
     <>
     {accommodationToDisplay.comment ? (
         <div>
-            <h1>{studentToDisplay.firstName}</h1>
+            <a href={`/students/${id}`}>{studentToDisplay.first_name} {studentToDisplay.last_name}</a>
             <h2>{accommodationToDisplay.description}</h2>
             <h2>Current comment:</h2>
             <div>

@@ -12,7 +12,11 @@ class Student(db.Model, SerializerMixin):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
     user = db.relationship('User', back_populates='students')
-    accommodations = db.relationship('Accommodation', back_populates='student')
+    accommodations = db.relationship(
+        'Accommodation', 
+        back_populates='student', 
+        cascade="all, delete-orphan" 
+    )
 
     serialize_rules = ('-accommodations.student', '-user.students')
 
