@@ -17,9 +17,8 @@ class Student(db.Model, SerializerMixin):
         back_populates='student', 
         cascade="all, delete-orphan" 
     )
-    categories = db.relationship('Category', back_populates='students')
 
-    serialize_rules = ('-accommodations.student', '-user.students', '-categories.students')
+    serialize_rules = ('-accommodations.student', '-user.students')
 
 
 class Accommodation(db.Model, SerializerMixin):
@@ -71,9 +70,7 @@ class Category(db.Model, SerializerMixin):
 
     accommodations = db.relationship("Accommodation", back_populates="category")
 
-    students = db.relationship('Student', back_populates='categories')
-
-    serialize_rules = ('-accommodations.category', '-students.categories')
+    serialize_rules = ('-accommodations.category',)
 
 class Comment(db.Model, SerializerMixin):
     __tablename__ = "comments"
