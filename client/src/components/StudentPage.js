@@ -48,7 +48,22 @@ function StudentPage({ }) {
     })
 
     function handleDelete(e) {
-        navigate(`/delete/${id}`)
+        const userConfirmed = window.confirm("Are you sure you want to delete this student record?");
+        if (userConfirmed) {
+            fetch(`http://127.0.0.1:5555/students/${id}`, {
+                method: "DELETE",
+                headers: {
+                "Content-Type": "application/json",
+                },
+                credentials: 'include'
+            })
+            .then(res => res.json())
+            .then(data => {
+                setStudents(prevState => prevState.filter(student => student.id !== id));
+                setStudentToDisplay({});
+                navigate("/students");
+            });
+        }
     }
 
     function handleEdit(e) {
@@ -68,9 +83,8 @@ function StudentPage({ }) {
                 {studentToDisplay ? (
                 <>
                     <h1>{studentToDisplay.first_name} {studentToDisplay.last_name}</h1>
-                    <button onClick={handleDelete}>Click here to delete student's record</button>
-                    <h3>To edit this student's record, click here:</h3>
-                    <button onClick={handleEdit}>Click here to edit</button>
+                    <button onClick={handleDelete}>Delete student record</button>
+                    <button onClick={handleEdit}>Edit student record</button>
                     <h2>Accommodations: </h2>
                     { studentToDisplay ? (
                         <div>
@@ -84,19 +98,9 @@ function StudentPage({ }) {
                         ) : (
                             <p>No student data to display</p>
                             )}
-                        <div>
-                            { studentToDisplay.classes && studentToDisplay.classes.length > 0 ? (
-                                <div>
-                                    <h2>Classes:</h2>
-                                    {studentToDisplay.classes.map((classItem) => {
-                                        return <h3 key={classItem.name}>{classItem.name}</h3>;
-                                    })}
-                                </div>
-                            ) : null}
-                        </div>
                     <form onSubmit={formik.handleSubmit}>
                         <h2>To add an accommodation for this student, type the description into the text box, choose the appropriate category for the accommodation, then click Submit </h2>
-                        <label htmlFor="new-accommodation">Accommodations</label>
+                        <label htmlFor="new-accommodation">New Accommodation: </label>
                                 <div>
                                     <input 
                                         type="text" 

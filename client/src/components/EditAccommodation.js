@@ -15,7 +15,7 @@ function EditAccommodation() {
     const id = parseInt(parts[2], 10)
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
-    const { students, setStudents, studentToDisplay, setStudentToDisplay, accommodationToDisplay, setAccommodationToDisplay } = useContext(StudentContext);
+    const { students, setStudents, studentToDisplay, setStudentToDisplay, accommodationToDisplay, setAccommodationToDisplay, categories, setCategories } = useContext(StudentContext);
     const [showAddComment, setShowAddComment] = useState(false);
     const accommodationId = accommodationToDisplay.id;
 
@@ -31,9 +31,10 @@ function EditAccommodation() {
     
       const formik = useFormik({
         initialValues: {
-          description: "",
+          description: accommodationToDisplay.description,
+          category_id: accommodationToDisplay.category.id,
         },
-        validationSchema: formSchema,
+        //validationSchema: formSchema,
         onSubmit: (values, { resetForm }) => {
             console.log("inside on submit")
             fetch(`http://127.0.0.1:5555/accommodations/${accommodationId}`, {
@@ -98,7 +99,19 @@ function EditAccommodation() {
             return student;
         })
         setStudents(updatedStudents);
-        navigate(`/students/${id}`)
+        setStudentToDisplay(prevState => {
+            return {
+               ...prevState,
+                accommodations: updatedAccommodations
+            };
+        })
+        if (updatedAccommodations.length === 0) {
+            navigate("/students");
+        }
+        else {
+            const firstAccommodation = studentToDisplay.accommodations[0];
+            setAccommodationToDisplay(firstAccommodation)
+        }
     })
     
     }
@@ -122,16 +135,20 @@ function EditAccommodation() {
                             </div>
                             ) : (
                                 <div>
-                                    <button onClick={handleEditComment}>EDIT COMMENT</button>
-                                    <p></p>
-                                    <button>DELETE COMMENT</button>
+                                    <button onClick={handleEditComment}>EDIT/DELETE COMMENT</button>
                                 </div>
                             )}
                             <div>
+                                {showAddComment ? (
+                                    <AddComment accommodation={accommodationToDisplay} setAccommodation={setAccommodationToDisplay} student={studentToDisplay} setStudent={setStudentToDisplay} students={students} setStudents={setStudents}/>
+                                ) : null}
+                            </div>
+                            <div>
                                 <h2>{accommodationToDisplay.description}</h2>
+                                <h3>Category: {accommodationToDisplay.category.description}</h3>
                                 {accommodationToDisplay.comment ? 
                                 (<div> 
-                                    <h3>Comment:</h3>
+                                    <h3>Current comment for accommodation:</h3>
                                     <ul>
                                         <li key={accommodationToDisplay.comment.id}>
                                             <Link 
@@ -165,7 +182,24 @@ function EditAccommodation() {
                                     onChange={formik.handleChange}/>
                                 </div>
                                 <div>
-                                <p></p>
+                                    <p></p>
+                                    <div>
+                                    <label htmlFor="category">Choose an updated accommodation category: </label>
+                                    <select type="dropdown" 
+                                    id="category_id" 
+                                    name="category_id"
+                                    value={formik.values.category_id} 
+                                    onChange={formik.handleChange}>
+                                        <option value="">
+                                            Select one
+                                        </option>
+                                        {categories.map(category => {
+                                        return <option key={category.id} value={category.id}>
+                                        {category.description}
+                                    </option>
+                                        })}
+                                    </select>
+                                </div>
                                 <button type="submit">Submit</button>
                                 </div>
                             </form>
@@ -178,11 +212,6 @@ function EditAccommodation() {
                     )}
                 </>
                 )}
-            </div>
-            <div>
-                {showAddComment ? (
-                    <AddComment accommodation={accommodationToDisplay} setAccommodation={setAccommodationToDisplay} student={studentToDisplay} setStudent={setStudentToDisplay} students={students} setStudents={setStudents}/>
-                ) : null}
             </div>
         </div>
         ) : null

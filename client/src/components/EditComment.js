@@ -65,29 +65,34 @@ function EditComment() {
     }
 
     function handleDelete(e) {
-        fetch(`http://127.0.0.1:5555/comments/${commentId}`, {
-            method: "DELETE",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            credentials: 'include'
-        })
-       .then(res => res.json())
-       .then(data => {
-        setAccommodationToDisplay(prevState => ({
-            ...prevState,
-            comment: {
-                ...prevState.comment,
-                description: ""
-            }
-        }))
-       });
+        const userConfirmed = window.confirm("Are you sure you want to delete this comment?");
+        if (userConfirmed) {
+            fetch(`http://127.0.0.1:5555/comments/${commentId}`, {
+                method: "DELETE",
+                headers: {
+                "Content-Type": "application/json",
+                },
+                credentials: 'include'
+            })
+            .then(res => res.json())
+            .then(data => {
+                setAccommodationToDisplay(prevState => ({
+                    ...prevState,
+                    comment: {
+                        ...prevState.comment,
+                        description: ""
+                    }
+                }))
+            });
+        }
     }
+    
     return (
     <>
     {accommodationToDisplay.comment ? (
         <div>
-            <h1>{accommodationToDisplay.description}</h1>
+            <h1>{studentToDisplay.firstName}</h1>
+            <h2>{accommodationToDisplay.description}</h2>
             <h2>Current comment:</h2>
             <div>
                 <h3>{accommodationToDisplay.comment.description}</h3>
@@ -100,7 +105,7 @@ function EditComment() {
             </div>
             {showForm ? (
                 <form onSubmit={formik.handleSubmit}>
-                <label htmlFor="comment_text">Enter new accommodation comment: </label>
+                <label htmlFor="comment_text">Enter new comment: </label>
                     <div>
                         <input 
                         type="text" 

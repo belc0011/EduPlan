@@ -134,10 +134,13 @@ class StudentById(Resource):
     def delete(self, id):
         if session.get('user_id'):
             student = Student.query.filter_by(id=id).first()
-            db.session.delete(student)
-            db.session.commit()
-            response = {'message': 'Successfully deleted'}, 200
-            return response
+            if student:
+                db.session.delete(student)
+                db.session.commit()
+                response = {'message': 'Successfully deleted'}, 200
+                return response
+            else:
+                return {'message': 'Student not found'}, 404
         else:
             return {'error': 'Unauthorized'}, 401
 
@@ -183,6 +186,8 @@ class AccommodationById(Resource):
             if accommodation:
                 if 'description' in request_dict:
                     accommodation.description = request_dict['description']
+                if 'category_id' in request_dict:
+                    accommodation.category_id = request_dict['category_id']
                 db.session.commit()
                 response = make_response(accommodation.to_dict(), 200)
                 return response
