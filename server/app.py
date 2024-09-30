@@ -109,9 +109,6 @@ class StudentById(Resource):
         else:
             return {'message': 'Error, unauthorized user'}, 401
     
-    def post(self, id):
-        pass
-    
     def patch(self, id):
         if session.get('user_id'):
             request_dict = request.get_json()
