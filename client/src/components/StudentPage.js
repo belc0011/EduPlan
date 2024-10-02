@@ -82,14 +82,16 @@ function StudentPage({ }) {
             <div>
                 {studentToDisplay ? (
                 <>
-                    <h1>{studentToDisplay.first_name} {studentToDisplay.last_name}</h1>
-                    <button onClick={handleDelete}>Delete student record</button>
-                    <button onClick={handleEdit}>Edit student record</button>
-                    <h2>Accommodations: </h2>
+                    <h1 className="text-5xl py-6 bg-slate-200">{studentToDisplay.first_name} {studentToDisplay.last_name}</h1>
+                    <div className="grid grid-cols-2 pl-40 pr-40 gap-20 py-5">
+                        <button onClick={handleDelete} className="text-red-800 text-3xl bg-red-100 border-red-900 border-4">Delete student record</button>
+                        <button onClick={handleEdit} className="text-blue-800 text-3xl bg-blue-100 border-4">Edit student record</button>
+                    </div>
+                    <h2 className="text-4xl pb-5">Accommodations: </h2>
                     { studentToDisplay ? (
-                        <div>
+                        <div className="pb-6">
                             {studentToDisplay.accommodations ? studentToDisplay.accommodations.map((accommodation) => {
-                                return <div key={accommodation.id}><button onClick={() => handleEditClick(accommodation)}>
+                                return <div key={accommodation.id} className="py-3"><button onClick={() => handleEditClick(accommodation)} className="bg-slate-200 rounded-3xl px-20 text-2xl text-black">
                                 {accommodation.description}
                               </button> 
                               </div>;
@@ -98,13 +100,17 @@ function StudentPage({ }) {
                         ) : (
                             <p>No student data to display</p>
                             )}
-                    <form onSubmit={formik.handleSubmit}>
-                        <h2>To add an accommodation for this student, type the description into the text box, choose the appropriate category for the accommodation, then click Submit </h2>
-                        <label htmlFor="new-accommodation">New Accommodation: </label>
-                                <div>
+                    <form onSubmit={formik.handleSubmit} className="bg-neutral-100">
+                        <h2 className="italic text-xl bg-slate-100 py-5">To add an accommodation for this student, type the description into the text box and choose the appropriate category</h2>
+                        <div className="py-3 text-lg">
+                            <label htmlFor="new-accommodation">New Accommodation: </label>
+                        </div>
+                            <div className="grid grid-cols-2 px-40">
+                                <div className="pb-5 pl-20">
                                     <input 
                                         type="text" 
                                         placeholder="Enter description" 
+                                        className="border-4 py-2 max-w-full"
                                         name="description"
                                         id="description" 
                                         value={formik.values.description} 
@@ -114,8 +120,7 @@ function StudentPage({ }) {
                                         <p style={{ color: "red" }}>{formik.errors.description}</p>
                                         ) : null}
                                 </div>
-                                <h1>   </h1> 
-                                <div>
+                                <div className="pb-5 pr-20">
                                     <select type="dropdown" 
                                     id="category_id" 
                                     name="category_id"
@@ -131,8 +136,7 @@ function StudentPage({ }) {
                                         })}
                                     </select>
                                 </div>
-                                <h1>  </h1>
-                                <h1>  </h1>
+                            </div>
                         <button type='submit'>Submit</button>
                     </form>
                     <br></br>
