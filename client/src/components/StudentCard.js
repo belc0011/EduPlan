@@ -8,22 +8,24 @@ function StudentCard({firstName, lastName, grade, accommodations, id}) {
     const { studentToDisplay, setStudentToDisplay } = useContext(StudentContext);
     function handleClick(e) {
         setStudentToDisplay({firstName, lastName, grade, accommodations, id})
-        navigate(`edit_student/${id}`)
+        navigate(`/students/${id}`)
     }
     return (
         <div className="bg-slate-200 border-4 border-black/50 rounded-2xl flex flex-col">
-            <a href={`/students/${id}`} className="text-red-900 font-bold text-3xl">{firstName} {lastName}</a>
-            <h3 className="text-lg">Grade {grade}</h3>
-               <p className="text-2xl underline pb-2"> Accommodations: </p>
-                {accommodations && accommodations.length > 0 ? (
-                    accommodations.map(accommodation => (
-                        <div key={accommodation.id}>
-                        <li className="pb-2 text-lg">{accommodation.description}</li>
-                        </div>
-                    ))
-                ) : (
-                    <div>No Accommodations</div>
-                )}
+            <button onClick={handleClick}>
+                <h1 className="text-red-900 font-bold text-3xl">{firstName} {lastName}</h1>
+                <h3 className="text-lg">Grade {grade}</h3>
+                <p className="text-2xl underline pb-2"> Accommodations: </p>
+                    {accommodations && accommodations.length > 0 ? (
+                        accommodations.map(accommodation => (
+                            <div key={accommodation.id}>
+                            <li className="pb-2 text-lg">{accommodation.description}</li>
+                            </div>
+                        ))
+                    ) : (
+                        <div>No Accommodations</div>
+                    )}
+            </button>
         </div>
     )
 }
