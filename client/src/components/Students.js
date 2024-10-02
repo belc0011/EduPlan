@@ -25,28 +25,31 @@ function Students() {
 
     return (
         <div>
-            <button onClick={handleClick}>Click here to add a new student</button>
+            <div className="flex justify-end pr-5 bg-slate-200/50">
+                <button onClick={handleClick} className="py-9 text-3xl border-4">Click here to add a new student</button>
+            </div>
             {showAddStudent && <AddStudent setError={setError} />}
             <main>
-                <h1>Students</h1>
-                <h3>Click on an accommodation to see comments</h3>
+                <h1 className="font-sans text-5xl py-5 font-bold">Students</h1>
                 <div>
-                    {loading ? (
-                        <h1>Loading student data...</h1>  // Loading state
-                    ) : students.length > 0 ? (
-                        students.map(student => (
-                            <StudentCard
-                                key={student.id}
-                                id={student.id}
-                                firstName={student.first_name}
-                                lastName={student.last_name}
-                                grade={student.grade}
-                                accommodations={student.accommodations}
-                            />
-                        ))
-                    ) : (
-                        <h1>No student data to display</h1>
-                    )}
+                    <div className="gap-1 grid grid-cols-3 px-2">
+                        {loading ? (
+                            <h1>Loading student data...</h1>
+                        ) : students.length > 0 ? (
+                            students.map(student => (
+                                <StudentCard
+                                    key={student.id}
+                                    id={student.id}
+                                    firstName={student.first_name}
+                                    lastName={student.last_name}
+                                    grade={student.grade}
+                                    accommodations={student.accommodations}
+                                />
+                            ))
+                        ) : (
+                            <h1>No student data to display</h1>
+                        )}
+                    </div>
                 </div>
             </main>
         </div>
