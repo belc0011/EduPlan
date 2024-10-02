@@ -11,41 +11,40 @@ function Home() {
     function handleClick(e) {
         navigate('/accommodations')
     }
-    function handleSubmit(e) {
+    function handleAddStudent(e) {
         e.preventDefault()
         setShowComponent(true)
     }
     
-    function handleSubmit2(e) {
+    function handleStudentClick(e) {
         e.preventDefault()
         navigate('/students')
         
     }
 
-    function handleClick2(e) {
+    function handleCategoryClick(e) {
         navigate('/categories')
     }
+
     return (
         <div>
-            <main>
-                <h3>Click here to see a list of accommodations: </h3>
-                <button onClick={handleClick}>Accommodation Search</button>
-                <h3>Click here to see a list of categories: </h3>
-                <button onClick={handleClick2}>Category List</button>
-                <form onSubmit={handleSubmit2}>
-                    <h3>Click here for a list of your students</h3>
-                    <div>
-                        <p></p>
-                        <button type="submit">Student List</button>
-                    </div>
-                </form>
-                <form onSubmit={handleSubmit}>
-                <h3>Click here to add a student</h3>
-                    <div>
-                        <p></p>
-                        <button type="submit">Add a student</button>
-                    </div>
-                </form>
+            <main className="bg-amber-100 py-2 px-40">
+                <div className="py-2 bg-emerald-200 border-4 border-solid">
+                    <h1 className="text-2xl py-2">For a list of accommodations:</h1>
+                    <button onClick={handleClick}>Accommodation Search</button>
+                </div>
+                <div className="py-2 bg-violet-300 border-4 border-solid">
+                    <h1 className="text-2xl py-2">For a list of categories:</h1>
+                    <button onClick={handleCategoryClick}>Category List</button>
+                </div>
+                <div className="py-2 bg-orange-300 border-4 border-solid">
+                    <h1 className="text-2xl py-2">For a list of students:</h1>
+                    <button onClick={handleStudentClick}>Student List</button>
+                </div>
+                <div className="py-2 bg-green-400 border-4 border-solid">
+                    <h1 className="text-2xl py-2">To add a student:</h1>
+                    <button onClick={handleAddStudent}>Add a student</button>
+                </div>
                 {showComponent && <AddStudent />}
             </main>
         </div>

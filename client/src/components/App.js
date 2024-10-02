@@ -12,6 +12,7 @@ import Categories from './Categories';
 import EditAccommodation from './EditAccommodation';
 import AccommodationSearch from './AccommodationSearch';
 import EditComment from './EditComment';
+import AccommodationByCategory from "./AccommodationByCategory";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -51,6 +52,7 @@ function App() {
                 <Route path="/students/:id/:accommodationId" element={<EditAccommodation />} />
                 <Route path="/accommodations" element={<AccommodationSearch />} />
                 <Route path="/comment/:accommodationId" element={<EditComment />} />
+                <Route path="/categories/accommodations/:categoryId" element={<AccommodationByCategory />} />
               </Routes>
             </main>
           </>

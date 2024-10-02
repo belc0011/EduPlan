@@ -30,11 +30,14 @@ function Categories() {
         {categories.length > 0 ? (
             <>
                 <h1>Categories</h1>
-                <ul>
+                <div>
                     {categories.map(category => (
-                        <li key={category.id}>{category.description}</li>
+                        <div>
+                        <a key={category.id} href={`/categories/accommodations/${category.id}`}>{category.description}</a>
+                        </div>
                     ))}
-                </ul>
+                </div>
+                <h3>Click on a category to see students with accommodations in that category</h3>
             </>
         ) : (<p>No categories to display</p>)}
         <button onClick={handleClick}>Click here to add a new category</button>

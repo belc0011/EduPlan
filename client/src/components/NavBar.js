@@ -20,7 +20,7 @@ function NavBar({ user, setUser }) {
     }
     if (user) {
     return (
-        <nav>
+        <nav className = "justify-center flex px-px pt-1 pb-1">
             <div>
                 <Link to="/" className="nav-link">Home</Link>
             </div>
@@ -29,6 +29,9 @@ function NavBar({ user, setUser }) {
             </div>
             <div>
                 <Link to="/students" className="nav-link">Students</Link>
+            </div>
+            <div>
+                <Link to="/categories" className="nav-link">Categories</Link>
             </div>
         </nav>
     );
