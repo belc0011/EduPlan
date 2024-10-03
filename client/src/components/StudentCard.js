@@ -23,7 +23,7 @@ function StudentCard({firstName, lastName, grade, accommodations, id}) {
                             </div>
                         ))
                     ) : (
-                        <div>No Accommodations</div>
+                        <div className="italic">No Accommodations</div>
                     )}
             </button>
         </div>

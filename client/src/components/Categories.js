@@ -39,7 +39,9 @@ function Categories() {
                 </div>
             </div>
         ) : (<p className="text-3xl">No categories to display</p>)}
-        <button onClick={handleClick}>Click here to add a new category</button>
+        <div className="py-5">
+            <button onClick={handleClick} className="bg-slate-700 text-white text-xl">NEW CATEGORY</button>
+        </div>
         {showAddCategory && <AddCategory categories={categories} setCategories={setCategories}/>}
     </>
     )

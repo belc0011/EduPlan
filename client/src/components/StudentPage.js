@@ -137,7 +137,7 @@ function StudentPage({ }) {
                                     </select>
                                 </div>
                             </div>
-                        <button type='submit'>Submit</button>
+                        <button type='submit'>SUBMIT</button>
                     </form>
                     <br></br>
                     <br></br>

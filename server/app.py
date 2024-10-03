@@ -210,10 +210,13 @@ class Categories(Resource):
     def get(self):
         if session.get('user_id'):
             user_id = session['user_id']
-            categories = Category.query.all()
-            category_list = {'categories': [category.to_dict() for category in categories]}
-            response = make_response(category_list, 200)
-            return response
+            categories = Category.query.filter_by(user_id=user_id).all()
+            if categories:
+                category_list = {'categories': [category.to_dict() for category in categories]}
+                response = make_response(category_list, 200)
+                return response
+            else:
+                return {'message': 'No categories found'}, 404
         else:
             return {'message': 'Error, unauthorized user'}, 401
     
