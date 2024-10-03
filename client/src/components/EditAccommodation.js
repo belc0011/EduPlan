@@ -122,19 +122,47 @@ function EditAccommodation() {
     return (
         studentToDisplay ? (
         <div>
-            <div className="card">
+            <div className="flex justify-end pr-5">
+                <button onClick={handleDeleteClick} className="py-9 text-3xl border-4 border-red-900 text-red-700">Click Here to Delete Accommodation</button>
+            </div>
+            <div className="bg-slate-200">
                 {isLoading ? (<h1>Loading...</h1>) : (
                 <>
-                    <a href={`/students/${id}`}>{studentToDisplay.first_name} {studentToDisplay.last_name}</a>
-                    <h3>Grade {studentToDisplay.grade}</h3>
+                    <a href={`/students/${id}`} className="text-5xl bold text-red-700">{studentToDisplay.first_name} {studentToDisplay.last_name}</a>
+                    <h3 className="pt-2 text-lg">Grade {studentToDisplay.grade}</h3>
+                    <div>
+                        <h3 className="italic text-lg pt-4">Category: {accommodationToDisplay.category.description}</h3>
+                        <h2 className="text-4xl font-sans bold py-4">{accommodationToDisplay.description}</h2>
+                    </div>
+                    <div>
+                        {accommodationToDisplay.comment ? 
+                        (<div>
+                            <ul>
+                                <li key={accommodationToDisplay.comment.id}>
+                                    <Link 
+                                        to={`/comment/${accommodationId}`} 
+                                        state={{ 
+                                            accommodation: accommodationToDisplay,
+                                            student: studentToDisplay,
+                                            commentId: accommodationToDisplay.comment.id
+                                        }}
+                                        onClick={handleCommentClick}
+                                        className="text-blue-700 text-3xl italic pb-5"
+                                    >
+                                        {accommodationToDisplay.comment.description}
+                                    </Link>
+                                </li>
+                            </ul>
+                        </div>) : null}
+                    </div>
                     {accommodationToDisplay ? (
                         <div>
                             {!accommodationToDisplay.comment ? (
-                            <div>
+                            <div className="py-2">
                                 <button onClick={handleAddComment}>ADD A COMMENT</button>
                             </div>
                             ) : (
-                                <div>
+                                <div className="py-2">
                                     <button onClick={handleEditComment}>EDIT/DELETE COMMENT</button>
                                 </div>
                             )}
@@ -143,68 +171,42 @@ function EditAccommodation() {
                                     <AddComment accommodation={accommodationToDisplay} setAccommodation={setAccommodationToDisplay} student={studentToDisplay} setStudent={setStudentToDisplay} students={students} setStudents={setStudents}/>
                                 ) : null}
                             </div>
-                            <div>
-                                <h2>{accommodationToDisplay.description}</h2>
-                                <h3>Category: {accommodationToDisplay.category.description}</h3>
-                                {accommodationToDisplay.comment ? 
-                                (<div> 
-                                    <h3>Current comment for accommodation:</h3>
-                                    <ul>
-                                        <li key={accommodationToDisplay.comment.id}>
-                                            <Link 
-                                                to={`/comment/${accommodationId}`} 
-                                                state={{ 
-                                                    accommodation: accommodationToDisplay,
-                                                    student: studentToDisplay,
-                                                    commentId: accommodationToDisplay.comment.id
-                                                }}
-                                                onClick={handleCommentClick}
-                                            >
-                                                {accommodationToDisplay.comment.description}
-                                            </Link>
-                                        </li>
-                                    </ul>
-                                    </div>) : null}
-                                </div>
-                            <div>
-                                <p></p>
-                            </div>
-                            <h3>Edit accommodation: </h3>
-                            <form onSubmit={formik.handleSubmit}>
-                            <label htmlFor="description">Enter updated accommodation description: </label>
-                                <div>
-                                    <input 
-                                    type="text" 
-                                    placeholder="Enter description" 
-                                    name="description"
-                                    id="description" 
-                                    value={formik.values.description} /* add touched, blur and errors */
-                                    onChange={formik.handleChange}/>
-                                </div>
-                                <div>
-                                    <p></p>
+                            <div className="border-blue-700 border-4 bg-white">
+                                <h3 className="text-3xl text-mono py-3">Edit accommodation: </h3>
+                                <form onSubmit={formik.handleSubmit}>
+                                <label htmlFor="description">Adjust the accommodation description as necessary: </label>
                                     <div>
-                                    <label htmlFor="category">Choose an updated accommodation category: </label>
-                                    <select type="dropdown" 
-                                    id="category_id" 
-                                    name="category_id"
-                                    value={formik.values.category_id} 
-                                    onChange={formik.handleChange}>
-                                        <option value="">
-                                            Select one
-                                        </option>
-                                        {categories.map(category => {
-                                        return <option key={category.id} value={category.id}>
-                                        {category.description}
-                                    </option>
-                                        })}
-                                    </select>
-                                </div>
-                                <button type="submit">Submit</button>
-                                </div>
-                            </form>
-                            <div>
-                                <button onClick={handleDeleteClick}>Click Here to Delete Accommodation</button>
+                                        <input 
+                                        type="text" 
+                                        placeholder="Enter description"
+                                        className="border-4 py-2 px-4 w-96"  
+                                        name="description"
+                                        id="description" 
+                                        value={formik.values.description} /* add touched, blur and errors */
+                                        onChange={formik.handleChange}/>
+                                    </div>
+                                    <div>
+                                        <div className="py-2">
+                                            <label htmlFor="category" className="text-xl">Choose an updated accommodation category: </label>
+                                            <select type="dropdown" 
+                                            id="category_id" 
+                                            name="category_id"
+                                            className="text-xl border-slate-400 border-2"
+                                            value={formik.values.category_id} 
+                                            onChange={formik.handleChange}>
+                                                <option value="">
+                                                    Select one
+                                                </option>
+                                                {categories.map(category => {
+                                                return <option key={category.id} value={category.id}>
+                                                {category.description}
+                                            </option>
+                                                })}
+                                            </select>
+                                        </div>
+                                        <button type="submit" className="text-xl">Submit Edit</button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     ) : (
