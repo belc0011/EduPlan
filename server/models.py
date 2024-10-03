@@ -46,9 +46,8 @@ class User(db.Model, SerializerMixin):
     _password_hash = db.Column(db.String)
 
     students = db.relationship('Student', back_populates='user')
-    categories = db.relationship('Category', back_populates='user')
     
-    serialize_rules = ('-students.user', '-accommodations.user', '-categories.user')
+    serialize_rules = ('-students.user', '-accommodations.user')
 
     @hybrid_property
     def password_hash(self):
@@ -71,9 +70,8 @@ class Category(db.Model, SerializerMixin):
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
 
     accommodations = db.relationship("Accommodation", back_populates="category")
-    user = db.relationship("User", back_populates="categories")
 
-    serialize_rules = ('-accommodations.category', '-user.categories')
+    serialize_rules = ('-accommodations.category',)
 
 class Comment(db.Model, SerializerMixin):
     __tablename__ = "comments"

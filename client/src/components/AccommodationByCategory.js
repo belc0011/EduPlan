@@ -24,12 +24,15 @@ function AccommodationByCategory() {
 
     return (
         <div>
-            {selectedCategory[0].accommodations.map(accommodation => {
+            { selectedCategory[0].accommodations.length > 0 ? (selectedCategory[0].accommodations.map(accommodation => {
                 return <div className="card">
                     <h1>{accommodation.student.first_name} {accommodation.student.last_name}</h1>
                     <h2 key={selectedCategory.id}>{accommodation.description}</h2>
                     </div>
-            })}
+            })
+        ) : (
+            <div className="text-2xl italic">No accommodations in this category</div>
+        )}
         </div>
     )
 }

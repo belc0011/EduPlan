@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useFormik } from "formik";
 import AddCategory from "./AddCategory.js";
+import { StudentContext } from "./MyContext.js";
 
 function Categories() {
-    const [categories, setCategories] = useState([]);
+    const { categories, setCategories } = useContext(StudentContext);
     const [showAddCategory, setShowAddCategory] = useState(false);
 
     useEffect(() => {
