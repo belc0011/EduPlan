@@ -32,7 +32,7 @@ function EditComment() {
           comment_text: "",
           comment_id: "",
         },
-        //validationSchema: formSchema,
+        validationSchema: formSchema,
         onSubmit: (values, { resetForm }) => {
             console.log("inside on submit")
           fetch(`http://127.0.0.1:5555/comments/${commentId}`, {
@@ -91,36 +91,35 @@ function EditComment() {
     return (
     <>
     {accommodationToDisplay.comment ? (
-        <div>
-            <a href={`/students/${id}`}>{studentToDisplay.first_name} {studentToDisplay.last_name}</a>
-            <h2>{accommodationToDisplay.description}</h2>
-            <h2>Current comment:</h2>
-            <div>
-                <h3>{accommodationToDisplay.comment.description}</h3>
+        <div className="bg-slate-100">
+            <a href={`/students/${id}`} className="text-blue-800 text-6xl font-bold">{studentToDisplay.first_name} {studentToDisplay.last_name}</a>
+            <h2 className="py-5 text-4xl">{accommodationToDisplay.description}</h2>
+            <div className="grid grid-cols-2 pb-5">    
+                <h2 className="italic text-3xl pl-15 text-right">Current comment:</h2>
+                <h3 className="pr-20 pl-3 text-3xl text-left">{accommodationToDisplay.comment.description}</h3>
             </div>
-            <div>
-                <button onClick={handleClick}>Edit comment</button>
-            </div>
-            <div>
-                <button onClick={handleDelete}>Delete Comment</button>
+            <div className="grid grid-cols-2 py-8">
+                <button onClick={handleClick} className="text-3xl text-blue-800 font-bold border-slate-500 border-4 w-fit justify-self-center ml-20 bg-blue-100">EDIT COMMENT</button>
+                <button onClick={handleDelete} className="text-3xl text-red-800 font-bold border-slate-500 border-4 w-fit justify-self-center mr-20 bg-red-100">DELETE COMMENT</button>
             </div>
             {showForm ? (
-                <form onSubmit={formik.handleSubmit}>
-                <label htmlFor="comment_text">Enter new comment: </label>
-                    <div>
+                <div className="text-white text-3xl italic py-5 border-2 border-slate-400 bg-slate-700">
+                    <h1>EDIT COMMENT</h1>
+                    <form onSubmit={formik.handleSubmit}>
+                    <label htmlFor="comment_text" className="text-2xl pt-5">Enter new comment: </label>
                         <input 
                         type="text" 
                         placeholder="Enter description" 
                         name="comment_text"
+                        className="ml-10 my-5"
                         id="comment_text" 
                         value={formik.values.comment_text} /* add touched, blur and errors */
                         onChange={formik.handleChange}/>
-                    </div>
                     <div>
-                        <p></p>
-                        <button type="submit">Submit</button>
+                        <button type="submit">SUBMIT</button>
                     </div>
-            </form>
+                </form>
+            </div>
             ) : null}
     </div>) : null}
     </>)

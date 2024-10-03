@@ -28,7 +28,7 @@ function Home() {
 
     return (
         <div>
-            <main className="bg-amber-100 py-2 px-40">
+            <main className="bg-slate-100 py-2 px-40">
                 <div className="py-2 bg-emerald-200 border-4 border-solid">
                     <h1 className="text-2xl py-2">For a list of accommodations:</h1>
                     <button onClick={handleClick}>Accommodation Search</button>

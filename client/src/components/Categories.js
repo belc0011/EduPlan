@@ -28,18 +28,17 @@ function Categories() {
     return (
     <>
         {categories.length > 0 ? (
-            <>
-                <h1>Categories</h1>
+            <div className="bg-slate-100">
+                <h1 className="text-6xl font-bold py-8">Categories</h1>
                 <div>
                     {categories.map(category => (
-                        <div>
-                        <a key={category.id} href={`/categories/accommodations/${category.id}`}>{category.description}</a>
+                        <div className="text-blue-700 font-bold py-3">
+                            <a key={category.id} href={`/categories/accommodations/${category.id}`} className="text-4xl">{category.description}</a>
                         </div>
                     ))}
                 </div>
-                <h3>Click on a category to see students with accommodations in that category</h3>
-            </>
-        ) : (<p>No categories to display</p>)}
+            </div>
+        ) : (<p className="text-3xl">No categories to display</p>)}
         <button onClick={handleClick}>Click here to add a new category</button>
         {showAddCategory && <AddCategory categories={categories} setCategories={setCategories}/>}
     </>

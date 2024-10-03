@@ -40,28 +40,30 @@ function Login({ onLogin }) {
     return (
         <div>
             <main>
-                <h1>Sign In</h1>
+                <h1 className="bg-slate-700 text-white italic text-7xl py-10">EduPlan 504 Organizer</h1>
+                <h1 className="text-3xl py-5 font-bold">Sign In</h1>
                 <form onSubmit={formik.handleSubmit}>
-                    <label htmlFor="username">Username</label>
-                    <div>
-                        <input 
-                        type="text" 
-                        placeholder="Username"
-                        name="userName" 
-                        id="username" 
-                        value={formik.values.userName} 
-                        onChange={formik.handleChange}/>
+                    <div className="py-5">
+                        <label htmlFor="username" className="text-2xl italic pr-5">Username: </label>
+                            <input 
+                            type="text" 
+                            placeholder="Username"
+                            name="userName" 
+                            className="text-2xl border-2"
+                            id="username" 
+                            value={formik.values.userName} 
+                            onChange={formik.handleChange}/>
                     </div>
-                    <label htmlFor="password">Password</label>
-                    <div>
-                        <input type="password" 
-                        name="password"
-                        id="password" 
-                        value={formik.values.password} 
-                        onChange={formik.handleChange}/>
+                    <div className="py-6">
+                        <label htmlFor="password" className="text-2xl italic pr-5">Password: </label>
+                            <input type="password" 
+                            name="password"
+                            id="password" 
+                            className="text-2xl border-2"
+                            value={formik.values.password} 
+                            onChange={formik.handleChange}/>
                     </div>
-                    <div>
-                        <p></p>
+                    <div className="pt-4">
                         <button type="submit">Submit</button>
                     </div>
                 </form>

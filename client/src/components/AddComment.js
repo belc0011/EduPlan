@@ -70,25 +70,24 @@ function AddComment({accommodation, setAccommodation, student, setStudent, stude
     });
    
     return(
-        <form onSubmit={formik.handleSubmit}>
-            <label htmlFor="comment_text">Enter comment: </label>
-                    <div>
-                        <input 
-                        type="text" 
-                        placeholder="Enter description:" 
-                        name="comment_text"
-                        id="comment_text" 
-                        value={formik.values.comment_text} 
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}/>
-                        {formik.touched.comment_text && formik.errors.comment_text ? (
-                        <p style={{ color: "red" }}>{formik.errors.comment_text}</p>
-                        ) : null}
-                    </div>
-                    <div>
-                        <p></p>
-                        <button type="submit">Submit</button>
-                    </div>
+        <form onSubmit={formik.handleSubmit} className="bg-slate-700 text-white">
+            <label htmlFor="comment_text" className="text-3xl">Enter comment: </label>
+                <input 
+                type="text" 
+                placeholder="Enter description:" 
+                name="comment_text"
+                id="comment_text" 
+                className="ml-10 mt-8 mb-5"
+                value={formik.values.comment_text} 
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}/>
+                {formik.touched.comment_text && formik.errors.comment_text ? (
+                <p style={{ color: "red" }}>{formik.errors.comment_text}</p>
+                ) : null}
+            <div>
+                <p></p>
+                <button type="submit" className="mb-5 text-xl">SUBMIT</button>
+            </div>
         </form>
     )
 }
