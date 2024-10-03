@@ -34,7 +34,6 @@ function AddCategory({ categories, setCategories}) {
                 res.json().then(
                     data => {setCategories(prevCategories => [...prevCategories, data])
                 resetForm()
-                navigate('/')
             })
             }
             else {
