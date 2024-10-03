@@ -225,7 +225,8 @@ class Categories(Resource):
             user_id = session['user_id']
             request_json = request.get_json()
             new_category = Category(
-                description=request_json['description'])
+                description=request_json['description'],
+                user_id=user_id)
             if new_category:
                 db.session.add(new_category)
                 db.session.commit()

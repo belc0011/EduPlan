@@ -11,7 +11,7 @@ function AddCategory({ categories, setCategories}) {
     const formSchema = yup.object().shape({
         description: yup
         .string()
-        .matches(/^[a-zA-Z\s'-]+$/, "Description can not contain numbers or special characters, except an apostrophe")
+        .matches(/^[a-zA-Z\s'/-]+$/, "Description can not contain numbers or special characters, except an apostrophe, hyphen or forward slash")
         .required("First name is required"),
       });
 
@@ -45,24 +45,25 @@ function AddCategory({ categories, setCategories}) {
     });
    
     return(
-        <form onSubmit={formik.handleSubmit}>
-            <label htmlFor="description">Description: </label>
+        <form onSubmit={formik.handleSubmit} className="bg-slate-100">
+            <div className="text-3xl">
+                <div className="py-6">
+                    <label htmlFor="description">Category Name: </label>
+                    <input 
+                    type="text" 
+                    placeholder="Enter category name" 
+                    description="description"
+                    id="description" 
+                    value={formik.values.description} 
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}/>
+                    {formik.touched.description && formik.errors.description ? (
+                    <p style={{ color: "red" }}>{formik.errors.description}</p>
+                    ) : null}
+                </div>
+            </div>
                     <div>
-                        <input 
-                        type="text" 
-                        placeholder="Enter description:" 
-                        description="description"
-                        id="description" 
-                        value={formik.values.description} 
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}/>
-                        {formik.touched.description && formik.errors.description ? (
-                        <p style={{ color: "red" }}>{formik.errors.description}</p>
-                        ) : null}
-                    </div>
-                    <div>
-                        <p></p>
-                        <button type="submit">Submit</button>
+                        <button type="submit" className="bg-slate-700 text-white text-2xl">SUBMIT</button>
                     </div>
         </form>
     )
