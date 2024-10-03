@@ -26,7 +26,7 @@ function Students() {
     return (
         <div>
             <div className="flex justify-end pr-5 bg-slate-200/50">
-                <button onClick={handleClick} className="py-9 text-3xl border-4">Click here to add a new student</button>
+                <button onClick={handleClick} className="py-9 my-4 text-3xl border-4">Add a new student</button>
             </div>
             {showAddStudent && <AddStudent setError={setError} />}
             <main>

@@ -55,73 +55,77 @@ function SignUp({ onLogin }) {
     });
     return (
     <div>
-            <main>
-                <h1>Sign Up</h1>
+            <main className="py-5">
                 <form onSubmit={formik.handleSubmit}>
-                    <label htmlFor="first_name">First Name: </label>
-                    <div>
-                        <input type="text" 
-                        id="first_name" 
-                        name="firstName"
-                        value={formik.values.firstName} 
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}/>
-                        {formik.touched.firstName && formik.errors.firstName ? (
-                        <p style={{ color: "red" }}>{formik.errors.firstName}</p>
-                        ) : null}
+                    <div className="grid grid-cols-2">
+                        <div className="pl-48 text-2xl py-5">
+                            <label htmlFor="first_name">First Name: </label>
+                                <input type="text" 
+                                id="first_name" 
+                                name="firstName"
+                                value={formik.values.firstName} 
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}/>
+                                {formik.touched.firstName && formik.errors.firstName ? (
+                                <p style={{ color: "red" }}>{formik.errors.firstName}</p>
+                                ) : null}
+                        </div>
+                        <div className="pr-40 text-2xl py-5">
+                            <label htmlFor="last_name">Last Name: </label>
+                                <input type="text" 
+                                id="last_name" 
+                                name="lastName"
+                                value={formik.values.lastName} 
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}/>
+                                {formik.touched.lastName && formik.errors.lastName ? (
+                                <p style={{ color: "red" }}>{formik.errors.lastName}</p>
+                                ) : null}
+                        </div>
+                        <div className="pl-48 text-2xl py-5">
+                            <label htmlFor="username">Username: </label>
+                                <input type="text" 
+                                id="username" 
+                                name="userName"
+                                value={formik.values.userName} 
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}/>
+                                {formik.touched.userName && formik.errors.userName ? (
+                                <p style={{ color: "red" }}>{formik.errors.userName}</p>
+                                ) : null}
+                        </div>
+                        <div className="pr-36 text-2xl py-5">
+                            <label htmlFor="password">Password: </label>
+                                <input type="password" 
+                                id="password" 
+                                name="password"
+                                value={formik.values.password} 
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}/>
+                                {formik.touched.password && formik.errors.password ? (
+                                <p style={{ color: "red" }}>{formik.errors.password}</p>
+                                ) : null}
+                        </div>
+                        <div>
+                            <p> </p>
+                        </div>
+                        <div className="pr-48 text-2xl pt-5 pb-10">
+                            <label htmlFor="password">Confirm password: </label>
+                                <input type="password" 
+                                id="confirm-password" 
+                                name="confirmPassword"
+                                value={formik.values.confirmPassword} 
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}/>
+                                {formik.touched.confirmPassword && formik.errors.confirmPassword ? (
+                                <p style={{ color: "red" }}>{formik.errors.confirmPassword}</p>
+                                ) : null}
+                        </div>
                     </div>
-                    <label htmlFor="last_name">Last Name: </label>
-                    <div>
-                        <input type="text" 
-                        id="last_name" 
-                        name="lastName"
-                        value={formik.values.lastName} 
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}/>
-                        {formik.touched.lastName && formik.errors.lastName ? (
-                        <p style={{ color: "red" }}>{formik.errors.lastName}</p>
-                        ) : null}
-                    </div>
-                    <label htmlFor="username">Username: </label>
-                    <div>
-                        <input type="text" 
-                        id="username" 
-                        name="userName"
-                        value={formik.values.userName} 
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}/>
-                        {formik.touched.userName && formik.errors.userName ? (
-                        <p style={{ color: "red" }}>{formik.errors.userName}</p>
-                        ) : null}
-                    </div>
-                    <label htmlFor="password">Password: </label>
-                    <div>
-                        <input type="password" 
-                        id="password" 
-                        name="password"
-                        value={formik.values.password} 
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}/>
-                        {formik.touched.password && formik.errors.password ? (
-                        <p style={{ color: "red" }}>{formik.errors.password}</p>
-                        ) : null}
-                    </div>
-                    <label htmlFor="password">Confirm password: </label>
-                    <div>
-                        <input type="password" 
-                        id="confirm-password" 
-                        name="confirmPassword"
-                        value={formik.values.confirmPassword} 
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}/>
-                        {formik.touched.confirmPassword && formik.errors.confirmPassword ? (
-                        <p style={{ color: "red" }}>{formik.errors.confirmPassword}</p>
-                        ) : null}
-                    </div>
-                    <div>
-                        <p></p>
-                        <button type="submit">Submit</button>
-                    </div>
+                        <div>
+                            <p></p>
+                            <button type="submit" className="border-slate-200 bg-slate-500 text-white text-xl font-semibold">SUBMIT</button>
+                        </div>
                 </form>
             </main>
         </div>

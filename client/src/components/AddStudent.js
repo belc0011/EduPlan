@@ -51,9 +51,10 @@ function AddStudent() {
     });
    
     return(
-        <form onSubmit={formik.handleSubmit}>
-            <label htmlFor="first-name">First Name: </label>
-                    <div>
+        <form onSubmit={formik.handleSubmit} className="bg-slate-200 border-2 border-double border-slate-700 py-5">
+            <div className="grid grid-cols-2">
+                <div className="pl-44 text-2xl py-4">
+                    <label htmlFor="first-name">First Name: </label>
                         <input 
                         type="text" 
                         placeholder="Enter first name" 
@@ -65,9 +66,9 @@ function AddStudent() {
                         {formik.touched.firstName && formik.errors.firstName ? (
                         <p style={{ color: "red" }}>{formik.errors.firstName}</p>
                         ) : null}
-                    </div>
+                </div>
+                <div className="pr-44 text-2xl py-4">
                     <label htmlFor="last-name">Last Name: </label>
-                    <div>
                         <input type="text" 
                         placeholder="Enter last name" 
                         name="lastName"
@@ -79,8 +80,9 @@ function AddStudent() {
                         <p style={{ color: "red" }}>{formik.errors.lastName}</p>
                         ) : null}
                     </div>
+            </div>
+                <div className="text-2xl pb-10">
                     <label htmlFor="grade">Grade: </label>
-                    <div>
                         <select type="dropdown" 
                         name="grade"
                         id="grade" 
@@ -92,11 +94,10 @@ function AddStudent() {
                             <option value="11">11</option>
                             <option value="12">12</option>
                         </select>
-                    </div>
-                    <div>
-                        <p></p>
-                        <button type="submit">Submit</button>
-                    </div>
+                </div>
+                <div className="justify-end">
+                    <button type="submit" className="bg-slate-700 text-white text-xl">SUBMIT</button>
+                </div>
         </form>
     )
 }

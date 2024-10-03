@@ -4,7 +4,7 @@ import { useState, useEffect, useMemo } from'react';
 const StudentContext = React.createContext()
 
 function StudentProvider({children, user}) {
-  const [students, setStudents] = useState(null);
+  const [students, setStudents] = useState([]);
   
     const [categories, setCategories] = useState([]);
     const [studentToDisplay, setStudentToDisplay] = useState({});

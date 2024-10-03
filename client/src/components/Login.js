@@ -63,15 +63,15 @@ function Login({ onLogin }) {
                             value={formik.values.password} 
                             onChange={formik.handleChange}/>
                     </div>
-                    <div className="pt-4">
-                        <button type="submit">Submit</button>
+                    <div className="py-5">
+                        <button type="submit" className="border-slate-200 bg-slate-500 text-white text-xl font-semibold">SUBMIT</button>
                     </div>
                 </form>
-                <p>Or, if you don't have an account...</p>
-                    <div>
-                        <button onClick={handleClick}>Sign Up</button>
+                <div className="bg-slate-200 border-2 border-slate-700">    
+                    <p className="italic text-3xl py-5 text-slate-700">Or, if you don't have an account...</p>
+                    <button onClick={handleClick} className="border-slate-500 text-xl font-semibold">SIGN UP</button>
                         {showComponent && <SignUp onLogin={onLogin} />}
-                    </div>
+                </div>
             </main>
         </div>
     )
