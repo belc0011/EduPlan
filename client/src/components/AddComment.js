@@ -77,7 +77,7 @@ function AddComment({accommodation, setAccommodation, student, setStudent, stude
                 placeholder="Enter description:" 
                 name="comment_text"
                 id="comment_text" 
-                className="ml-10 mt-8 mb-5"
+                className="ml-10 mt-8 mb-5 text-black"
                 value={formik.values.comment_text} 
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}/>

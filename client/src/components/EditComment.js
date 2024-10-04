@@ -111,7 +111,7 @@ function EditComment() {
                         type="text" 
                         placeholder="Enter description" 
                         name="comment_text"
-                        className="ml-10 my-5"
+                        className="ml-10 my-5 text-black"
                         id="comment_text" 
                         value={formik.values.comment_text} /* add touched, blur and errors */
                         onChange={formik.handleChange}/>

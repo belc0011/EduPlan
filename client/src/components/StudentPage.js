@@ -131,11 +131,12 @@ function StudentPage({ }) {
                                         <option value="" disabled>
                                             Select one
                                         </option>
-                                        {categories.map(category => {
+                                        {categories.length > 0 ? (categories.map(category => {
                                         return <option key={category.id} value={category.id}>
                                         {category.description}
                                     </option>
-                                        })}
+                                        } )) : null
+                                    }
                                     </select>
                                 </div>
                             </div>
