@@ -25,13 +25,16 @@ function NavBar({ user, setUser }) {
                 <Link to="/" className="nav-link">Home</Link>
             </div>
             <div>
-                <Link to="/" className="nav-link" onClick={handleLogoutClick}>Logout</Link>
-            </div>
-            <div>
                 <Link to="/students" className="nav-link">Students</Link>
             </div>
             <div>
                 <Link to="/categories" className="nav-link">Categories</Link>
+            </div>
+            <div>
+                <Link to="/accommodations" className="nav-link">Accommodations</Link>
+            </div>
+            <div>
+                <Link to="/" className="nav-link" onClick={handleLogoutClick}>Logout</Link>
             </div>
         </nav>
     );

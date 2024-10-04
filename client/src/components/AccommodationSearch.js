@@ -54,7 +54,30 @@ function AccommodationSearch() {
     
     return (
         <div>
-            <h1 className="text-5xl py-4">Accommodations:</h1>
+            <h1 className="text-5xl py-7 font-bold">Accommodations:</h1>
+            <form onSubmit={formik.handleSubmit}>
+                <label htmlFor="description" className="text-2xl italic py-3">Enter key words to search accommodations: </label>
+                        <div>
+                            <input 
+                            type="text" 
+                            placeholder="Enter key words for description" 
+                            name="description"
+                            id="description" 
+                            className="py-4 text-2xl w-1/3"
+                            value={formik.values.description} 
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}/>
+                            {formik.touched.description && formik.errors.description ? (
+                            <p style={{ color: "red" }}>{formik.errors.description}</p>
+                            ) : null}
+                        </div>
+                        <div className="py-3 text-xl">
+                            <button type="submit" className="bg-slate-700 text-white font-bold">SUBMIT</button>
+                        </div>
+            </form>
+            <div className="py-3">
+                <button onClick={handleClick} className="py-3 text-xl bg-slate-200 font-bold text-black">RESTORE LIST</button>
+            </div>
             <div className="grid grid-cols-4">
                 {accommodationsToDisplay ? accommodationsToDisplay.map(accommodation => (
                     <button key={accommodation.id} className="bg-slate-200 border-2 border-slate-700 mx-1 my-1" onClick={() => handleStudentClick(accommodation.student.id)}>
@@ -63,27 +86,6 @@ function AccommodationSearch() {
                     </button>))
                     : <p className="text-3xl italic">No accommodations available</p>}
             </div>
-                <form onSubmit={formik.handleSubmit}>
-                <label htmlFor="description">Enter key words to search: </label>
-                        <div>
-                            <input 
-                            type="text" 
-                            placeholder="Enter key words for description" 
-                            name="description"
-                            id="description" 
-                            value={formik.values.description} 
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}/>
-                            {formik.touched.description && formik.errors.description ? (
-                            <p style={{ color: "red" }}>{formik.errors.description}</p>
-                            ) : null}
-                        </div>
-                        <div>
-                            <p></p>
-                            <button type="submit">Submit</button>
-                        </div>
-            </form>
-            <button onClick={handleClick}>Click here to restore list of accommodations</button>
         </div>
     )
 }

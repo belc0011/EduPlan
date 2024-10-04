@@ -31,38 +31,49 @@ function EditAccommodation() {
     
       const formik = useFormik({
         initialValues: {
-          description: accommodationToDisplay.description,
-          category_id: accommodationToDisplay.category.id,
+          description: "",
+          category_id: "",
         },
         //validationSchema: formSchema,
         onSubmit: (values, { resetForm }) => {
-            console.log("inside on submit")
-            fetch(`http://127.0.0.1:5555/accommodations/${accommodationId}`, {
-                method: "PATCH",
-                headers: {
-                "Content-Type": "application/json",
-                },
-                body: JSON.stringify(values, null, 2),
-                credentials: 'include'
-        })
-        .then(res => res.json())
-        .then(data => {
-            setAccommodationToDisplay(data); 
-            console.log(data)
-            const updatedAccommodation = data
-            setStudentToDisplay(prevStudent => {
-                const updatedAccommodations = prevStudent.accommodations.map(accommodation => 
-                    accommodation.id === accommodationId ? updatedAccommodation : accommodation
-                );
-                return {
-                    ...prevStudent,
-                    accommodations: updatedAccommodations
-                };
+            const changes = {};
+
+            if (values.description !== formik.initialValues.description) {
+                changes.description = values.description;
+            }
+
+            if (values.category_id !== formik.initialValues.category_id) {
+                changes.category_id = values.category_id;
+            }
+
+            if (Object.keys(changes).length > 0) {
+                fetch(`http://127.0.0.1:5555/accommodations/${accommodationId}`, {
+                    method: "PATCH",
+                    headers: {
+                    "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(changes, null, 2),
+                    credentials: 'include'
             })
-            resetForm();
-        })
-        .catch(error => {
-            console.error('Error updating student:', error)})
+            .then(res => res.json())
+            .then(data => {
+                setAccommodationToDisplay(data); 
+                console.log(data)
+                const updatedAccommodation = data
+                setStudentToDisplay(prevStudent => {
+                    const updatedAccommodations = prevStudent.accommodations.map(accommodation => 
+                        accommodation.id === accommodationId ? updatedAccommodation : accommodation
+                    );
+                    return {
+                        ...prevStudent,
+                        accommodations: updatedAccommodations
+                    };
+                })
+                resetForm();
+            })
+            .catch(error => {
+                console.error('Error updating student:', error)})
+            }
         }
     });
     function handleAddComment(e) {
