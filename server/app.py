@@ -114,10 +114,10 @@ class StudentById(Resource):
             request_dict = request.get_json()
             student = Student.query.filter_by(id=id).first()
             if student:
-                if 'firstName' in request_dict:
-                    student.first_name = request_dict.get('firstName', student.first_name).title()
-                if 'lastName' in request_dict:
-                    student.last_name = request_dict.get('lastName', student.last_name).title()
+                if 'first_name' in request_dict:
+                    student.first_name = request_dict.get('first_name', student.first_name).title()
+                if 'last_name' in request_dict:
+                    student.last_name = request_dict.get('last_name', student.last_name).title()
                 if 'grade' in request_dict:
                     student.grade = request_dict.get('grade', student.grade)
                 db.session.commit()

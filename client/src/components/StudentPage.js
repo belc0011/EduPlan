@@ -113,7 +113,7 @@ function StudentPage({ }) {
                     <form onSubmit={formik.handleSubmit} className="bg-neutral-100">
                         <h2 className="italic text-xl bg-slate-100 py-5">To add an accommodation for this student, type the description into the text box and choose the appropriate category</h2>
                         <div className="py-3 text-lg">
-                            <label htmlFor="new-accommodation" className="text-2xl">New Accommodation: </label>
+                            <label htmlFor="new-accommodation" className="text-2xl">Add a New Accommodation: </label>
                         </div>
                             <div className="grid grid-cols-2 px-40">
                                 <div className="pb-5 pl-20">
