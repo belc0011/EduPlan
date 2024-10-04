@@ -9,9 +9,10 @@ function AddComment({accommodation, setAccommodation, student, setStudent, stude
     const location = useLocation()
     const url = location.pathname
     const parts = url.split("/")
-    const accommodationId = parseInt(parts[3], 10)
     const studentId = parseInt(parts[2], 10)
+    const accommodationId = accommodation.id
     console.log(accommodation)
+    console.log(accommodationId)
 
 
     const formSchema = yup.object().shape({
@@ -41,7 +42,6 @@ function AddComment({accommodation, setAccommodation, student, setStudent, stude
             if (res.ok) {
                 res.json().then(data => {
                     console.log(data)
-                    console.log(accommodationId)
                     console.log(student.accommodations)
                     setAccommodation(prevAccommodation => ({
                         ...prevAccommodation,

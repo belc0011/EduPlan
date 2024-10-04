@@ -122,7 +122,7 @@ function EditAccommodation() {
     return (
         studentToDisplay ? (
         <div>
-            <div className="flex justify-end pr-5">
+            <div className="flex justify-end pr-5 py-3">
                 <button onClick={handleDeleteClick} className="py-9 text-3xl border-4 border-red-900 text-red-700">Click Here to Delete Accommodation</button>
             </div>
             <div className="bg-slate-200">

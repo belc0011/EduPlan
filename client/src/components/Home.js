@@ -37,7 +37,7 @@ function Home() {
                     <h1 className="text-2xl py-2">For a list of categories:</h1>
                     <button onClick={handleCategoryClick}>Category List</button>
                 </div>
-                <div className="py-2 bg-orange-300 border-4 border-solid">
+                <div className="py-2 bg-slate-300 border-4 border-solid">
                     <h1 className="text-2xl py-2">For a list of students:</h1>
                     <button onClick={handleStudentClick}>Student List</button>
                 </div>

@@ -43,6 +43,14 @@ function StudentPage({ }) {
                 ...prevState,
                 accommodations: [...prevState.accommodations, data]
             }));
+            setStudents(prevStudents => prevStudents.map(student => 
+                student.id === studentToDisplay.id 
+                    ? {
+                        ...student,
+                        accommodations: [...student.accommodations, data]
+                      }
+                    : student
+            ));
             resetForm();
         });
         }
@@ -112,7 +120,7 @@ function StudentPage({ }) {
                                     <input 
                                         type="text" 
                                         placeholder="Enter description" 
-                                        className="border-4 py-2 w-3/4"
+                                        className="border-4 border-slate-700 py-2 w-3/4"
                                         name="description"
                                         id="description" 
                                         value={formik.values.description} 
@@ -126,6 +134,7 @@ function StudentPage({ }) {
                                     <select type="dropdown" 
                                     id="category_id" 
                                     name="category_id"
+                                    className="border-slate-700"
                                     value={formik.values.category_id} 
                                     onChange={formik.handleChange}>
                                         <option value="" disabled>
@@ -140,7 +149,7 @@ function StudentPage({ }) {
                                     </select>
                                 </div>
                             </div>
-                        <button type='submit'>SUBMIT</button>
+                        <button type='submit' className="text-2xl bg-slate-700 text-white">SUBMIT</button>
                     </form>
                     <br></br>
                     <br></br>
