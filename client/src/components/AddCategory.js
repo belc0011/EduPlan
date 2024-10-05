@@ -12,7 +12,7 @@ function AddCategory({ categories, setCategories}) {
         description: yup
         .string()
         .matches(/^[a-zA-Z\s'/-]+$/, "Description can not contain numbers or special characters, except an apostrophe, hyphen or forward slash")
-        .required("First name is required"),
+        .required("Description is required"),
       });
 
     const formik = useFormik({

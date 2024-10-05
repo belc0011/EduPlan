@@ -42,11 +42,17 @@ function StudentProvider({children, user}) {
         method: "GET",
         credentials: 'include'
     })
-   .then(res => res.json())
-   .then(data => {
-      setCategories(data.categories)
-      console.log(data)
-      console.log(data.categories)})
+   .then(res => {
+      if (res.ok) {
+        res.json().then(data => {
+          setCategories(data.categories)
+          console.log(data)
+          console.log(data.categories)})
+        }
+      else {
+        console.log("error: " + res)
+      }
+  })
    .catch(error => console.error('Error:', error));
   }, [])
 

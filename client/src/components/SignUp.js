@@ -54,8 +54,8 @@ function SignUp({ onLogin }) {
     }
     });
     return (
-    <div>
-            <main className="py-5">
+    <div className="my-5">
+            <main className="my-5">
                 <form onSubmit={formik.handleSubmit}>
                     <div className="grid grid-cols-2">
                         <div className="pl-48 text-2xl py-5">

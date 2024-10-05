@@ -110,17 +110,15 @@ function StudentPage({ }) {
                         ) : (
                             <p>No student data to display</p>
                             )}
-                    <form onSubmit={formik.handleSubmit} className="bg-neutral-100">
-                        <h2 className="italic text-xl bg-slate-100 py-5">To add an accommodation for this student, type the description into the text box and choose the appropriate category</h2>
-                        <div className="py-3 text-lg">
-                            <label htmlFor="new-accommodation" className="text-2xl">Add a New Accommodation: </label>
-                        </div>
-                            <div className="grid grid-cols-2 px-40">
+                    <form onSubmit={formik.handleSubmit} className="bg-slate-700">
+                        <h2 className="italic text-4xl text-white py-5">ADD AN ACCOMMODATION:</h2>
+                            <div className="">
                                 <div className="pb-5 pl-20">
+                                <label htmlFor="new-accommodation" className="text-2xl text-white pr-5">New accommodation description:</label>
                                     <input 
                                         type="text" 
                                         placeholder="Enter description" 
-                                        className="border-4 border-slate-700 py-2 w-3/4"
+                                        className="border-2 border-blue-400 text-black text-xl py-2 w-1/2"
                                         name="description"
                                         id="description" 
                                         value={formik.values.description} 
@@ -131,25 +129,27 @@ function StudentPage({ }) {
                                         ) : null}
                                 </div>
                                 <div className="pb-5 pr-20">
-                                    <select type="dropdown" 
-                                    id="category_id" 
-                                    name="category_id"
-                                    className="border-slate-700"
-                                    value={formik.values.category_id} 
-                                    onChange={formik.handleChange}>
-                                        <option value="" disabled>
-                                            Select one
-                                        </option>
-                                        {categories.length > 0 ? (categories.map(category => {
-                                        return <option key={category.id} value={category.id}>
-                                        {category.description}
-                                    </option>
-                                        } )) : null
-                                    }
-                                    </select>
+                                    <label htmlFor="new-category" className="text-2xl text-white pr-5">Category:</label>
+                                        <select type="dropdown" 
+                                        id="category_id" 
+                                        name="category_id"
+                                        className="border-blue-400"
+                                        value={formik.values.category_id} 
+                                        onChange={formik.handleChange}>
+                                            <option value="" disabled>
+                                                Select one
+                                            </option>
+                                            {categories.length > 0 ? (categories.map(category => {
+                                            return <option key={category.id} value={category.id}>
+                                            {category.description}
+                                            </option>})) : null
+                                            }
+                                        </select>
                                 </div>
                             </div>
-                        <button type='submit' className="text-2xl bg-slate-700 text-white">SUBMIT</button>
+                        <div className="py-4">
+                            <button type='submit' className="text-2xl bg-slate-200 text-blue-700">SUBMIT</button>
+                        </div>
                     </form>
                     <br></br>
                     <br></br>

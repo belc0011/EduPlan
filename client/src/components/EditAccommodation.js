@@ -139,32 +139,39 @@ function EditAccommodation() {
             <div className="bg-slate-200">
                 {isLoading ? (<h1>Loading...</h1>) : (
                 <>
-                    <a href={`/students/${id}`} className="text-5xl bold text-red-700">{studentToDisplay.first_name} {studentToDisplay.last_name}</a>
-                    <h3 className="pt-2 text-lg">Grade {studentToDisplay.grade}</h3>
-                    <div>
-                        <h3 className="italic text-lg pt-4">Category: {accommodationToDisplay.category.description}</h3>
-                        <h2 className="text-4xl font-sans bold py-4">{accommodationToDisplay.description}</h2>
-                    </div>
-                    <div>
-                        {accommodationToDisplay.comment ? 
-                        (<div>
-                            <ul>
-                                <li key={accommodationToDisplay.comment.id}>
-                                    <Link 
-                                        to={`/comment/${accommodationId}`} 
-                                        state={{ 
-                                            accommodation: accommodationToDisplay,
-                                            student: studentToDisplay,
-                                            commentId: accommodationToDisplay.comment.id
-                                        }}
-                                        onClick={handleCommentClick}
-                                        className="text-blue-700 text-3xl italic pb-5"
-                                    >
-                                        {accommodationToDisplay.comment.description}
-                                    </Link>
-                                </li>
-                            </ul>
-                        </div>) : null}
+                    <a href={`/students/${id}`} className="text-4xl italic font-bold text-red-700 flex justify-start pl-5 bg-slate-100">{studentToDisplay.first_name} {studentToDisplay.last_name}</a>
+                    <h3 className="pt-2 text-lg flex justify-start pl-20 italic text-red-700 font-bold bg-slate-100">Grade {studentToDisplay.grade}</h3>
+                    <div className="grid grid-cols-3 space-x-1">
+                        <div className="border-2 border-slate-500 py-4">
+                            <h1 className="text-4xl text-blue-800 font-bold py-5">Accommodation Description</h1>
+                            <h2 className="text-4xl font-sans py-4">{accommodationToDisplay.description}</h2>
+                        </div>
+                        <div className="border-2 border-slate-500 py-4 px-1">
+                            <h3 className="text-4xl text-blue-800 font-bold py-5">Accommodation Category</h3>
+                            <h3 className="italic text-2xl py-4">{accommodationToDisplay.category.description}</h3>
+                        </div>
+                        <div>
+                            {accommodationToDisplay.comment ? 
+                            (<div className="border-2 border-slate-500 py-4">
+                                <h1 className="text-4xl text-blue-800 font-bold py-5">Comment</h1>
+                                <ul>
+                                    <li key={accommodationToDisplay.comment.id}>
+                                        <Link 
+                                            to={`/comment/${accommodationId}`} 
+                                            state={{ 
+                                                accommodation: accommodationToDisplay,
+                                                student: studentToDisplay,
+                                                commentId: accommodationToDisplay.comment.id
+                                            }}
+                                            onClick={handleCommentClick}
+                                            className="text-blue-700 text-3xl italic pb-5"
+                                        >
+                                            {accommodationToDisplay.comment.description}
+                                        </Link>
+                                    </li>
+                                </ul>
+                            </div>) : null}
+                        </div>
                     </div>
                     {accommodationToDisplay ? (
                         <div>

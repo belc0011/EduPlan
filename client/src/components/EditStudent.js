@@ -69,7 +69,6 @@ function EditStudent() {
                                 return [...prevStudents.slice(0, studentIndex), data,...prevStudents.slice(studentIndex + 1)];
         
                         }})
-                    navigate('/students')
                     resetForm()})
                 }
                 else {
@@ -91,7 +90,7 @@ function EditStudent() {
                 <p className="text-red-700 text-3xl py-4"> Current accommodations: </p>
                 {studentToDisplay.accommodations && studentToDisplay.accommodations.length > 0 ? (
                     studentToDisplay.accommodations.map(accommodation => (
-                        <div key={accommodation.id}>
+                        <div key={accommodation.id} className="py-3">
                             <a href={`/students/${id}/${accommodation.id}`}>{accommodation.description}</a>
                         </div>
                     ))
@@ -99,7 +98,7 @@ function EditStudent() {
                 <div className="text-xl italic py-4">No Accommodations</div>
                 )}
                 <div className="bg-slate-700">
-                    <h2>Enter the updated student information and click submit: </h2>
+                    <h2 className="text-white text-xl italic py-3">Enter the updated student information</h2>
                     <form onSubmit={formik.handleSubmit}>
                         <div>
                             <label htmlFor="first-name" className="text-white text-3xl pb-2 italic">To change first name: </label>
