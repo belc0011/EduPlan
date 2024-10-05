@@ -8,7 +8,7 @@ function StudentProvider({children, user}) {
   
     const [categories, setCategories] = useState([]);
     const [studentToDisplay, setStudentToDisplay] = useState({});
-    
+    const [categoryToDisplay, setCategoryToDisplay] = useState({});
     const [accommodationToDisplay, setAccommodationToDisplay] = useState({});
 
   useEffect(() => {
@@ -64,7 +64,9 @@ function StudentProvider({children, user}) {
     studentToDisplay,
     setStudentToDisplay,
     accommodationToDisplay,
-    setAccommodationToDisplay
+    setAccommodationToDisplay,
+    categoryToDisplay,
+    setCategoryToDisplay
   }), [students, categories, studentToDisplay, accommodationToDisplay]);
   
 

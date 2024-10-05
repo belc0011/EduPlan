@@ -13,6 +13,7 @@ import EditAccommodation from './EditAccommodation';
 import AccommodationSearch from './AccommodationSearch';
 import EditComment from './EditComment';
 import AccommodationByCategory from "./AccommodationByCategory";
+import EditCategory from "./EditCategory";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -53,6 +54,8 @@ function App() {
                 <Route path="/accommodations" element={<AccommodationSearch />} />
                 <Route path="/comment/:accommodationId" element={<EditComment />} />
                 <Route path="/categories/accommodations/:categoryId" element={<AccommodationByCategory />} />
+                <Route path="/categories/edit_category/:categoryId" element={<EditCategory />} />
+                <Route path="*" element={<h1>Page not found</h1>} />
               </Routes>
             </main>
           </>
