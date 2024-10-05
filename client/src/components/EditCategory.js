@@ -7,6 +7,7 @@ import * as yup from "yup";
 
 function EditCategory() {
     const { categories, setCategories, categoryToDisplay, setCategoryToDisplay } = useContext(StudentContext);
+    const navigate = useNavigate();
 
     const formSchema = yup.object().shape({
         description: yup
@@ -55,6 +56,28 @@ function EditCategory() {
             }
         }
     });
+
+    function handleDeleteClick(e) {
+        const isConfirmed = window.confirm('Are you sure you want to delete this accommodation?');
+        if (isConfirmed) {
+            fetch(`http://127.0.0.1:5555/categories/${categoryToDisplay.id}`, {
+                method: "DELETE",
+                headers: {
+                "Content-Type": "application/json",
+                },
+                credentials: 'include'
+            })
+            .then(res => res.json())
+            .then(data => {
+                const updatedCategories = categories.filter(category => category.id !== categoryToDisplay.id);
+                setCategories(updatedCategories);
+                navigate("/categories");
+            })
+        }
+        else {
+            console.log('User canceled delete action')
+        }
+    }
     
     console.log(categoryToDisplay)
     return(
@@ -79,6 +102,9 @@ function EditCategory() {
                             </div>
                     </form>
                 </div>
+            <div className="py-3">
+                <button onClick={handleDeleteClick}>DELETE THIS CATEGORY</button>
+            </div>
         </div>
     )
 }

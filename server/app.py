@@ -237,7 +237,7 @@ class Categories(Resource):
         else:
             return {'message': 'Error, unauthorized user'}, 401
 
-class CategoryById(Resource):
+class CategoriesById(Resource):
     def patch(self, id):
         if session.get('user_id'):
             request_dict = request.get_json()
@@ -247,6 +247,19 @@ class CategoryById(Resource):
                     category.description = request_dict['description']
                 db.session.commit()
                 response = make_response(category.to_dict(), 200)
+                return response
+            else:
+                return {"error": "Category not found"}, 404
+        else:
+            return {"error": "Unauthorized"}, 401
+    
+    def delete(self, id):
+        if session.get('user_id'):
+            category = Category.query.filter_by(id=id).first()
+            if category:
+                db.session.delete(category)
+                db.session.commit()
+                response = {'message': 'Successfully deleted'}, 200
                 return response
             else:
                 return {"error": "Category not found"}, 404
@@ -321,7 +334,7 @@ api.add_resource(AccommodationById, '/accommodations/<int:id>', endpoint='accomm
 api.add_resource(Categories, '/categories', endpoint='categories')
 api.add_resource(Comments, '/comments', endpoint='comments')
 api.add_resource(CommentsById, '/comments/<int:id>', endpoint='comments/<int:id>')
-api.add_resource(CategoryById, '/categories/<int:id>', endpoint='categories/<int:id>')
+api.add_resource(CategoriesById, '/categories/<int:id>', endpoint='categories/<int:id>')
 
 if __name__ == '__main__':
     app.run(port=5555, debug=False)
