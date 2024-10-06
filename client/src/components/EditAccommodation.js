@@ -76,7 +76,7 @@ function EditAccommodation() {
         }
     });
     function handleAddComment(e) {
-        setShowAddComment(true)
+        setShowAddComment(prevState => !prevState)
     }
 
     function handleCommentClick(e) {
@@ -176,14 +176,24 @@ function EditAccommodation() {
                     {accommodationToDisplay ? (
                         <div>
                             {!accommodationToDisplay.comment ? (
-                            <div className="py-2">
-                                <button onClick={handleAddComment}>ADD A COMMENT</button>
-                            </div>
-                            ) : (
-                                <div className="py-2">
-                                    <button onClick={handleEditComment}>EDIT/DELETE COMMENT</button>
-                                </div>
-                            )}
+                                !showAddComment ? (
+                                    <>
+                                        <div className="py-2">
+                                            <button onClick={handleAddComment}>ADD A COMMENT</button>
+                                        </div>
+                                    </>
+                                ) : (
+                                    <>
+                                        <div>
+                                            <button onClick={handleAddComment}>HIDE ADD COMMENT</button>
+                                        </div>
+                                    </>
+                                    )
+                                ) : (
+                                        <div className="py-2">
+                                            <button onClick={handleEditComment}>EDIT/DELETE COMMENT</button>
+                                        </div>
+                                )}
                             <div>
                                 {showAddComment ? (
                                     <AddComment accommodation={accommodationToDisplay} setAccommodation={setAccommodationToDisplay} student={studentToDisplay} setStudent={setStudentToDisplay} students={students} setStudents={setStudents}/>
