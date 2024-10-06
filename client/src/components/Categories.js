@@ -26,7 +26,7 @@ function Categories() {
     }, [])
     console.log(categories)
     function handleClick(e) {
-        setShowAddCategory(!showAddCategory);
+        setShowAddCategory(prevState => !prevState);
     }
 
     function handleEditClick(categoryId) {
@@ -51,9 +51,14 @@ function Categories() {
                 </div>
             </div>
         ) : (<p className="text-3xl">No categories to display</p>)}
-        <div className="py-5">
-            <button onClick={handleClick} className="bg-slate-700 text-white text-xl">NEW CATEGORY</button>
-        </div>
+        {!showAddCategory ? (
+            <div className="py-5">
+                <button onClick={handleClick} className="bg-slate-700 text-white text-xl">NEW CATEGORY</button>
+            </div>
+            ) : (
+            <div className="py-5">
+                <button onClick={handleClick} className="bg-slate-700 text-white text-xl">HIDE NEW CATEGORY</button>
+            </div>)}
         {showAddCategory && <AddCategory categories={categories} setCategories={setCategories}/>}
     </>
     )

@@ -20,14 +20,19 @@ function Students() {
     }, [students, error]);
 
     function handleClick(e) {
-        setShowAddStudent(true);
+        setShowAddStudent(prevState => !prevState);
     }
 
     return (
         <div>
-            <div className="flex justify-end pr-5 bg-slate-200/50">
-                <button onClick={handleClick} className="py-9 my-4 text-3xl border-4">Add a new student</button>
-            </div>
+            {!showAddStudent ? (
+                <div className="flex justify-end pr-5 bg-slate-200/50">
+                    <button onClick={handleClick} className="py-9 my-4 text-3xl border-4">ADD A STUDENT</button>
+                </div>
+            ) : (
+                <div className="flex justify-end pr-5 bg-slate-200/50">
+                    <button onClick={handleClick} className="py-9 my-4 text-3xl border-4">HIDE ADD STUDENT</button>
+                </div>)} 
             {showAddStudent && <AddStudent setError={setError} />}
             <main>
                 <h1 className="font-sans text-5xl py-5 font-bold">Students</h1>
