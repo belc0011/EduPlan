@@ -13,18 +13,16 @@ function EditStudent() {
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
     const { students, setStudents, studentToDisplay, setStudentToDisplay } = useContext(StudentContext);
-    // Need to store the student to display in a state variable "studentToDisplay" and use that state variable to display data, not make a fetch request
+    
     
     console.log(studentToDisplay);
     const formSchema = yup.object().shape({
-        firstName: yup
+        first_name: yup
         .string()
-        .matches(/^[a-zA-Z\']+$/, "First name can not contain numbers or special characters, except an apostrophe")
-        .required(),
-        lastName: yup
+        .matches(/^[a-zA-Z\']+$/, "First name can not contain numbers or special characters, except an apostrophe"),
+        last_name: yup
         .string()
-        .matches(/^[a-zA-Z\-]+$/, "Last name can only contain letters and hyphens")
-        .required(),
+        .matches(/^[a-zA-Z\-]+$/, "Last name can only contain letters and hyphens"),
       });
 
     const formik = useFormik({
@@ -33,7 +31,7 @@ function EditStudent() {
           last_name: "",
           grade: "",
         },
-        //validationSchema: formSchema,
+        validationSchema: formSchema,
         onSubmit: (values, { resetForm }) => {
             const changes = {};
 
@@ -108,8 +106,12 @@ function EditStudent() {
                                 className="text-black text-2xl" 
                                 name="first_name"
                                 id="first-name" 
-                                value={formik.values.first_name} /* add touched, blur and errors */
-                                onChange={formik.handleChange}/>
+                                value={formik.values.first_name} 
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}/>
+                                {formik.touched.first_name && formik.errors.first_name ? (
+                                <p style={{ color: "red" }}>{formik.errors.first_name}</p>
+                                ) : null}
                         </div>
                         <div className="py-3">
                             <label htmlFor="last-name" className="text-3xl text-white italic">To change last name: </label>
@@ -119,7 +121,11 @@ function EditStudent() {
                                 className="text-2xl"
                                 id="last-name" 
                                 value={formik.values.last_name} 
-                                onChange={formik.handleChange}/>
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}/>
+                                {formik.touched.last_name && formik.errors.last_name ? (
+                                <p style={{ color: "red" }}>{formik.errors.last_name}</p>
+                                ) : null}
                             </div>
                         <div className="py-3">    
                             <label htmlFor="grade" className="text-white text-3xl italic">To change grade: </label>

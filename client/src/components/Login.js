@@ -9,7 +9,7 @@ function Login({ onLogin }) {
 
     const formik = useFormik({
         initialValues: {
-          userName: "",
+          username: "",
           password: "",
         },
         onSubmit: (values) => {
@@ -48,10 +48,10 @@ function Login({ onLogin }) {
                             <input 
                             type="text" 
                             placeholder="Username"
-                            name="userName" 
+                            name="username" 
                             className="text-2xl border-2"
                             id="username" 
-                            value={formik.values.userName} 
+                            value={formik.values.username} 
                             onChange={formik.handleChange}/>
                     </div>
                     <div className="py-6">

@@ -18,8 +18,8 @@ function AddComment({accommodation, setAccommodation, student, setStudent, stude
     const formSchema = yup.object().shape({
         comment_text: yup
         .string()
-        .matches(/^[a-zA-Z\s'-]+$/, "Description can not contain numbers or special characters, except an apostrophe")
-        .required("Description is required"),
+        .matches(/^[a-zA-Z0-9\'\-\/ ]+$/, "Comment can not contain special characters, except an apostrophe, hyphen, forward slash, or white space")
+        .required("Comment description is required"),
       });
 
     const formik = useFormik({

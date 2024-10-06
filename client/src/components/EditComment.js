@@ -23,7 +23,7 @@ function EditComment() {
     const formSchema = yup.object().shape({
         comment_text: yup
         .string()
-        .matches(/^[a-zA-Z\' ]+$/, "Comment can not contain numbers or special characters, except an apostrophe or a space")
+        .matches(/^[a-zA-Z0-9\'\-\/ ]+$/, "Comment can not contain special characters, except an apostrophe, hyphen, forward slash, or white space")
         .required(),
       });
 
@@ -113,8 +113,12 @@ function EditComment() {
                         name="comment_text"
                         className="ml-10 my-5 text-black"
                         id="comment_text" 
-                        value={formik.values.comment_text} /* add touched, blur and errors */
-                        onChange={formik.handleChange}/>
+                        value={formik.values.comment_text}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}/>
+                        {formik.touched.comment_text && formik.errors.comment_text ? (
+                        <p style={{ color: "red" }}>{formik.errors.comment_text}</p>
+                        ) : null}
                     <div>
                         <button type="submit">SUBMIT</button>
                     </div>

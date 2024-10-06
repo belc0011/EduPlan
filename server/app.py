@@ -13,9 +13,9 @@ class Signup(Resource):
             return {'message': 'Username already exists'}, 400
         else:
             new_user = User(
-                    first_name=request_dict['firstName'].title(),
-                    last_name=request_dict['lastName'].title(),
-                    username=request_dict['userName'])
+                    first_name=request_dict['first_name'].title(),
+                    last_name=request_dict['last_name'].title(),
+                    username=request_dict['username'])
             new_user.password_hash = request_dict['password']
             
             db.session.add(new_user)
@@ -28,7 +28,7 @@ class Signup(Resource):
 class Login(Resource):
     def post(self):
         request_dict = request.get_json()
-        user = User.query.filter_by(username=request_dict['userName']).first()
+        user = User.query.filter_by(username=request_dict['username']).first()
         if user and user.authenticate(request_dict['password']):
             user_dict = user.to_dict()
             session['user_id'] = user.id
@@ -73,16 +73,16 @@ class Students(Resource):
         request_json = request.get_json()
         if session.get('user_id'):
             user_id = session.get('user_id')
-            existing_student_first = request_json['firstName'].title()
-            existing_student_last = request_json['lastName'].title()
+            existing_student_first = request_json['first_name'].title()
+            existing_student_last = request_json['last_name'].title()
             existing_student_grade = int(request_json['grade'])
             existing_student = Student.query.filter_by(user_id=user_id, first_name=existing_student_first, last_name=existing_student_last, grade=existing_student_grade).first()
             if existing_student:
                 return {'message': 'Student already exists'}, 400
             else:
                 new_student = Student(
-                    first_name=request_json['firstName'].title(),
-                    last_name=request_json['lastName'].title(),
+                    first_name=request_json['first_name'].title(),
+                    last_name=request_json['last_name'].title(),
                     grade=request_json['grade'],
                     user_id=user_id
                 )

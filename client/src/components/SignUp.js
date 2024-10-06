@@ -8,7 +8,7 @@ function SignUp({ onLogin }) {
     const [refreshPage, setRefreshPage] = useState(false);
     
     const formSchema = yup.object().shape({
-        userName: yup
+        username: yup
         .string()
         .matches(/^[a-zA-Z0-9]+$/, "Username can only contain alphanumeric characters")
         .min(6, "Must be at least 6 characters")
@@ -21,15 +21,15 @@ function SignUp({ onLogin }) {
         .string()
         .oneOf([yup.ref('password'), null], 'Passwords must match')
         .required('Please confirm your password'),
-        firstName: yup.string().required("Must enter a first name").max(15),
-        lastName: yup.string().required("Must enter a last name").max(20)
+        first_name: yup.string().required("Must enter a first name").max(15),
+        last_name: yup.string().required("Must enter a last name").max(20)
       });
 
     const formik = useFormik({
         initialValues: {
-          firstName: "",
-          lastName: "",
-          userName: "",
+          first_name: "",
+          last_name: "",
+          username: "",
           password: "",
           confirmPassword: ""
         },
@@ -62,36 +62,36 @@ function SignUp({ onLogin }) {
                             <label htmlFor="first_name">First Name: </label>
                                 <input type="text" 
                                 id="first_name" 
-                                name="firstName"
-                                value={formik.values.firstName} 
+                                name="first_name"
+                                value={formik.values.first_name} 
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}/>
-                                {formik.touched.firstName && formik.errors.firstName ? (
-                                <p style={{ color: "red" }}>{formik.errors.firstName}</p>
+                                {formik.touched.first_name && formik.errors.first_name ? (
+                                <p style={{ color: "red" }}>{formik.errors.first_name}</p>
                                 ) : null}
                         </div>
                         <div className="pr-40 text-2xl py-5">
                             <label htmlFor="last_name">Last Name: </label>
                                 <input type="text" 
                                 id="last_name" 
-                                name="lastName"
-                                value={formik.values.lastName} 
+                                name="last_name"
+                                value={formik.values.last_name} 
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}/>
-                                {formik.touched.lastName && formik.errors.lastName ? (
-                                <p style={{ color: "red" }}>{formik.errors.lastName}</p>
+                                {formik.touched.last_name && formik.errors.last_name ? (
+                                <p style={{ color: "red" }}>{formik.errors.last_name}</p>
                                 ) : null}
                         </div>
                         <div className="pl-48 text-2xl py-5">
                             <label htmlFor="username">Username: </label>
                                 <input type="text" 
                                 id="username" 
-                                name="userName"
-                                value={formik.values.userName} 
+                                name="username"
+                                value={formik.values.username} 
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}/>
-                                {formik.touched.userName && formik.errors.userName ? (
-                                <p style={{ color: "red" }}>{formik.errors.userName}</p>
+                                {formik.touched.username && formik.errors.username ? (
+                                <p style={{ color: "red" }}>{formik.errors.username}</p>
                                 ) : null}
                         </div>
                         <div className="pr-36 text-2xl py-5">

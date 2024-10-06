@@ -94,8 +94,12 @@ function EditCategory() {
                                 className="text-black text-2xl" 
                                 name="description"
                                 id="description" 
-                                value={formik.values.description} /* add touched, blur and errors */
-                                onChange={formik.handleChange}/>
+                                value={formik.values.description}
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}/>
+                                {formik.touched.description && formik.errors.description ? (
+                                <p style={{ color: "red" }}>{formik.errors.description}</p>
+                                ) : null}
                         </div>
                             <div className="py-3">
                                 <button type="submit" className="bg-slate-200 text-2xl font-bold text-black">SUBMIT</button>

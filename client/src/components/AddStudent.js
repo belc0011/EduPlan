@@ -10,11 +10,11 @@ function AddStudent() {
     const { students, setStudents } = useContext(StudentContext);
 
     const formSchema = yup.object().shape({
-        firstName: yup
+        first_name: yup
         .string()
         .matches(/^[a-zA-Z\']+$/, "First name can not contain numbers or special characters, except an apostrophe")
         .required("First name is required"),
-        lastName: yup
+        last_name: yup
         .string()
         .matches(/^[a-zA-Z\-]+$/, "Last name can not contain numbers or special characters, except a hyphen")
         .required("Last name is required"),
@@ -22,8 +22,8 @@ function AddStudent() {
 
     const formik = useFormik({
         initialValues: {
-          firstName: "",
-          lastName: "",
+          first_name: "",
+          last_name: "",
           grade: "",
         },
         validationSchema: formSchema,
@@ -58,26 +58,26 @@ function AddStudent() {
                         <input 
                         type="text" 
                         placeholder="Enter first name" 
-                        name="firstName"
-                        id="first-name" 
-                        value={formik.values.firstName} 
+                        name="first_name"
+                        id="first_name" 
+                        value={formik.values.first_name} 
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}/>
-                        {formik.touched.firstName && formik.errors.firstName ? (
-                        <p style={{ color: "red" }}>{formik.errors.firstName}</p>
+                        {formik.touched.first_name && formik.errors.first_name ? (
+                        <p style={{ color: "red" }}>{formik.errors.first_name}</p>
                         ) : null}
                 </div>
                 <div className="pr-44 text-2xl py-4">
                     <label htmlFor="last-name">Last Name: </label>
                         <input type="text" 
                         placeholder="Enter last name" 
-                        name="lastName"
-                        id="last-name" 
-                        value={formik.values.lastName} 
+                        name="last_name"
+                        id="last_name" 
+                        value={formik.values.last_name} 
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}/>
-                        {formik.touched.lastName && formik.errors.lastName ? (
-                        <p style={{ color: "red" }}>{formik.errors.lastName}</p>
+                        {formik.touched.last_name && formik.errors.last_name ? (
+                        <p style={{ color: "red" }}>{formik.errors.last_name}</p>
                         ) : null}
                     </div>
             </div>
