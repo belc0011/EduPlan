@@ -25,8 +25,7 @@ function EditAccommodation() {
     const formSchema = yup.object().shape({
         description: yup
         .string()
-        .matches(/^[a-zA-Z\'\- ]+$/, "Description can not contain numbers or special characters, except an apostrophe, hyphen or white space")
-        .required(),
+        .matches(/^[a-zA-Z0-9\'\-\/ ]+$/, "Description can not contain special characters, except an apostrophe, hyphen, forward slash, or white space")
       });
     
       const formik = useFormik({
@@ -34,7 +33,7 @@ function EditAccommodation() {
           description: "",
           category_id: "",
         },
-        //validationSchema: formSchema,
+        validationSchema: formSchema,
         onSubmit: (values, { resetForm }) => {
             const changes = {};
 
@@ -201,7 +200,11 @@ function EditAccommodation() {
                                         name="description"
                                         id="description" 
                                         value={formik.values.description}
-                                        onChange={formik.handleChange}/>
+                                        onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur}/>
+                                        {formik.touched.description && formik.errors.description ? (
+                                        <p style={{ color: "red" }}>{formik.errors.description}</p>
+                                        ) : null}
                                     </div>
                                     <div>
                                         <div className="py-2">

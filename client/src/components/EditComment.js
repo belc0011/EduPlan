@@ -23,7 +23,7 @@ function EditComment() {
     const formSchema = yup.object().shape({
         comment_text: yup
         .string()
-        .matches(/^[a-zA-Z\' ]+$/, "Description can not contain numbers or special characters, except an apostrophe or a space")
+        .matches(/^[a-zA-Z\' ]+$/, "Comment can not contain numbers or special characters, except an apostrophe or a space")
         .required(),
       });
 
