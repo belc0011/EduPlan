@@ -200,7 +200,7 @@ function EditAccommodation() {
                                         className="border-4 py-2 px-4 w-96"  
                                         name="description"
                                         id="description" 
-                                        value={formik.values.description} /* add touched, blur and errors */
+                                        value={formik.values.description}
                                         onChange={formik.handleChange}/>
                                     </div>
                                     <div>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useNavigate, useLocation } from 'react-router-dom'
 import { useFormik } from "formik";
+import * as yup from "yup";
 import { StudentContext } from "./MyContext.js";
 import EditAccommodation from "./EditAccommodation.js";
 
@@ -21,12 +22,20 @@ function StudentPage({ }) {
         }
     }, [students]);
 
+    const formSchema = yup.object().shape({
+        description: yup
+        .string()
+        .matches(/^[a-zA-Z0-9\'\-\/ ]+$/, "Description can not contain special characters, except an apostrophe, hyphen, forward slash, or white space")
+        .required(),
+      });
+
     const formik = useFormik({
         initialValues: {
           description: "",
           category_id: "",
           student_id: id
         },
+        validationSchema: formSchema,
         onSubmit: (values, { resetForm }) => {
             fetch("http://127.0.0.1:5555/accommodations", {
               method: "POST",
