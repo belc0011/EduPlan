@@ -6,16 +6,17 @@ import StudentCard from './StudentCard';
 
 function Students() {
     const [showAddStudent, setShowAddStudent] = useState(false);
-    const [loading, setLoading] = useState(true);  // Loading state
-    const [error, setError] = useState(false); // Error state
+    const [loading, setLoading] = useState(true);  
+    const [error, setError] = useState(false); 
     const { students } = useContext(StudentContext);
 
     useEffect(() => {
         console.log("Students value:", students);
         if (students && students.length > 0) {
-            setLoading(false);  // Data is loaded
+            setLoading(false);  
         } else if (students === null || students === undefined) {
             setError("Failed to load student data");
+            setLoading(false);
         }
     }, [students, error]);
 
@@ -40,7 +41,9 @@ function Students() {
                     <div className="gap-1 grid grid-cols-3 px-2">
                         {loading ? (
                             <h1>Loading student data...</h1>
-                        ) : students.length > 0 ? (
+                        ) : error ? (
+                            <h1 className="text-xl text-red-600">{error}</h1>) : 
+                            students.length > 0 ? (
                             students.map(student => (
                                 <StudentCard
                                     key={student.id}

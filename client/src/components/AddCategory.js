@@ -44,10 +44,10 @@ function AddCategory({ categories, setCategories}) {
     });
    
     return(
-        <form onSubmit={formik.handleSubmit} className="bg-slate-100">
+        <form onSubmit={formik.handleSubmit} className="bg-slate-700">
             <div className="text-3xl">
                 <div className="py-6">
-                    <label htmlFor="description">Category Name: </label>
+                    <label htmlFor="description" className="text-white">Category Name: </label>
                     <input 
                     type="text" 
                     placeholder="Enter category name" 
@@ -62,7 +62,7 @@ function AddCategory({ categories, setCategories}) {
                 </div>
             </div>
                     <div>
-                        <button type="submit" className="bg-slate-700 text-white text-2xl">SUBMIT</button>
+                        <button type="submit" className="bg-slate-200 text-slate-700 font-bold border-3 text-2xl">SUBMIT</button>
                     </div>
         </form>
     )

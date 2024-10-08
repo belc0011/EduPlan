@@ -41,8 +41,6 @@ function AddComment({accommodation, setAccommodation, student, setStudent, stude
         .then(res => {
             if (res.ok) {
                 res.json().then(data => {
-                    console.log(data)
-                    console.log(student.accommodations)
                     setAccommodation(prevAccommodation => ({
                         ...prevAccommodation,
                         comment: data

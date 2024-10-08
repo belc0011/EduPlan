@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { useNavigate, useLocation, Navigate } from 'react-router-dom'
@@ -28,28 +28,30 @@ function AccommodationByCategory() {
     }
 
     return (
-        <div>
-            {selectedCategory[0].accommodations.length > 0 ? (
-            <div className="grid grid-cols-3 gap-4"> {/* Grid wraps all buttons */}
-                {selectedCategory[0].accommodations.map(accommodation => (
-                    <button
-                        key={accommodation.id} 
-                        className="bg-slate-200 border-4 border-slate-500"
-                        onClick={() => handleClick(accommodation.student.id)}
-                    >
-                        <h1 className="text-4xl py-3 text-black font-bold">
-                            {accommodation.student.first_name} {accommodation.student.last_name}
-                        </h1>
-                        <h2 className="text-2xl py-3">
-                            {accommodation.description}
-                        </h2>
-                    </button>
-                ))}
+        selectedCategory[0] ? (
+            <div>
+                {selectedCategory[0].accommodations.length > 0 ? (
+                <div className="grid grid-cols-3 gap-4">
+                    {selectedCategory[0].accommodations.map(accommodation => (
+                        <button
+                            key={accommodation.id} 
+                            className="bg-slate-200 border-4 border-slate-500"
+                            onClick={() => handleClick(accommodation.student.id)}
+                        >
+                            <h1 className="text-4xl py-3 text-black font-bold">
+                                {accommodation.student.first_name} {accommodation.student.last_name}
+                            </h1>
+                            <h2 className="text-2xl py-3">
+                                {accommodation.description}
+                            </h2>
+                        </button>
+                    ))}
+                </div>
+            ) : (
+                <div className="text-2xl italic">No accommodations in this category</div>
+            )}
             </div>
-        ) : (
-            <div className="text-2xl italic">No accommodations in this category</div>
-        )}
-        </div>
+        ) : (<p className="text-2xl italic">Loading...if page doesn't load, please return to the home page</p>)
     )
 }
 

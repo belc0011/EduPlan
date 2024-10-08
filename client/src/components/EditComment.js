@@ -125,7 +125,7 @@ function EditComment() {
                 </form>
             </div>
             ) : null}
-    </div>) : null}
+    </div>) : <p className="italic text-xl">Error loading page, please return to home page</p>}
     </>)
 
 }

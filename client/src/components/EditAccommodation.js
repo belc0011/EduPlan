@@ -200,8 +200,8 @@ function EditAccommodation() {
                                 ) : null}
                             </div>
                             <div className="border-blue-700 border-4 bg-white">
-                                <h3 className="text-3xl text-mono py-3">Edit accommodation: </h3>
-                                <form onSubmit={formik.handleSubmit}>
+                                <h3 className="text-3xl text-mono py-3 font-bold">Edit Accommodation: </h3>
+                                <form onSubmit={formik.handleSubmit} className="my-2">
                                 <label htmlFor="description">Adjust the accommodation description as necessary: </label>
                                     <div>
                                         <input 
@@ -248,7 +248,7 @@ function EditAccommodation() {
                 )}
             </div>
         </div>
-        ) : null
+        ) : <p className="italic text-xl">Error loading page, please return to home page</p>
     )
 }
 

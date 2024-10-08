@@ -14,8 +14,6 @@ function EditStudent() {
     const navigate = useNavigate();
     const { students, setStudents, studentToDisplay, setStudentToDisplay } = useContext(StudentContext);
     
-    
-    console.log(studentToDisplay);
     const formSchema = yup.object().shape({
         first_name: yup
         .string()
@@ -149,7 +147,7 @@ function EditStudent() {
             </>
             )}
         </div>
-        ) : null
+        ) : <p className="italic text-xl">Error loading page, please return to home page</p>
     )
 }
 

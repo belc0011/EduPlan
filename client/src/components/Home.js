@@ -12,12 +12,10 @@ function Home() {
         navigate('/accommodations')
     }
     function handleAddStudent(e) {
-        e.preventDefault()
         setShowComponent(true)
     }
     
     function handleStudentClick(e) {
-        e.preventDefault()
         navigate('/students')
         
     }

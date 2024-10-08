@@ -11,6 +11,7 @@ function StudentCard({firstName, lastName, grade, accommodations, id}) {
         navigate(`/students/${id}`)
     }
     return (
+        firstName && lastName && grade && accommodations && id ? (
         <div className="bg-slate-200 border-4 border-black/50 rounded-2xl flex flex-col">
             <button onClick={handleClick}>
                 <h1 className="text-red-900 font-bold text-3xl">{firstName} {lastName}</h1>
@@ -27,6 +28,9 @@ function StudentCard({firstName, lastName, grade, accommodations, id}) {
                     )}
             </button>
         </div>
+        ) : (
+            <p className="italic text-2xl">Loading...</p>
+        )
     )
 }
 
