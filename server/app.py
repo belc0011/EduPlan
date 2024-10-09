@@ -1,4 +1,5 @@
 from flask import request, session, make_response, jsonify
+from flask import render_template
 from flask_restful import Resource
 from sqlalchemy import select
 
@@ -335,6 +336,10 @@ api.add_resource(Categories, '/categories', endpoint='categories')
 api.add_resource(Comments, '/comments', endpoint='comments')
 api.add_resource(CommentsById, '/comments/<int:id>', endpoint='comments/<int:id>')
 api.add_resource(CategoriesById, '/categories/<int:id>', endpoint='categories/<int:id>')
+@app.route('/<path:path>', methods=['GET'])
+@app.route('/', methods=['GET'])
+def catch_all(path=''):
+    return render_template('index.html')
 
 if __name__ == '__main__':
     app.run(port=5555, debug=False)
