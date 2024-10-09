@@ -29,7 +29,7 @@ function Categories() {
     }
 
     function handleEditClick(categoryId) {
-        const category = categories.find(category => category.id === categoryId);
+        const category = categories.find(c => c.id === categoryId);
         setCategoryToDisplay(category);
         navigate(`/categories/edit_category/${categoryId}`);
     }

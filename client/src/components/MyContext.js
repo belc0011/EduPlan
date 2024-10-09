@@ -10,6 +10,7 @@ function StudentProvider({children, user}) {
     const [studentToDisplay, setStudentToDisplay] = useState({});
     const [categoryToDisplay, setCategoryToDisplay] = useState({});
     const [accommodationToDisplay, setAccommodationToDisplay] = useState({});
+    const [categoryId, setCategoryId] = useState(null);
 
   useEffect(() => {
     fetch("http://127.0.0.1:5555/students", {
@@ -62,10 +63,10 @@ function StudentProvider({children, user}) {
     accommodationToDisplay,
     setAccommodationToDisplay,
     categoryToDisplay,
-    setCategoryToDisplay
+    setCategoryToDisplay,
   }), [students, categories, studentToDisplay, accommodationToDisplay]);
   
-
+  console.log(categoryToDisplay)
   return <StudentContext.Provider value={contextValue}>{children}</StudentContext.Provider>
 }
 

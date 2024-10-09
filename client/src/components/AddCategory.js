@@ -43,7 +43,7 @@ function AddCategory({ categories, setCategories}) {
         <form onSubmit={formik.handleSubmit} className="bg-slate-700">
             <div className="text-3xl">
                 <div className="py-6">
-                    <label htmlFor="description" className="text-white">Category Name: </label>
+                    <label htmlFor="description" className="text-white">Enter New Category Name: </label>
                     <input 
                     type="text" 
                     placeholder="Enter category name" 

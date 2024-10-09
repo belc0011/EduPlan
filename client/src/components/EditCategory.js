@@ -7,6 +7,7 @@ import * as yup from "yup";
 
 function EditCategory() {
     const { categories, setCategories, categoryToDisplay, setCategoryToDisplay } = useContext(StudentContext);
+    
     const navigate = useNavigate();
 
     const formSchema = yup.object().shape({
