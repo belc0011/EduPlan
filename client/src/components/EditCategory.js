@@ -79,7 +79,7 @@ function EditCategory() {
             console.log('User canceled delete action')
         }
     }
-    
+    console.log(categoryToDisplay)
     return(
         categoryToDisplay ? (
             <div className="bg-slate-200">

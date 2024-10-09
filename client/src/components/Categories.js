@@ -34,6 +34,29 @@ function Categories() {
         navigate(`/categories/edit_category/${categoryId}`);
     }
 
+    function handleDeleteClick(categoryId) {
+        const isConfirmed = window.confirm('Are you sure you want to delete this category?');
+        if (isConfirmed) {
+            fetch(`http://127.0.0.1:5555/categories/${categoryId}`, {
+                method: "DELETE",
+                headers: {
+                "Content-Type": "application/json",
+                },
+                credentials: 'include'
+            })
+           .then(res => res.json())
+           .then(data => {
+                const updatedCategories = categories.filter(category => category.id!== categoryId);
+                setCategories(updatedCategories);
+            })
+           .catch(err => {console.error("error: " + err.message)});
+        }
+        else {
+            console.log('User canceled delete action')
+        }
+    }
+    console.log(categories);
+
     return (
     <>
         {categories.length > 0 ? (
@@ -44,7 +67,7 @@ function Categories() {
                         <div className="text-blue-700 font-bold py-3">
                             <a key={category.id} href={`/categories/accommodations/${category.id}`} className="text-4xl">{category.description}</a>
                             <button onClick={() => handleEditClick(category.id)} className="mx-5">EDIT</button>
-                            <button className="mx-3 border-2 border-red-800 text-red-800">DELETE</button>
+                            <button onClick={() => handleDeleteClick(category.id)} className="mx-3 border-2 border-red-800 text-red-800">DELETE</button>
                         </div>
                     ))}
                 </div>
