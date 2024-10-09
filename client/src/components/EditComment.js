@@ -6,19 +6,10 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 
 function EditComment() {
-    const location = useLocation()
-    const url = location.pathname
-    const parts = url.split("/")
-    const accommodationId = parseInt(parts[2], 10)
-    const [isLoading, setIsLoading] = useState(false);
-    const navigate = useNavigate();
     const { studentToDisplay, setStudentToDisplay, accommodationToDisplay, setAccommodationToDisplay } = useContext(StudentContext);
     const [showForm, setShowForm] = useState(false);
-    const [commentToDisplay, setCommentToDisplay] = useState("");
     const commentId = accommodationToDisplay.comment.id;
     const id = studentToDisplay.id;
-    console.log(accommodationToDisplay);
-    console.log(studentToDisplay);
 
     const formSchema = yup.object().shape({
         comment_text: yup
@@ -84,7 +75,8 @@ function EditComment() {
                         description: ""
                     }
                 }))
-            });
+            })
+            .catch(error => {console.error("error: " + error.message)});
         }
     }
 

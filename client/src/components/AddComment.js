@@ -1,19 +1,10 @@
 import React, { useState, useContext } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { useNavigate, useLocation } from 'react-router-dom'
 
 function AddComment({accommodation, setAccommodation, student, setStudent, students, setStudents}) {
     
-    const navigate = useNavigate()
-    const location = useLocation()
-    const url = location.pathname
-    const parts = url.split("/")
-    const studentId = parseInt(parts[2], 10)
     const accommodationId = accommodation.id
-    console.log(accommodation)
-    console.log(accommodationId)
-
 
     const formSchema = yup.object().shape({
         comment_text: yup
@@ -83,7 +74,6 @@ function AddComment({accommodation, setAccommodation, student, setStudent, stude
                 <p style={{ color: "red" }}>{formik.errors.comment_text}</p>
                 ) : null}
             <div>
-                <p></p>
                 <button type="submit" className="mb-5 text-xl">SUBMIT</button>
             </div>
         </form>

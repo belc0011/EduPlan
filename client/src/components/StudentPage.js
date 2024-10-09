@@ -12,7 +12,6 @@ function StudentPage({ }) {
     const id = parseInt(parts[2])
     const navigate = useNavigate()
     const { students, setStudents, categories, studentToDisplay, setStudentToDisplay, accommodationToDisplay, setAccommodationToDisplay } = useContext(StudentContext);
-    const student_id = id
     const [showEditAccommodation, setShowEditAccommodation] = useState(false);
     
     useEffect(() => {
@@ -47,7 +46,6 @@ function StudentPage({ }) {
           })
         .then(res => res.json())
         .then(data => {
-            console.log(data);
             setStudentToDisplay(prevState => ({
                 ...prevState,
                 accommodations: [...prevState.accommodations, data]
@@ -61,7 +59,8 @@ function StudentPage({ }) {
                     : student
             ));
             resetForm();
-        });
+        })
+        .catch(err => console.error);
         }
     })
 
@@ -80,7 +79,8 @@ function StudentPage({ }) {
                 setStudents(prevState => prevState.filter(student => student.id !== id));
                 setStudentToDisplay({});
                 navigate("/students");
-            });
+            })
+            .catch(err => console.error);
         }
     }
 
@@ -91,9 +91,7 @@ function StudentPage({ }) {
     function handleEditClick(accommodation) {
         setShowEditAccommodation(true);
         setAccommodationToDisplay(accommodation);
-        console.log(accommodationToDisplay);
     }
-    console.log(categories)
 
     return (
         <div>

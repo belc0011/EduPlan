@@ -73,6 +73,7 @@ function EditCategory() {
                 setCategories(updatedCategories);
                 navigate("/categories");
             })
+            .catch(err => {console.error("error: " + err.message)});
         }
         else {
             console.log('User canceled delete action')

@@ -5,7 +5,6 @@ import { StudentContext } from "./MyContext.js";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import AddComment from "./AddComment.js"
-import EditComment from './EditComment.js';
 import { Link } from 'react-router-dom';
 
 function EditAccommodation() {
@@ -18,9 +17,6 @@ function EditAccommodation() {
     const { students, setStudents, studentToDisplay, setStudentToDisplay, accommodationToDisplay, setAccommodationToDisplay, categories, setCategories } = useContext(StudentContext);
     const [showAddComment, setShowAddComment] = useState(false);
     const accommodationId = accommodationToDisplay.id;
-
-    console.log(studentToDisplay);
-    console.log(accommodationToDisplay)
 
     const formSchema = yup.object().shape({
         description: yup
@@ -57,7 +53,6 @@ function EditAccommodation() {
             .then(res => res.json())
             .then(data => {
                 setAccommodationToDisplay(data); 
-                console.log(data)
                 const updatedAccommodation = data
                 setStudentToDisplay(prevStudent => {
                     const updatedAccommodations = prevStudent.accommodations.map(accommodation => 
@@ -80,8 +75,6 @@ function EditAccommodation() {
     }
 
     function handleCommentClick(e) {
-        console.log(accommodationToDisplay)
-        console.log(accommodationToDisplay.comment.id)
         navigate(`/comment/${accommodationId}`);
     }
 
@@ -98,31 +91,31 @@ function EditAccommodation() {
             "Content-Type": "application/json",
             },
             credentials: 'include'
-    })
-    .then(res => res.json())
-    .then(data => {
-        const updatedAccommodations = studentToDisplay.accommodations.filter(accommodation => accommodation.id !== accommodationId);
-        const updatedStudents = students.map(student => {
-            if (student.id === id) {
-                return {...student, accommodations: updatedAccommodations}
+        })
+        .then(res => res.json())
+        .then(data => {
+            const updatedAccommodations = studentToDisplay.accommodations.filter(accommodation => accommodation.id !== accommodationId);
+            const updatedStudents = students.map(student => {
+                if (student.id === id) {
+                    return {...student, accommodations: updatedAccommodations}
+                }
+                return student;
+            })
+            setStudents(updatedStudents);
+            setStudentToDisplay(prevState => {
+                return {
+                ...prevState,
+                    accommodations: updatedAccommodations
+                };
+            })
+            if (updatedAccommodations.length === 0) {
+                setAccommodationToDisplay({})
             }
-            return student;
+            else {
+                const firstAccommodation = studentToDisplay.accommodations[0];
+                setAccommodationToDisplay(firstAccommodation)
+            }
         })
-        setStudents(updatedStudents);
-        setStudentToDisplay(prevState => {
-            return {
-               ...prevState,
-                accommodations: updatedAccommodations
-            };
-        })
-        if (updatedAccommodations.length === 0) {
-            navigate("/students");
-        }
-        else {
-            const firstAccommodation = studentToDisplay.accommodations[0];
-            setAccommodationToDisplay(firstAccommodation)
-        }
-    })
     
     }
     else {
@@ -143,15 +136,15 @@ function EditAccommodation() {
                     <div className="grid grid-cols-3 space-x-1">
                         <div className="border-2 border-slate-500 py-4 flex flex-col h-full">
                             <h1 className="text-4xl text-blue-800 font-bold py-5">Accommodation Description</h1>
-                            <h2 className="text-4xl font-sans py-4">{accommodationToDisplay.description}</h2>
+                            <h2 className="text-4xl font-sans py-4">{accommodationToDisplay?.description || "No accommodation to display"}</h2>
                         </div>
                         <div className="border-2 border-slate-500 py-4 flex flex-col h-full px-1">
                             <h3 className="text-4xl text-blue-800 font-bold py-5">Accommodation Category</h3>
-                            <h3 className="italic text-4xl py-4">{accommodationToDisplay.category.description}</h3>
+                            <h3 className="italic text-4xl py-4">{accommodationToDisplay?.category?.description || "No accommodation to display"}</h3>
                         </div>
                         <div className="border-2 border-slate-500 py-4 flex flex-col h-full justify-between">
                             <h1 className="text-4xl text-blue-800 font-bold py-5">Comment</h1>
-                            {accommodationToDisplay.comment ? 
+                            {Object.keys(accommodationToDisplay).length > 0 && accommodationToDisplay.comment ? 
                             (<>
                                 <div className="flex-grow"></div>
                                 <ul className="mb-3">

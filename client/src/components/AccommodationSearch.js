@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { useNavigate } from 'react-router-dom'
-import { StudentContext } from "./MyContext.js";
 
 function AccommodationSearch() {
 
@@ -21,8 +20,8 @@ function AccommodationSearch() {
        .then(res => res.json())
        .then(data => {
         setAccommodations(data);
-        setAccommodationsToDisplay(data); 
-    console.log(accommodations)}) 
+        setAccommodationsToDisplay(data)}) 
+        .catch(err => {console.error(err);});
     }, [])
     const formSchema = yup.object().shape({
         description: yup

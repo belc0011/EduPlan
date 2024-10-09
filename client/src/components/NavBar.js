@@ -17,6 +17,7 @@ function NavBar({ user, setUser }) {
                 navigate('/')
             }
         })
+        .catch(error => console.log(error));
     }
     if (user) {
     return (

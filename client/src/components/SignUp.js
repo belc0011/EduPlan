@@ -123,7 +123,6 @@ function SignUp({ onLogin }) {
                         </div>
                     </div>
                         <div>
-                            <p></p>
                             <button type="submit" className="border-slate-200 bg-slate-500 text-white text-xl font-semibold">SUBMIT</button>
                         </div>
                 </form>

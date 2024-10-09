@@ -1,11 +1,9 @@
 import React, { useContext } from "react";
-import { useFormik } from "formik";
-import * as yup from "yup";
-import { useNavigate, useLocation, Navigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { StudentContext } from "./MyContext.js";
 
 function AccommodationByCategory() {
-    const { students, setStudents, studentToDisplay, setStudentToDisplay, accommodationToDisplay, setAccommodationToDisplay, categories, setCategories } = useContext(StudentContext);
+    const { students, setStudentToDisplay, categories } = useContext(StudentContext);
     const location = useLocation()
     const url = location.pathname
     const parts = url.split("/")
@@ -18,8 +16,6 @@ function AccommodationByCategory() {
     }
     
     const selectedCategory = categories.filter(category => category.id === categoryId);
-    
-    console.log(selectedCategory);
 
     function handleClick(studentId) {
         const student = students.find(student => student.id === studentId)

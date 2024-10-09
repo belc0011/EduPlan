@@ -12,7 +12,6 @@ function StudentProvider({children, user}) {
     const [accommodationToDisplay, setAccommodationToDisplay] = useState({});
 
   useEffect(() => {
-    console.log("useEffect firing")
     fetch("http://127.0.0.1:5555/students", {
         method: "GET",
         headers: {
@@ -32,7 +31,6 @@ function StudentProvider({children, user}) {
       })
       .then(data => {
         setStudents(data);
-      console.log(data)
   })
       .catch(error => console.log(error));
   }, [user]);
@@ -45,9 +43,7 @@ function StudentProvider({children, user}) {
    .then(res => {
       if (res.ok) {
         res.json().then(data => {
-          setCategories(data.categories)
-          console.log(data)
-          console.log(data.categories)})
+          setCategories(data.categories)})
         }
       else {
         console.log("error: " + res)

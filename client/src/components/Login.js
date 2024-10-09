@@ -7,7 +7,6 @@ function Login({ onLogin }) {
     
     const [showComponent, setShowComponent] = useState(false);
     const [errorLoggingIn, setErrorLoggingIn] = useState(false);
-    const navigate = useNavigate()
 
     const formSchema = yup.object().shape({
         username: yup
@@ -23,6 +22,7 @@ function Login({ onLogin }) {
           username: "",
           password: "",
         },
+        validationSchema: formSchema,
         onSubmit: (values) => {
         fetch("http://127.0.0.1:5555", {
             method: "POST",

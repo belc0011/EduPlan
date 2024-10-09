@@ -1,12 +1,8 @@
 import React, { useState, useContext } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { useNavigate } from 'react-router-dom'
-import { StudentContext } from "./MyContext.js";
 
 function AddCategory({ categories, setCategories}) {
-    
-    const navigate = useNavigate()
     
     const formSchema = yup.object().shape({
         description: yup

@@ -11,7 +11,6 @@ function EditStudent() {
     const parts = url.split("/")
     const id = parseInt(parts[3], 10)
     const [isLoading, setIsLoading] = useState(false);
-    const navigate = useNavigate();
     const { students, setStudents, studentToDisplay, setStudentToDisplay } = useContext(StudentContext);
     
     const formSchema = yup.object().shape({

@@ -11,7 +11,6 @@ function Students() {
     const { students } = useContext(StudentContext);
 
     useEffect(() => {
-        console.log("Students value:", students);
         if (students && students.length > 0) {
             setLoading(false);  
         } else if (students === null || students === undefined) {
