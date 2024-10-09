@@ -6,9 +6,15 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 
 function EditCategory() {
-    const { categories, setCategories, categoryToDisplay, setCategoryToDisplay } = useContext(StudentContext);
-    
+    const { categories, setCategories } = useContext(StudentContext);
+    const location = useLocation()
+    const url = location.pathname
+    const parts = url.split("/")
+    const categoryId = parseInt(parts[3], 10)
+    console.log(categoryId)
+    const categoryToDisplay = categories.find(c => c.id === categoryId);
     const navigate = useNavigate();
+    console.log(categoryToDisplay);
 
     const formSchema = yup.object().shape({
         description: yup
@@ -41,11 +47,15 @@ function EditCategory() {
                 .then(res => {
                     if (res.ok) {
                         res.json().then(data => {
-                            setCategoryToDisplay(data);
                             setCategories(prevCategories => [
-                                ...prevCategories, data
+                                prevCategories.filter(c => {
+                                    if (c.id!== categoryToDisplay.id) {
+                                        return c;
+                                    }
+                                    return {...c, description: data.description };
+                                })
                             ]);
-                            resetForm();
+                            navigate("/categories");
                         });
                     } else {
                         console.log("error: " + res);

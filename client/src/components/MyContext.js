@@ -8,7 +8,6 @@ function StudentProvider({children, user}) {
   
     const [categories, setCategories] = useState([]);
     const [studentToDisplay, setStudentToDisplay] = useState({});
-    const [categoryToDisplay, setCategoryToDisplay] = useState({});
     const [accommodationToDisplay, setAccommodationToDisplay] = useState({});
     const [categoryId, setCategoryId] = useState(null);
 
@@ -62,11 +61,8 @@ function StudentProvider({children, user}) {
     setStudentToDisplay,
     accommodationToDisplay,
     setAccommodationToDisplay,
-    categoryToDisplay,
-    setCategoryToDisplay,
   }), [students, categories, studentToDisplay, accommodationToDisplay]);
   
-  console.log(categoryToDisplay)
   return <StudentContext.Provider value={contextValue}>{children}</StudentContext.Provider>
 }
 
