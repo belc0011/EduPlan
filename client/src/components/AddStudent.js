@@ -18,6 +18,7 @@ function AddStudent() {
         .string()
         .matches(/^[a-zA-Z\-]+$/, "Last name can not contain numbers or special characters, except a hyphen")
         .required("Last name is required"),
+        grade: yup.number().required("Grade is required"),
       });
 
     const formik = useFormik({
@@ -87,13 +88,17 @@ function AddStudent() {
                         name="grade"
                         id="grade" 
                         value={formik.values.grade} 
-                        onChange={formik.handleChange}>
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}>
                             <option value="default">Select One</option>
                             <option value="9">9</option>
                             <option value="10">10</option>
                             <option value="11">11</option>
                             <option value="12">12</option>
                         </select>
+                        {formik.touched.grade && formik.errors.grade ? (
+                        <p style={{ color: "red" }}>{formik.errors.grade}</p>
+                        ) : null}
                 </div>
                 <div className="justify-end">
                     <button type="submit" className="bg-slate-700 text-white text-xl">SUBMIT</button>
