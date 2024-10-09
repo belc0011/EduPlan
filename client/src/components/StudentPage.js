@@ -26,6 +26,7 @@ function StudentPage({ }) {
         .string()
         .matches(/^[a-zA-Z0-9\'\-\/ ]+$/, "Description can not contain special characters, except an apostrophe, hyphen, forward slash, or white space")
         .required(),
+        category_id: yup.number().required("Category is required"),
       });
 
     const formik = useFormik({
@@ -142,7 +143,8 @@ function StudentPage({ }) {
                                         name="category_id"
                                         className="border-blue-400"
                                         value={formik.values.category_id} 
-                                        onChange={formik.handleChange}>
+                                        onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur}>
                                             <option value="" disabled>
                                                 Select one
                                             </option>
@@ -152,6 +154,10 @@ function StudentPage({ }) {
                                             </option>})) : null
                                             }
                                         </select>
+                                        {formik.touched.category_id && formik.errors.category_id ? (
+                                            <p style={{ color: "red" }}>{formik.errors.category_id}</p>
+                                            ) : null 
+                                        }
                                 </div>
                             </div>
                         <div className="py-4">

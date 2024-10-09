@@ -113,7 +113,7 @@ function EditAccommodation() {
             }
             else {
                 const firstAccommodation = studentToDisplay.accommodations[0];
-                setAccommodationToDisplay(firstAccommodation)
+                setAccommodationToDisplay({...firstAccommodation})
             }
         })
     
