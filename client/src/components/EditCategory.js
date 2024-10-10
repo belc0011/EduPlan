@@ -69,9 +69,9 @@ function EditCategory() {
     });
 
     function handleDeleteClick(e) {
-        const isConfirmed = window.confirm('Are you sure you want to delete this accommodation?');
+        const isConfirmed = window.confirm('Are you sure you want to delete this category? This will automatically delete all accommodations in this category.');
         if (isConfirmed) {
-            fetch(`http://127.0.0.1:5555/categories/${categoryToDisplay.id}`, {
+            fetch(`https://eduplan.onrender.com/categories/${categoryToDisplay.id}`, {
                 method: "DELETE",
                 headers: {
                 "Content-Type": "application/json",
@@ -82,6 +82,15 @@ function EditCategory() {
             .then(data => {
                 const updatedCategories = categories.filter(category => category.id !== categoryToDisplay.id);
                 setCategories(updatedCategories);
+                const updatedStudents = students.map(student => {
+                    return {
+                        ...student,
+                        accommodations: student.accommodations.filter(accommodation => 
+                            accommodation.category_id !== categoryToDisplay.id
+                        )
+                    };
+                });
+                setStudents(updatedStudents);
                 navigate("/categories");
             })
             .catch(err => {console.error("error: " + err.message)});

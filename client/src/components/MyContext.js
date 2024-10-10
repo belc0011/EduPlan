@@ -52,6 +52,8 @@ function StudentProvider({children, user}) {
    .catch(error => console.error('Error:', error));
   }, [])
 
+  console.log(students)
+
   const contextValue = useMemo(() => ({
     students,
     setStudents,

@@ -5,7 +5,7 @@ import AddCategory from "./AddCategory.js";
 import { StudentContext } from "./MyContext.js";
 
 function Categories() {
-    const { categories, setCategories, categoryToDisplay, setCategoryToDisplay } = useContext(StudentContext);
+    const { categories, setCategories, students, setStudents } = useContext(StudentContext);
     const [showAddCategory, setShowAddCategory] = useState(false);
     const navigate = useNavigate()
 
@@ -33,7 +33,7 @@ function Categories() {
     }
 
     function handleDeleteClick(categoryId) {
-        const isConfirmed = window.confirm('Are you sure you want to delete this category?');
+        const isConfirmed = window.confirm('Are you sure you want to delete this category? This will automatically delete all accommodations within this category.');
         if (isConfirmed) {
             fetch(`https://eduplan.onrender.com/categories/${categoryId}`, {
                 method: "DELETE",
@@ -46,6 +46,15 @@ function Categories() {
            .then(data => {
                 const updatedCategories = categories.filter(category => category.id!== categoryId);
                 setCategories(updatedCategories);
+                const updatedStudents = students.map(student => {
+                    return {
+                        ...student,
+                        accommodations: student.accommodations.filter(accommodation => 
+                            accommodation.category_id !== categoryId
+                        )
+                    };
+                });
+                setStudents(updatedStudents);
             })
            .catch(err => {console.error("error: " + err.message)});
         }
