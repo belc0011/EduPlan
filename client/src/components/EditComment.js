@@ -26,7 +26,7 @@ function EditComment() {
         validationSchema: formSchema,
         onSubmit: (values, { resetForm }) => {
             console.log("inside on submit")
-          fetch(`http://127.0.0.1:5555/comments/${commentId}`, {
+          fetch(`https://eduplan.onrender.com/comments/${commentId}`, {
             method: "PATCH",
             headers: {
               "Content-Type": "application/json",
