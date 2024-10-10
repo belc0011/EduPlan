@@ -37,6 +37,6 @@ db.init_app(app)
 api = Api(app)
 
 # Instantiate CORS
-CORS(app, supports_credentials=True, origins=["http://127.0.0.1:3000"], send_wildcard=True)
+CORS(app, supports_credentials=True, origins=["https://eduplan.onrender.com"], send_wildcard=True)
 
 bcrypt = Bcrypt(app)
