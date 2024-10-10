@@ -9,7 +9,7 @@ from models import User, Student, Accommodation, Category, Comment
 class Signup(Resource):
     def post(self):
         request_dict = request.get_json()
-        existing_user = User.query.filter_by(username=request_dict['userName']).first()
+        existing_user = User.query.filter_by(username=request_dict['username']).first()
         if existing_user:
             return {'message': 'Username already exists'}, 400
         else:
