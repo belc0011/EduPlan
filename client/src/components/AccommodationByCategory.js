@@ -17,6 +17,7 @@ function AccommodationByCategory() {
     }
     
     const selectedCategory = categories.filter(category => category.id === categoryId);
+    console.log(selectedCategory);
 
     function handleClick(studentId) {
         const student = students.find(student => student.id === studentId)
