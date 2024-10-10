@@ -17,7 +17,7 @@ function AddCategory({ categories, setCategories}) {
         },
         validationSchema: formSchema,
         onSubmit: (values, { resetForm }) => {
-          fetch("http://127.0.0.1:5555/categories", {
+          fetch("https://eduplan.onrender.com/categories", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",

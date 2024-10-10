@@ -21,7 +21,7 @@ function App() {
 
   useEffect(() => {
     // auto-login
-    fetch(`http://127.0.0.1:5555/check_session`, {
+    fetch(`https://eduplan.onrender.com/check_session`, {
       method: "GET",
       credentials: 'include'
       })

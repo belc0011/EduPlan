@@ -29,7 +29,7 @@ function AddStudent() {
         },
         validationSchema: formSchema,
         onSubmit: (values, { resetForm }) => {
-          fetch("http://127.0.0.1:5555/students", {
+          fetch("https://eduplan.onrender.com/students", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",

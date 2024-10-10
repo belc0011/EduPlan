@@ -37,7 +37,7 @@ function StudentPage({ }) {
         },
         validationSchema: formSchema,
         onSubmit: (values, { resetForm }) => {
-            fetch("http://127.0.0.1:5555/accommodations", {
+            fetch("https://eduplan.onrender.com/accommodations", {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
@@ -68,7 +68,7 @@ function StudentPage({ }) {
     function handleDelete(e) {
         const userConfirmed = window.confirm("Are you sure you want to delete this student record?");
         if (userConfirmed) {
-            fetch(`http://127.0.0.1:5555/students/${id}`, {
+            fetch(`https://eduplan.onrender.com/students/${id}`, {
                 method: "DELETE",
                 headers: {
                 "Content-Type": "application/json",

@@ -12,7 +12,7 @@ function StudentProvider({children, user}) {
     const [categoryId, setCategoryId] = useState(null);
 
   useEffect(() => {
-    fetch("http://127.0.0.1:5555/students", {
+    fetch("https://eduplan.onrender.com/students", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -36,7 +36,7 @@ function StudentProvider({children, user}) {
   }, [user]);
   
   useEffect(() => {
-    fetch("http://127.0.0.1:5555/categories", {
+    fetch("https://eduplan.onrender.com/categories", {
         method: "GET",
         credentials: 'include'
     })

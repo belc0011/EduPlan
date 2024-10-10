@@ -10,7 +10,7 @@ function AccommodationSearch() {
     const navigate = useNavigate()
 
     useEffect(() => {
-        fetch("http://127.0.0.1:5555/accommodations", {
+        fetch("https://eduplan.onrender.com/accommodations", {
             method: "GET",
             headers: {
               "Content-Type": "application/json",

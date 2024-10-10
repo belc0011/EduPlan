@@ -10,7 +10,7 @@ function Categories() {
     const navigate = useNavigate()
 
     useEffect(() => {
-        fetch("http://127.0.0.1:5555/categories", {
+        fetch("https://eduplan.onrender.com/categories", {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
@@ -35,7 +35,7 @@ function Categories() {
     function handleDeleteClick(categoryId) {
         const isConfirmed = window.confirm('Are you sure you want to delete this category?');
         if (isConfirmed) {
-            fetch(`http://127.0.0.1:5555/categories/${categoryId}`, {
+            fetch(`https://eduplan.onrender.com/categories/${categoryId}`, {
                 method: "DELETE",
                 headers: {
                 "Content-Type": "application/json",

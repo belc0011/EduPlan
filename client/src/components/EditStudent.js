@@ -45,7 +45,7 @@ function EditStudent() {
             }
             
             if (Object.keys(changes).length > 0) {
-            fetch(`http://127.0.0.1:5555/students/${id}`, {
+            fetch(`https://eduplan.onrender.com/students/${id}`, {
                 method: "PATCH",
                 headers: {
                 "Content-Type": "application/json",

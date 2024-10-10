@@ -42,7 +42,7 @@ function EditAccommodation() {
             }
 
             if (Object.keys(changes).length > 0) {
-                fetch(`http://127.0.0.1:5555/accommodations/${accommodationId}`, {
+                fetch(`https://eduplan.onrender.com/accommodations/${accommodationId}`, {
                     method: "PATCH",
                     headers: {
                     "Content-Type": "application/json",
@@ -85,7 +85,7 @@ function EditAccommodation() {
     function handleDeleteClick(e) {
         const isConfirmed = window.confirm('Are you sure you want to delete this accommodation?');
         if (isConfirmed) {
-        fetch(`http://127.0.0.1:5555/accommodations/${accommodationId}`, {
+        fetch(`https://eduplan.onrender.com/accommodations/${accommodationId}`, {
             method: "DELETE",
             headers: {
             "Content-Type": "application/json",

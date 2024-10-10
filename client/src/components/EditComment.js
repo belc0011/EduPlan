@@ -59,7 +59,7 @@ function EditComment() {
     function handleDelete(e) {
         const userConfirmed = window.confirm("Are you sure you want to delete this comment?");
         if (userConfirmed) {
-            fetch(`http://127.0.0.1:5555/comments/${commentId}`, {
+            fetch(`https://eduplan.onrender.com/comments/${commentId}`, {
                 method: "DELETE",
                 headers: {
                 "Content-Type": "application/json",

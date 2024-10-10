@@ -21,7 +21,7 @@ function AddComment({accommodation, setAccommodation, student, setStudent, stude
         validationSchema: formSchema,
         onSubmit: (values, { resetForm }) => {
             console.log("click")
-          fetch("http://127.0.0.1:5555/comments", {
+          fetch("https://eduplan.onrender.com/comments", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
