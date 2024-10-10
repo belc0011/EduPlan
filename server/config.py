@@ -1,10 +1,10 @@
 from flask import Flask
 from flask_cors import CORS
-from flask_migrate import Migrate
+from flask_migrate import Migrate, upgrade
 from flask_session import Session
 from flask_restful import Api
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import MetaData
+from sqlalchemy import MetaData, create_engine, inspect
 from flask_bcrypt import Bcrypt
 import os
 from datetime import timedelta
@@ -47,13 +47,14 @@ CORS(app, supports_credentials=True, origins=["https://eduplan.onrender.com"], s
 
 bcrypt = Bcrypt(app)
 
-engine = sa.create_engine(app.config['SQLALCHEMY_DATABASE_URI'])
-inspector = sa.inspect(engine)
+engine = create_engine(app.config['SQLALCHEMY_DATABASE_URI'])
+inspector = inspect(engine)
 
-if not inspector.has_table("users"):  
+# Only initialize DB if the users table doesn't exist
+if not inspector.has_table('users'):
     with app.app_context():
-        db.drop_all()
-        db.create_all()
-        app.logger.info('Initialized the database!')
+        
+        upgrade()
+        app.logger.info('Database migration applied!')
 else:
-    app.logger.info('Database already contains the users table.')
+    app.logger.info('Database already initialized.')
