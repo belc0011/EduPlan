@@ -27,7 +27,7 @@ class Accommodation(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     description = db.Column(db.String)
     student_id = db.Column(db.Integer, db.ForeignKey('students.id'))
-    category_id = db.Column(db.Integer, db.ForeignKey('categories.id'))
+    category_id = db.Column(db.Integer, db.ForeignKey('categories.id', ondelete='CASCADE'))
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
     comment = db.relationship('Comment', back_populates='accommodation', uselist=False, cascade="all, delete-orphan")
@@ -69,7 +69,11 @@ class Category(db.Model, SerializerMixin):
     description = db.Column(db.String)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
 
-    accommodations = db.relationship("Accommodation", back_populates="category")
+    accommodations = db.relationship(
+        "Accommodation",
+        back_populates="category",
+        cascade="all, delete-orphan"  
+    )
 
     serialize_rules = ('-accommodations.category',)
 
