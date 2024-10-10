@@ -10,6 +10,7 @@ function AccommodationByCategory() {
     const categoryId = parseInt(parts[3], 10)
     const navigate = useNavigate();
     
+    console.log(categoryId)
     if (!categories || categories.length === 0) {
         
         return <div>Loading categories...</div>;
