@@ -115,6 +115,7 @@ function EditAccommodation({ setShowEditAccommodation }) {
                 const firstAccommodation = studentToDisplay.accommodations[0];
                 setAccommodationToDisplay({...firstAccommodation})
             }
+            navigate('/students')
         })
     
     }
