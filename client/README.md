@@ -8,7 +8,7 @@ The primary purpose of this project is to enable teachers to store and search th
 
 ### Project Demo
 
-The project can be found at https://EduPlan.onrender.com. Follow the steps to interact with the website:
+The project can be found at https://EduPlan.onrender.com. Follow the steps below to interact with the website:
 
 1. Click the "Sign Up" button and create an account to sign in.
 2. Click on the "Categories" button in the NavBar and then click on "New Category". Create all the categories you believe you will need.
@@ -18,6 +18,14 @@ The project can be found at https://EduPlan.onrender.com. Follow the steps to in
 6. Use the "Categories" button from the NavBar if you want to pull up all accommodations in a particular category.
 7. Use the "Accommodations" button from the NavBar if you want to be able to search accommodations by key word or phrase.
 8. Comments, accommodations, categories and students can all be edited or deleted. Deleting a category will automatically remove all accommodations within that category.
+
+### Future improvements
+Future improvements to the website will include the following:
+
+* Requiring a valid e-mail address when signing up to allow username/password recovery
+* Forgot username/password button on login screen
+* Alphabetizing students by name automatically when displayed
+* Alphabetizing categories by name automatically when displayed
 
 ### Built with
 

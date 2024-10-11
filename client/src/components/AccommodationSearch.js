@@ -87,7 +87,7 @@ function AccommodationSearch() {
                         : <p className="text-3xl italic">No accommodations available</p>}
                 </div>
             </div>
-        ) : (<p>Error loading page, please return to the home page</p>)
+        ) : (<p>Loading, please wait...</p>)
     )
 }
 export default AccommodationSearch
