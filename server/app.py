@@ -1,5 +1,5 @@
 from flask import request, session, make_response, jsonify
-from flask import render_template
+from flask import render_template, upgrade
 from flask_restful import Resource
 from sqlalchemy import select
 
@@ -324,6 +324,12 @@ class CommentsById(Resource):
             return {"error": "Unauthorized"}, 401
         
     
+@app.before_first_request
+def run_migrations():
+    """Apply database migrations on startup."""
+    with app.app_context():
+        upgrade()
+
 api.add_resource(Signup, '/signup', endpoint='signup')
 api.add_resource(Login, '/', endpoint='')
 api.add_resource(Logout, '/logout', endpoint='logout')
