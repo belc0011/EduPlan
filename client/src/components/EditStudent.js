@@ -4,6 +4,7 @@ import { useNavigate, useLocation } from 'react-router-dom'
 import { StudentContext } from "./MyContext.js";
 import { useFormik } from "formik";
 import * as yup from "yup";
+import { Link } from 'react-router-dom';
 
 function EditStudent() {
     const location = useLocation()
@@ -80,13 +81,20 @@ function EditStudent() {
         <div className="bg-slate-200">
             {isLoading ? (<h1>Loading...</h1>) : (
             <>
-                <a href={`/students/${id}`} className="text-blue-700 text-5xl font-bold">{studentToDisplay.first_name} {studentToDisplay.last_name}</a>
+                <Link 
+                    to={`/students/${id}`} 
+                    className="text-blue-700 text-5xl font-bold"
+                >
+                    {studentToDisplay.first_name} {studentToDisplay.last_name}
+                </Link>
                 <h3 className="py-5 text-3xl italic">Current grade {studentToDisplay.grade}</h3>
                 <p className="text-red-700 text-3xl py-4"> Current accommodations: </p>
                 {studentToDisplay.accommodations && studentToDisplay.accommodations.length > 0 ? (
                     studentToDisplay.accommodations.map(accommodation => (
                         <div key={accommodation.id} className="py-3">
-                            <a href={`/students/${id}/${accommodation.id}`}>{accommodation.description}</a>
+                            <Link to={`/students/${id}/${accommodation.id}`}>
+                                {accommodation.description}
+                            </Link>
                         </div>
                     ))
                 ) : (
