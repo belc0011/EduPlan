@@ -5,8 +5,8 @@ import { useNavigate } from 'react-router-dom'
 
 function AccommodationSearch() {
 
-    const [accommodations, setAccommodations] = useState()
-    const [accommodationsToDisplay, setAccommodationsToDisplay] = useState()
+    const [accommodations, setAccommodations] = useState([])
+    const [accommodationsToDisplay, setAccommodationsToDisplay] = useState([])
     const navigate = useNavigate()
 
     useEffect(() => {
