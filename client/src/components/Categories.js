@@ -72,7 +72,9 @@ function Categories() {
                 <div>
                     {categories.map(category => (
                         <div className="text-blue-700 font-bold py-3">
-                            <a key={category.id} href={`/categories/accommodations/${category.id}`} className="text-4xl">{category.description}</a>
+                            <Link to={`/categories/accommodations/${category.id}`} className="text-4xl">
+                                {category.description}
+                            </Link>
                             <button onClick={() => handleEditClick(category.id)} className="mx-5">EDIT</button>
                             <button onClick={() => handleDeleteClick(category.id)} className="mx-3 border-2 border-red-800 text-red-800">DELETE</button>
                         </div>

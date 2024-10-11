@@ -131,7 +131,9 @@ function EditAccommodation() {
             <div className="bg-slate-200">
                 {isLoading ? (<h1>Loading...</h1>) : (
                 <>
-                    <a href={`/students/${id}`} className="text-4xl italic font-bold text-red-700 flex justify-start pl-5 bg-slate-100">{studentToDisplay.first_name} {studentToDisplay.last_name}</a>
+                    <Link to={`/students/${id}`} className="text-4xl italic font-bold text-red-700 flex justify-start pl-5 bg-slate-100">
+                        {studentToDisplay.first_name} {studentToDisplay.last_name}
+                    </Link>
                     <h3 className="pt-2 text-lg flex justify-start pl-20 italic text-red-700 font-bold bg-slate-100">Grade {studentToDisplay.grade}</h3>
                     <div className="grid grid-cols-3 space-x-1">
                         <div className="border-2 border-slate-500 py-4 flex flex-col h-full">
