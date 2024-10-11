@@ -7,6 +7,12 @@ from flask_migrate import upgrade
 from config import app, db, api
 from models import User, Student, Accommodation, Category, Comment
 
+@app.before_first_request
+def run_migrations():
+    """Apply database migrations on startup."""
+    with app.app_context():
+        upgrade()
+        
 class Signup(Resource):
     def post(self):
         request_dict = request.get_json()
@@ -324,12 +330,6 @@ class CommentsById(Resource):
         else:
             return {"error": "Unauthorized"}, 401
         
-    
-@app.before_first_request
-def run_migrations():
-    """Apply database migrations on startup."""
-    with app.app_context():
-        upgrade()
 
 api.add_resource(Signup, '/signup', endpoint='signup')
 api.add_resource(Login, '/', endpoint='')
