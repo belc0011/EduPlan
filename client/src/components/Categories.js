@@ -3,6 +3,7 @@ import { useFormik } from "formik";
 import { useNavigate, useLocation } from 'react-router-dom'
 import AddCategory from "./AddCategory.js";
 import { StudentContext } from "./MyContext.js";
+import { Link } from 'react-router-dom';
 
 function Categories() {
     const { categories, setCategories, students, setStudents } = useContext(StudentContext);
