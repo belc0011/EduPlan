@@ -108,14 +108,8 @@ function EditAccommodation({ setShowEditAccommodation }) {
                     accommodations: updatedAccommodations
                 };
             })
-            if (updatedAccommodations.length === 0) {
-                setAccommodationToDisplay({})
-            }
-            else {
-                const firstAccommodation = studentToDisplay.accommodations[0];
-                setAccommodationToDisplay({...firstAccommodation})
-            }
-            navigate('/students')
+            setShowEditAccommodation(false);
+            navigate(`/students/${id}`);
         })
     
     }
