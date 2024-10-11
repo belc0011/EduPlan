@@ -172,7 +172,7 @@ function StudentPage({ }) {
                     )}
             </div>
         ) : (
-            <EditAccommodation student={studentToDisplay} accommodation={accommodationToDisplay} setStudent={setStudentToDisplay} setAccommodation={setAccommodationToDisplay}/>
+            <EditAccommodation student={studentToDisplay} accommodation={accommodationToDisplay} setStudent={setStudentToDisplay} setAccommodation={setAccommodationToDisplay} setShowEditAccommodation={setShowEditAccommodation}/>
         )}
     </div>
     )

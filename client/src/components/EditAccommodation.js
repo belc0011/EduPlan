@@ -7,7 +7,7 @@ import * as yup from "yup";
 import AddComment from "./AddComment.js"
 import { Link } from 'react-router-dom';
 
-function EditAccommodation() {
+function EditAccommodation({ setShowEditAccommodation }) {
     const location = useLocation()
     const url = location.pathname
     const parts = url.split("/")
@@ -131,7 +131,11 @@ function EditAccommodation() {
             <div className="bg-slate-200">
                 {isLoading ? (<h1>Loading...</h1>) : (
                 <>
-                    <Link to={`/students/${id}`} className="text-4xl italic font-bold text-red-700 flex justify-start pl-5 bg-slate-100">
+                    <Link 
+                        to={`/students/${id}`} 
+                        className="text-4xl italic font-bold text-red-700 flex justify-start pl-5 bg-slate-100"
+                        onClick={() => setShowEditAccommodation(false)}
+                    >
                         {studentToDisplay.first_name} {studentToDisplay.last_name}
                     </Link>
                     <h3 className="pt-2 text-lg flex justify-start pl-20 italic text-red-700 font-bold bg-slate-100">Grade {studentToDisplay.grade}</h3>
