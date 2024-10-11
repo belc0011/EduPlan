@@ -8,6 +8,8 @@ The primary purpose of this project is to enable teachers to store and search th
 
 ### Project Demo
 
+Video link: https://youtu.be/YtGxeu0LIAY
+
 The project can be found at https://EduPlan.onrender.com. Follow the steps below to interact with the website:
 
 1. Click the "Sign Up" button and create an account to sign in.
