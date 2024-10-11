@@ -7,12 +7,16 @@ from flask_migrate import upgrade
 from config import app, db, api
 from models import User, Student, Accommodation, Category, Comment
 
-@app.before_first_request
+initialized = False
+
+@app.before_request
 def run_migrations():
-    """Apply database migrations on startup."""
-    with app.app_context():
-        upgrade()
-        
+    global initialized
+    if not initialized:
+        with app.app_context():
+            upgrade()  
+            initialized = True
+
 class Signup(Resource):
     def post(self):
         request_dict = request.get_json()
