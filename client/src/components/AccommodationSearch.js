@@ -52,7 +52,7 @@ function AccommodationSearch() {
         }
     
     return (
-        accommodationsToDisplay ? (
+        accommodationsToDisplay.length > 0 ? (
             <div>
                 <h1 className="text-5xl py-7 font-bold">Accommodations:</h1>
                 <form onSubmit={formik.handleSubmit}>
@@ -79,7 +79,7 @@ function AccommodationSearch() {
                     <button onClick={handleClick} className="py-3 text-xl bg-slate-200 font-bold text-black">RESTORE LIST</button>
                 </div>
                 <div className="grid grid-cols-4">
-                    {accommodationsToDisplay ? accommodationsToDisplay.map(accommodation => (
+                    {accommodationsToDisplay.length > 0 ? accommodationsToDisplay.map(accommodation => (
                         <button key={accommodation.id} className="bg-slate-200 border-2 border-slate-700 mx-1 my-1" onClick={() => handleStudentClick(accommodation.student.id)}>
                             <h3 className="text-2xl text-red-700 font-bold py-2">{accommodation.student.first_name} {accommodation.student.last_name}</h3>
                             <p className="py-2 text-xl italic text-black">{accommodation.description}</p>
