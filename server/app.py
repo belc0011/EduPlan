@@ -1,7 +1,8 @@
 from flask import request, session, make_response, jsonify
-from flask import render_template, upgrade
+from flask import render_template
 from flask_restful import Resource
 from sqlalchemy import select
+from flask_migrate import upgrade
 
 from config import app, db, api
 from models import User, Student, Accommodation, Category, Comment
