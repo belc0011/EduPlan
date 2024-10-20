@@ -1,11 +1,9 @@
 import React, { useState, useContext } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { StudentContext } from "./MyContext.js";
-import Login from "./Login.js";
 
 function AddComment({accommodation, setAccommodation, student, setStudent, students, setStudents}) {
-    const { user } = useContext(StudentContext);
+    
     const accommodationId = accommodation.id
 
     const formSchema = yup.object().shape({
@@ -61,26 +59,24 @@ function AddComment({accommodation, setAccommodation, student, setStudent, stude
     });
    
     return (
-        user ? (
-            <form onSubmit={formik.handleSubmit} className="bg-slate-700 text-white">
-                <label htmlFor="comment_text" className="text-3xl">Enter comment: </label>
-                    <input 
-                    type="text" 
-                    placeholder="Enter description:" 
-                    name="comment_text"
-                    id="comment_text" 
-                    className="ml-10 mt-8 mb-5 text-black"
-                    value={formik.values.comment_text} 
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}/>
-                    {formik.touched.comment_text && formik.errors.comment_text ? (
-                    <p style={{ color: "red" }}>{formik.errors.comment_text}</p>
-                    ) : null}
-                <div>
-                    <button type="submit" className="mb-5 text-xl">SUBMIT</button>
-                </div>
-            </form>
-        ) : <Login />
+        <form onSubmit={formik.handleSubmit} className="bg-slate-700 text-white">
+            <label htmlFor="comment_text" className="text-3xl">Enter comment: </label>
+                <input 
+                type="text" 
+                placeholder="Enter description:" 
+                name="comment_text"
+                id="comment_text" 
+                className="ml-10 mt-8 mb-5 text-black"
+                value={formik.values.comment_text} 
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}/>
+                {formik.touched.comment_text && formik.errors.comment_text ? (
+                <p style={{ color: "red" }}>{formik.errors.comment_text}</p>
+                ) : null}
+            <div>
+                <button type="submit" className="mb-5 text-xl">SUBMIT</button>
+            </div>
+        </form>
     )
 }
 
