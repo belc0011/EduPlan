@@ -60,9 +60,9 @@ class CheckSession(Resource):
    
 class Logout(Resource):
     def delete(self):
-        session.get('user_id')
-        session['user_id'] = None
-        return {}, 204
+        if session.get('user_id'):
+            session.pop('user_id', None)
+            return {}, 204
 
 class Students(Resource):
     def get(self):
