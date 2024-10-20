@@ -4,9 +4,10 @@ import { useNavigate, useLocation } from 'react-router-dom'
 import AddCategory from "./AddCategory.js";
 import { StudentContext } from "./MyContext.js";
 import { Link } from 'react-router-dom';
+import Login from './Login.js';
 
 function Categories() {
-    const { categories, setCategories, students, setStudents } = useContext(StudentContext);
+    const { user, categories, setCategories, students, setStudents } = useContext(StudentContext);
     const [showAddCategory, setShowAddCategory] = useState(false);
     const navigate = useNavigate()
 
@@ -66,33 +67,35 @@ function Categories() {
     console.log(categories);
 
     return (
-    <>
-        {categories.length > 0 ? (
-            <div className="bg-slate-100">
-                <h1 className="text-6xl font-bold py-8">Categories</h1>
-                <div>
-                    {categories.map(category => (
-                        <div className="text-blue-700 font-bold py-3">
-                            <Link to={`/categories/accommodations/${category.id}`} className="text-4xl">
-                                {category.description}
-                            </Link>
-                            <button onClick={() => handleEditClick(category.id)} className="mx-5">EDIT</button>
-                            <button onClick={() => handleDeleteClick(category.id)} className="mx-3 border-2 border-red-800 text-red-800">DELETE</button>
+        user ? (
+            <>
+                {categories.length > 0 ? (
+                    <div className="bg-slate-100">
+                        <h1 className="text-6xl font-bold py-8">Categories</h1>
+                        <div>
+                            {categories.map(category => (
+                                <div className="text-blue-700 font-bold py-3">
+                                    <Link to={`/categories/accommodations/${category.id}`} className="text-4xl">
+                                        {category.description}
+                                    </Link>
+                                    <button onClick={() => handleEditClick(category.id)} className="mx-5">EDIT</button>
+                                    <button onClick={() => handleDeleteClick(category.id)} className="mx-3 border-2 border-red-800 text-red-800">DELETE</button>
+                                </div>
+                            ))}
                         </div>
-                    ))}
-                </div>
-            </div>
-        ) : (<p className="text-3xl">No categories to display</p>)}
-        {!showAddCategory ? (
-            <div className="py-5">
-                <button onClick={handleClick} className="bg-slate-700 text-white text-xl">NEW CATEGORY</button>
-            </div>
-            ) : (
-            <div className="py-5">
-                <button onClick={handleClick} className="bg-slate-700 text-white text-xl">HIDE NEW CATEGORY</button>
-            </div>)}
-        {showAddCategory && <AddCategory categories={categories} setCategories={setCategories}/>}
-    </>
+                    </div>
+                ) : (<p className="text-3xl">No categories to display</p>)}
+                {!showAddCategory ? (
+                    <div className="py-5">
+                        <button onClick={handleClick} className="bg-slate-700 text-white text-xl">NEW CATEGORY</button>
+                    </div>
+                    ) : (
+                    <div className="py-5">
+                        <button onClick={handleClick} className="bg-slate-700 text-white text-xl">HIDE NEW CATEGORY</button>
+                    </div>)}
+                {showAddCategory && <AddCategory categories={categories} setCategories={setCategories}/>}
+            </>
+        ) : <Login />
     )
 }
 

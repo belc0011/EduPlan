@@ -4,9 +4,10 @@ import { useNavigate, useLocation } from 'react-router-dom'
 import { StudentContext } from "./MyContext.js";
 import { useFormik } from "formik";
 import * as yup from "yup";
+import Login from "./Login.js"
 
 function EditCategory() {
-    const { categories, setCategories } = useContext(StudentContext);
+    const { categories, setCategories, user } = useContext(StudentContext);
     const location = useLocation()
     const url = location.pathname
     const parts = url.split("/")
@@ -100,38 +101,41 @@ function EditCategory() {
         }
     }
     console.log(categoryToDisplay)
-    return(
-        categoryToDisplay ? (
-            <div className="bg-slate-200">
-                <h1 className="text-4xl italic py-5">Current category: {categoryToDisplay.description}</h1>
-                    <div className="bg-slate-700">
-                        <h2 className="text-white text-xl italic py-3">Enter the updated category description</h2>
-                        <form onSubmit={formik.handleSubmit}>
-                            <div>
-                                <label htmlFor="description" className="text-white text-3xl pb-2 italic">New description: </label>
-                                    <input 
-                                    type="text" 
-                                    placeholder="Enter description"
-                                    className="text-black text-2xl" 
-                                    name="description"
-                                    id="description" 
-                                    value={formik.values.description}
-                                    onChange={formik.handleChange}
-                                    onBlur={formik.handleBlur}/>
-                                    {formik.touched.description && formik.errors.description ? (
-                                    <p style={{ color: "red" }}>{formik.errors.description}</p>
-                                    ) : null}
-                            </div>
-                                <div className="py-3">
-                                    <button type="submit" className="bg-slate-200 text-2xl font-bold text-black">SUBMIT</button>
+
+    return (
+        user ? (
+            categoryToDisplay ? (
+                <div className="bg-slate-200">
+                    <h1 className="text-4xl italic py-5">Current category: {categoryToDisplay.description}</h1>
+                        <div className="bg-slate-700">
+                            <h2 className="text-white text-xl italic py-3">Enter the updated category description</h2>
+                            <form onSubmit={formik.handleSubmit}>
+                                <div>
+                                    <label htmlFor="description" className="text-white text-3xl pb-2 italic">New description: </label>
+                                        <input 
+                                        type="text" 
+                                        placeholder="Enter description"
+                                        className="text-black text-2xl" 
+                                        name="description"
+                                        id="description" 
+                                        value={formik.values.description}
+                                        onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur}/>
+                                        {formik.touched.description && formik.errors.description ? (
+                                        <p style={{ color: "red" }}>{formik.errors.description}</p>
+                                        ) : null}
                                 </div>
-                        </form>
+                                    <div className="py-3">
+                                        <button type="submit" className="bg-slate-200 text-2xl font-bold text-black">SUBMIT</button>
+                                    </div>
+                            </form>
+                        </div>
+                    <div className="py-3">
+                        <button onClick={handleDeleteClick}>DELETE THIS CATEGORY</button>
                     </div>
-                <div className="py-3">
-                    <button onClick={handleDeleteClick}>DELETE THIS CATEGORY</button>
                 </div>
-            </div>
-        ) : <p className="italic text-xl">Error loading page, please return to the home page</p>
+            ) : <p className="italic text-xl">Error loading page, please return to the home page</p>
+        ) : <Login />
     )
 }
 

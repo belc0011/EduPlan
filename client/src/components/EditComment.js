@@ -4,9 +4,10 @@ import { useNavigate, useLocation } from 'react-router-dom'
 import { StudentContext } from "./MyContext.js";
 import { useFormik } from "formik";
 import * as yup from "yup";
+import Login from "./Login.js"
 
 function EditComment() {
-    const { studentToDisplay, setStudentToDisplay, accommodationToDisplay, setAccommodationToDisplay } = useContext(StudentContext);
+    const { user, studentToDisplay, setStudentToDisplay, accommodationToDisplay, setAccommodationToDisplay } = useContext(StudentContext);
     const [showForm, setShowForm] = useState(false);
     const commentId = accommodationToDisplay.comment.id;
     const id = studentToDisplay.id;
@@ -81,44 +82,46 @@ function EditComment() {
     }
 
     return (
-    <>
-    {accommodationToDisplay.comment ? (
-        <div className="bg-slate-100">
-            <a href={`/students/${id}`} className="text-blue-800 text-6xl font-bold">{studentToDisplay.first_name} {studentToDisplay.last_name}</a>
-            <h2 className="py-5 text-4xl">{accommodationToDisplay.description}</h2>
-            <div className="grid grid-cols-2 pb-5">    
-                <h2 className="italic text-3xl pl-15 text-right">Current comment:</h2>
-                <h3 className="pr-20 pl-3 text-3xl text-left">{accommodationToDisplay.comment.description}</h3>
-            </div>
-            <div className="grid grid-cols-2 py-8">
-                <button onClick={handleClick} className="text-3xl text-blue-800 font-bold border-slate-500 border-4 w-fit justify-self-center ml-20 bg-blue-100">EDIT COMMENT</button>
-                <button onClick={handleDelete} className="text-3xl text-red-800 font-bold border-slate-500 border-4 w-fit justify-self-center mr-20 bg-red-100">DELETE COMMENT</button>
-            </div>
-            {showForm ? (
-                <div className="text-white text-3xl italic py-5 border-2 border-slate-400 bg-slate-700">
-                    <h1>EDIT COMMENT</h1>
-                    <form onSubmit={formik.handleSubmit}>
-                    <label htmlFor="comment_text" className="text-2xl pt-5">Enter new comment: </label>
-                        <input 
-                        type="text" 
-                        placeholder="Enter description" 
-                        name="comment_text"
-                        className="ml-10 my-5 text-black"
-                        id="comment_text" 
-                        value={formik.values.comment_text}
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}/>
-                        {formik.touched.comment_text && formik.errors.comment_text ? (
-                        <p style={{ color: "red" }}>{formik.errors.comment_text}</p>
-                        ) : null}
-                    <div>
-                        <button type="submit">SUBMIT</button>
+        user ? (
+            <>
+            {accommodationToDisplay.comment ? (
+                <div className="bg-slate-100">
+                    <a href={`/students/${id}`} className="text-blue-800 text-6xl font-bold">{studentToDisplay.first_name} {studentToDisplay.last_name}</a>
+                    <h2 className="py-5 text-4xl">{accommodationToDisplay.description}</h2>
+                    <div className="grid grid-cols-2 pb-5">    
+                        <h2 className="italic text-3xl pl-15 text-right">Current comment:</h2>
+                        <h3 className="pr-20 pl-3 text-3xl text-left">{accommodationToDisplay.comment.description}</h3>
                     </div>
-                </form>
-            </div>
-            ) : null}
-    </div>) : <p className="italic text-xl">Error loading page, please return to home page</p>}
-    </>)
-
+                    <div className="grid grid-cols-2 py-8">
+                        <button onClick={handleClick} className="text-3xl text-blue-800 font-bold border-slate-500 border-4 w-fit justify-self-center ml-20 bg-blue-100">EDIT COMMENT</button>
+                        <button onClick={handleDelete} className="text-3xl text-red-800 font-bold border-slate-500 border-4 w-fit justify-self-center mr-20 bg-red-100">DELETE COMMENT</button>
+                    </div>
+                    {showForm ? (
+                        <div className="text-white text-3xl italic py-5 border-2 border-slate-400 bg-slate-700">
+                            <h1>EDIT COMMENT</h1>
+                            <form onSubmit={formik.handleSubmit}>
+                            <label htmlFor="comment_text" className="text-2xl pt-5">Enter new comment: </label>
+                                <input 
+                                type="text" 
+                                placeholder="Enter description" 
+                                name="comment_text"
+                                className="ml-10 my-5 text-black"
+                                id="comment_text" 
+                                value={formik.values.comment_text}
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}/>
+                                {formik.touched.comment_text && formik.errors.comment_text ? (
+                                <p style={{ color: "red" }}>{formik.errors.comment_text}</p>
+                                ) : null}
+                            <div>
+                                <button type="submit">SUBMIT</button>
+                            </div>
+                        </form>
+                    </div>
+                    ) : null}
+                </div>) : <p className="italic text-xl">Error loading page, please return to home page</p>}
+            </>
+        ) : <Login />
+    )
 }
 export default EditComment

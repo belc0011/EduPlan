@@ -6,6 +6,7 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import AddComment from "./AddComment.js"
 import { Link } from 'react-router-dom';
+import Login from './Login.js';
 
 function EditAccommodation({ setShowEditAccommodation }) {
     const location = useLocation()
@@ -14,7 +15,7 @@ function EditAccommodation({ setShowEditAccommodation }) {
     const id = parseInt(parts[2], 10)
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
-    const { students, setStudents, studentToDisplay, setStudentToDisplay, accommodationToDisplay, setAccommodationToDisplay, categories, setCategories } = useContext(StudentContext);
+    const { user, students, setStudents, studentToDisplay, setStudentToDisplay, accommodationToDisplay, setAccommodationToDisplay, categories, setCategories } = useContext(StudentContext);
     const [showAddComment, setShowAddComment] = useState(false);
     const accommodationId = accommodationToDisplay.id;
 
@@ -118,131 +119,133 @@ function EditAccommodation({ setShowEditAccommodation }) {
     }
 }
     return (
-        studentToDisplay ? (
-        <div>
-            <div className="flex justify-end pr-5 py-3">
-                <button onClick={handleDeleteClick} className="py-9 text-3xl border-4 border-red-900 text-red-700">Click Here to Delete Accommodation</button>
-            </div>
-            <div className="bg-slate-200">
-                {isLoading ? (<h1>Loading...</h1>) : (
-                <>
-                    <Link 
-                        to={`/students/${id}`} 
-                        className="text-4xl italic font-bold text-red-700 flex justify-start pl-5 bg-slate-100"
-                        onClick={() => setShowEditAccommodation(false)}
-                    >
-                        {studentToDisplay.first_name} {studentToDisplay.last_name}
-                    </Link>
-                    <h3 className="pt-2 text-lg flex justify-start pl-20 italic text-red-700 font-bold bg-slate-100">Grade {studentToDisplay.grade}</h3>
-                    <div className="grid grid-cols-3 space-x-1">
-                        <div className="border-2 border-slate-500 py-4 flex flex-col h-full">
-                            <h1 className="text-4xl text-blue-800 font-bold py-5">Accommodation Description</h1>
-                            <h2 className="text-4xl font-sans py-4">{accommodationToDisplay?.description || "No accommodation to display"}</h2>
+        user ? (
+            studentToDisplay ? (
+            <div>
+                <div className="flex justify-end pr-5 py-3">
+                    <button onClick={handleDeleteClick} className="py-9 text-3xl border-4 border-red-900 text-red-700">Click Here to Delete Accommodation</button>
+                </div>
+                <div className="bg-slate-200">
+                    {isLoading ? (<h1>Loading...</h1>) : (
+                    <>
+                        <Link 
+                            to={`/students/${id}`} 
+                            className="text-4xl italic font-bold text-red-700 flex justify-start pl-5 bg-slate-100"
+                            onClick={() => setShowEditAccommodation(false)}
+                        >
+                            {studentToDisplay.first_name} {studentToDisplay.last_name}
+                        </Link>
+                        <h3 className="pt-2 text-lg flex justify-start pl-20 italic text-red-700 font-bold bg-slate-100">Grade {studentToDisplay.grade}</h3>
+                        <div className="grid grid-cols-3 space-x-1">
+                            <div className="border-2 border-slate-500 py-4 flex flex-col h-full">
+                                <h1 className="text-4xl text-blue-800 font-bold py-5">Accommodation Description</h1>
+                                <h2 className="text-4xl font-sans py-4">{accommodationToDisplay?.description || "No accommodation to display"}</h2>
+                            </div>
+                            <div className="border-2 border-slate-500 py-4 flex flex-col h-full px-1">
+                                <h3 className="text-4xl text-blue-800 font-bold py-5">Accommodation Category</h3>
+                                <h3 className="italic text-4xl py-4">{accommodationToDisplay?.category?.description || "No accommodation to display"}</h3>
+                            </div>
+                            <div className="border-2 border-slate-500 py-4 flex flex-col h-full justify-between">
+                                <h1 className="text-4xl text-blue-800 font-bold py-5">Comment</h1>
+                                {Object.keys(accommodationToDisplay).length > 0 && accommodationToDisplay.comment ? 
+                                (<>
+                                    <div className="flex-grow"></div>
+                                    <ul className="mb-3">
+                                        <li key={accommodationToDisplay.comment.id}>
+                                            <Link 
+                                                to={`/comment/${accommodationId}`} 
+                                                state={{ 
+                                                    accommodation: accommodationToDisplay,
+                                                    student: studentToDisplay,
+                                                    commentId: accommodationToDisplay.comment.id
+                                                }}
+                                                onClick={handleCommentClick}
+                                                className="text-blue-700 text-4xl italic pb-3"
+                                            >
+                                                {accommodationToDisplay.comment.description}
+                                            </Link>
+                                        </li>
+                                    </ul>
+                                </>) : <p className="italic text-2xl pb-4">No comment to display</p>}
+                            </div>
                         </div>
-                        <div className="border-2 border-slate-500 py-4 flex flex-col h-full px-1">
-                            <h3 className="text-4xl text-blue-800 font-bold py-5">Accommodation Category</h3>
-                            <h3 className="italic text-4xl py-4">{accommodationToDisplay?.category?.description || "No accommodation to display"}</h3>
-                        </div>
-                        <div className="border-2 border-slate-500 py-4 flex flex-col h-full justify-between">
-                            <h1 className="text-4xl text-blue-800 font-bold py-5">Comment</h1>
-                            {Object.keys(accommodationToDisplay).length > 0 && accommodationToDisplay.comment ? 
-                            (<>
-                                <div className="flex-grow"></div>
-                                <ul className="mb-3">
-                                    <li key={accommodationToDisplay.comment.id}>
-                                        <Link 
-                                            to={`/comment/${accommodationId}`} 
-                                            state={{ 
-                                                accommodation: accommodationToDisplay,
-                                                student: studentToDisplay,
-                                                commentId: accommodationToDisplay.comment.id
-                                            }}
-                                            onClick={handleCommentClick}
-                                            className="text-blue-700 text-4xl italic pb-3"
-                                        >
-                                            {accommodationToDisplay.comment.description}
-                                        </Link>
-                                    </li>
-                                </ul>
-                            </>) : <p className="italic text-2xl pb-4">No comment to display</p>}
-                        </div>
-                    </div>
-                    {accommodationToDisplay ? (
-                        <div>
-                            {!accommodationToDisplay.comment ? (
-                                !showAddComment ? (
-                                    <>
-                                        <div className="py-2">
-                                            <button onClick={handleAddComment}>ADD A COMMENT</button>
-                                        </div>
-                                    </>
-                                ) : (
-                                    <>
-                                        <div>
-                                            <button onClick={handleAddComment}>HIDE ADD COMMENT</button>
-                                        </div>
-                                    </>
-                                    )
-                                ) : (
-                                        <div className="py-2">
-                                            <button onClick={handleEditComment}>EDIT/DELETE COMMENT</button>
-                                        </div>
-                                )}
+                        {accommodationToDisplay ? (
                             <div>
-                                {showAddComment ? (
-                                    <AddComment accommodation={accommodationToDisplay} setAccommodation={setAccommodationToDisplay} student={studentToDisplay} setStudent={setStudentToDisplay} students={students} setStudents={setStudents}/>
-                                ) : null}
-                            </div>
-                            <div className="border-blue-700 border-4 bg-white">
-                                <h3 className="text-3xl text-mono py-3 font-bold">Edit Accommodation: </h3>
-                                <form onSubmit={formik.handleSubmit} className="my-2">
-                                <label htmlFor="description">Adjust the accommodation description as necessary: </label>
-                                    <div>
-                                        <input 
-                                        type="text" 
-                                        placeholder="Enter description"
-                                        className="border-4 py-2 px-4 w-96"  
-                                        name="description"
-                                        id="description" 
-                                        value={formik.values.description}
-                                        onChange={formik.handleChange}
-                                        onBlur={formik.handleBlur}/>
-                                        {formik.touched.description && formik.errors.description ? (
-                                        <p style={{ color: "red" }}>{formik.errors.description}</p>
-                                        ) : null}
-                                    </div>
-                                    <div>
-                                        <div className="py-2">
-                                            <label htmlFor="category" className="text-xl">Choose an updated accommodation category: </label>
-                                            <select type="dropdown" 
-                                            id="category_id" 
-                                            name="category_id"
-                                            className="text-xl border-slate-400 border-2"
-                                            value={formik.values.category_id} 
-                                            onChange={formik.handleChange}>
-                                                <option value="">
-                                                    Select one
-                                                </option>
-                                                {categories.map(category => {
-                                                return <option key={category.id} value={category.id}>
-                                                {category.description}
-                                            </option>
-                                                })}
-                                            </select>
+                                {!accommodationToDisplay.comment ? (
+                                    !showAddComment ? (
+                                        <>
+                                            <div className="py-2">
+                                                <button onClick={handleAddComment}>ADD A COMMENT</button>
+                                            </div>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <div>
+                                                <button onClick={handleAddComment}>HIDE ADD COMMENT</button>
+                                            </div>
+                                        </>
+                                        )
+                                    ) : (
+                                            <div className="py-2">
+                                                <button onClick={handleEditComment}>EDIT/DELETE COMMENT</button>
+                                            </div>
+                                    )}
+                                <div>
+                                    {showAddComment ? (
+                                        <AddComment accommodation={accommodationToDisplay} setAccommodation={setAccommodationToDisplay} student={studentToDisplay} setStudent={setStudentToDisplay} students={students} setStudents={setStudents}/>
+                                    ) : null}
+                                </div>
+                                <div className="border-blue-700 border-4 bg-white">
+                                    <h3 className="text-3xl text-mono py-3 font-bold">Edit Accommodation: </h3>
+                                    <form onSubmit={formik.handleSubmit} className="my-2">
+                                    <label htmlFor="description">Adjust the accommodation description as necessary: </label>
+                                        <div>
+                                            <input 
+                                            type="text" 
+                                            placeholder="Enter description"
+                                            className="border-4 py-2 px-4 w-96"  
+                                            name="description"
+                                            id="description" 
+                                            value={formik.values.description}
+                                            onChange={formik.handleChange}
+                                            onBlur={formik.handleBlur}/>
+                                            {formik.touched.description && formik.errors.description ? (
+                                            <p style={{ color: "red" }}>{formik.errors.description}</p>
+                                            ) : null}
                                         </div>
-                                        <button type="submit" className="text-xl">Submit Edit</button>
-                                    </div>
-                                </form>
+                                        <div>
+                                            <div className="py-2">
+                                                <label htmlFor="category" className="text-xl">Choose an updated accommodation category: </label>
+                                                <select type="dropdown" 
+                                                id="category_id" 
+                                                name="category_id"
+                                                className="text-xl border-slate-400 border-2"
+                                                value={formik.values.category_id} 
+                                                onChange={formik.handleChange}>
+                                                    <option value="">
+                                                        Select one
+                                                    </option>
+                                                    {categories.map(category => {
+                                                    return <option key={category.id} value={category.id}>
+                                                    {category.description}
+                                                </option>
+                                                    })}
+                                                </select>
+                                            </div>
+                                            <button type="submit" className="text-xl">Submit Edit</button>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
-                        </div>
-                    ) : (
-                    <div>No Accommodations</div>
+                        ) : (
+                        <div>No Accommodations</div>
+                        )}
+                    </>
                     )}
-                </>
-                )}
+                </div>
             </div>
-        </div>
-        ) : <p className="italic text-xl">Error loading page, please return to home page</p>
+            ) : <p className="italic text-xl">Error loading page, please return to home page</p>
+        ) : <Login />
     )
 }
 
