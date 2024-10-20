@@ -28,6 +28,10 @@ function App() {
       .then((r) => {
         if (r.ok) {
           return r.json();
+        }
+        else if (r.status === 401){
+          setUser(null);
+          return null;
         } else {
           throw new Error('Network response was not ok.');
         }
