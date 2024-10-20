@@ -1,4 +1,4 @@
-from flask import request, session, make_response, jsonify
+from flask import request, session, make_response, send_from_directory
 from flask import render_template
 from flask_restful import Resource
 from sqlalchemy import select
@@ -350,7 +350,7 @@ api.add_resource(CategoriesById, '/categories/<int:id>', endpoint='categories/<i
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
 def catch_all(path):
-    return render_template("index.html")
+    return send_from_directory(app.static_folder, 'index.html')
 
 if __name__ == '__main__':
     app.run()
