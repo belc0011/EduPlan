@@ -42,7 +42,7 @@ function SignUp({ onLogin }) {
         },
         validationSchema: formSchema,
         onSubmit: (values) => {
-          fetch("https://eduplan.onrender.com/signup", {
+          fetch("http://127.0.0.1:5555/signup", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
