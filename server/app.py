@@ -17,6 +17,17 @@ def run_migrations():
             upgrade()  
             initialized = True
 
+import logging
+
+# Set up logging
+logging.basicConfig(level=logging.INFO)
+
+@app.errorhandler(500)
+def internal_error(error):
+    app.logger.error(f"Server Error: {error}")
+    return "500 Internal Server Error", 500
+
+
 class Signup(Resource):
     def post(self):
         request_dict = request.get_json()
