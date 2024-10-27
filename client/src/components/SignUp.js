@@ -8,11 +8,17 @@ function SignUp({ onLogin }) {
     const [refreshPage, setRefreshPage] = useState(false);
     
     const formSchema = yup.object().shape({
+        first_name: yup.string().required("Must enter a first name").max(15),
+        last_name: yup.string().required("Must enter a last name").max(20),
         username: yup
         .string()
         .matches(/^[a-zA-Z0-9]+$/, "Username can only contain alphanumeric characters")
         .min(6, "Must be at least 6 characters")
         .required("Username is required"),
+        email: yup
+            .string()
+            .email("Please enter a valid email address")  // Email format validation
+            .required("Email is required"),
         password: yup
         .string()
         .min(7, "Must be at least 7 characters")
@@ -30,6 +36,7 @@ function SignUp({ onLogin }) {
           first_name: "",
           last_name: "",
           username: "",
+          email: "",
           password: "",
           confirmPassword: ""
         },
@@ -93,6 +100,20 @@ function SignUp({ onLogin }) {
                                 {formik.touched.username && formik.errors.username ? (
                                 <p style={{ color: "red" }}>{formik.errors.username}</p>
                                 ) : null}
+                        </div>
+                        <div className="pr-36 text-2xl py-5">
+                            <label htmlFor="email">Email:</label>
+                            <input 
+                                type="email" 
+                                id="email" 
+                                name="email"
+                                value={formik.values.email} 
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                            />
+                            {formik.touched.email && formik.errors.email ? (
+                                <p style={{ color: "red" }}>{formik.errors.email}</p>
+                            ) : null}
                         </div>
                         <div className="pr-36 text-2xl py-5">
                             <label htmlFor="password">Password: </label>
