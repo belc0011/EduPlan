@@ -42,23 +42,31 @@ function SignUp({ onLogin }) {
         },
         validationSchema: formSchema,
         onSubmit: (values) => {
-          fetch("https://eduplan.onrender.com/signup", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(values, null, 2)
-        })
-        .then(res => {
-            if (res.ok) {
-                res.json().then(user => onLogin(user))
-                setRefreshPage(!refreshPage);
-            }
-            else {
-                console.log("error: " + res)
-            }
-        });
-    }
+            fetch("https://eduplan.onrender.com/signup", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(values, null, 2)
+            })
+            .then(res => {
+                if (res.ok) {
+                    return res.json().then(user => {
+                        onLogin(user);
+                        setRefreshPage(!refreshPage);
+                    });
+                } else {
+                    // Attempt to parse the error response body
+                    return res.json().then(err => {
+                        console.error("Error:", err); // Log the parsed error object
+                        throw new Error(err.message || "An error occurred");
+                    });
+                }
+            })
+            .catch(err => {
+                console.error("Fetch error:", err.message); // Log the error message
+            });
+        }
     });
     return (
     <div className="my-5">
