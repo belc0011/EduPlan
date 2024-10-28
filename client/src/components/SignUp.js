@@ -56,10 +56,11 @@ function SignUp({ onLogin }) {
                         setRefreshPage(!refreshPage);
                     });
                 } else {
-                    // Attempt to parse the error response body
-                    return res.json().then(err => {
-                        console.error("Error:", err); // Log the parsed error object
-                        throw new Error(err.message || "An error occurred");
+                    // Log the status code and text for debugging
+                    console.error("Error status:", res.status);
+                    return res.text().then(text => {
+                        console.error("Error response body:", text);
+                        throw new Error(text || "An error occurred");
                     });
                 }
             })
