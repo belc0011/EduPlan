@@ -39,7 +39,8 @@ class Signup(Resource):
                     first_name=request_dict['first_name'].title(),
                     last_name=request_dict['last_name'].title(),
                     username=request_dict['username'],
-                    email=request_dict['email']),
+                    email=request_dict['email']
+                    )
             new_user.password_hash = request_dict['password']
             
             db.session.add(new_user)
