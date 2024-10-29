@@ -24,7 +24,7 @@ function StudentPage({ }) {
     const formSchema = yup.object().shape({
         description: yup
         .string()
-        .matches(/^[a-zA-Z0-9\'\-\/\&\, ]+$/, "Description can not contain special characters, except an apostrophe, hyphen, forward slash, ampersand, or comma")
+        .matches(/^[a-zA-Z0-9'\/&,\- ]+$/, "Description can not contain special characters, except an apostrophe, hyphen, forward slash, ampersand, or comma")
         .required(),
         category_id: yup.number().required("Category is required"),
       });

@@ -7,7 +7,7 @@ function AddCategory({ categories, setCategories}) {
     const formSchema = yup.object().shape({
         description: yup
         .string()
-        .matches(/^[a-zA-Z\s'/-]+$/, "Description can not contain numbers or special characters, except an apostrophe, hyphen or forward slash")
+        .matches(/^[a-zA-Z\s'/&-]+$/, "Description can not contain numbers or special characters, except an apostrophe, hyphen, ampersand or forward slash")
         .required("Description is required"),
       });
 
