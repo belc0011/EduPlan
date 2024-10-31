@@ -21,7 +21,7 @@ function EditAccommodation({ setShowEditAccommodation }) {
     const formSchema = yup.object().shape({
         description: yup
         .string()
-        .matches(/^[a-zA-Z0-9'\/&,\- ]+$/, "Description can not contain special characters, except an apostrophe, hyphen, forward slash, ampersand, or comma")
+        .matches(/^[a-zA-Z0-9'\/&,\-:()% ]+$/, "Description can only contain alphanumeric characters and some special characters")
       });
     
       const formik = useFormik({
